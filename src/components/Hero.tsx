@@ -59,6 +59,9 @@ export default function Hero() {
     mouseY.set(clientY - target.top);
   };
 
+  // Remove unused colors variable to fix TS6133 error
+  // const colors = [...]; // removed as unused
+
   const currentRole = roles[index];
   const CurrentIcon = currentRole.icon;
 
@@ -69,7 +72,7 @@ export default function Hero() {
       description: "Impeccable attention to detail in every component",
       icon: FaPaintBrush,
       color: "from-violet-500/15 to-purple-500/15",
-      borderColor: "border-violet-400/20",
+      borderColor: "border-gradient-to-r from-violet-400 to-purple-400",
       delay: 0.1
     },
     {
@@ -77,7 +80,7 @@ export default function Hero() {
       description: "Optimized for maximum performance scores",
       icon: FaBolt,
       color: "from-amber-500/15 to-orange-500/15",
-      borderColor: "border-amber-400/20",
+      borderColor: "border-gradient-to-r from-amber-400 to-orange-400",
       delay: 0.2
     },
     {
@@ -85,7 +88,7 @@ export default function Hero() {
       description: "Flawless experience on all devices",
       icon: FaMobileAlt,
       color: "from-blue-500/15 to-cyan-500/15",
-      borderColor: "border-blue-400/20",
+      borderColor: "border-gradient-to-r from-blue-400 to-cyan-400",
       delay: 0.3
     },
     {
@@ -93,7 +96,7 @@ export default function Hero() {
       description: "Inclusive design for all users",
       icon: FaUniversalAccess,
       color: "from-emerald-500/15 to-green-500/15",
-      borderColor: "border-emerald-400/20",
+      borderColor: "border-gradient-to-r from-emerald-400 to-green-400",
       delay: 0.4
     }
   ];
@@ -101,30 +104,159 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/40 overflow-hidden"
       aria-label="Intro — Nayan Ray"
       onMouseMove={handleMouseMove}
       ref={ref}
     >
-      {/* Enhanced Animated Background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Subtle gradient orbs */}
+      {/* Premium Full-Screen Code Animation Background */}
+      <div className="pointer-events-none absolute top-0 left-0 w-full h-full overflow-hidden">
+        {/* Interactive mouse-following gradient overlay */}
         <motion.div
-          className="absolute w-[480px] h-[480px] rounded-full bg-gradient-to-r from-blue-500/5 to-purple-500/5 blur-3xl opacity-40"
+          className="absolute inset-0 opacity-20"
           style={{
-            x: cursorX,
-            y: cursorY,
-            translateX: "-50%",
-            translateY: "-50%",
+            background: `radial-gradient(circle at ${cursorX}px ${cursorY}px, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.1) 25%, rgba(236, 72, 153, 0.05) 50%, transparent 70%)`,
           }}
         />
-        
-        {/* Static background elements */}
-        <div className="absolute top-1/4 -left-32 w-80 h-80 bg-purple-500/3 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/3 rounded-full blur-3xl" />
-        
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
+
+        {/* Unique Multi-Circle Tech Icon System with Path Light Animation */}
+        <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" aria-hidden="true">
+          <defs>
+            <linearGradient id="line-gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#06b6d4" />
+              <stop offset="25%" stopColor="#3b82f6" />
+              <stop offset="50%" stopColor="#8b5cf6" />
+              <stop offset="75%" stopColor="#ec4899" />
+              <stop offset="100%" stopColor="#f97316" />
+            </linearGradient>
+            <radialGradient id="icon-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(59, 130, 246, 0.4)" />
+              <stop offset="100%" stopColor="rgba(139, 92, 246, 0.1)" />
+            </radialGradient>
+            <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(59, 130, 246, 0.8)" />
+              <stop offset="50%" stopColor="rgba(139, 92, 246, 0.6)" />
+              <stop offset="100%" stopColor="rgba(236, 72, 153, 0.4)" />
+            </radialGradient>
+          </defs>
+
+          {/* Multiple concentric circles with path animations */}
+          {[1, 2, 3, 4, 5].map((ring) => {
+            const radius = 150 + ring * 100; // Balanced radius for coverage without full width
+            const iconCount = 10 + ring * 5; // Balanced icon count
+
+
+            return (
+              <g key={`ring-${ring}`}>
+                {/* Animated path light effect */}
+                <motion.circle
+                  cx={window.innerWidth / 2}
+                  cy={window.innerHeight / 2}
+                  r={radius}
+                  fill="none"
+                  stroke="url(#line-gradient)"
+                  strokeWidth="2"
+                  strokeDasharray="20 40"
+                  initial={{ strokeDashoffset: 0 }}
+                  animate={{
+                    strokeDashoffset: [-60, 0],
+                    strokeOpacity: [0.1, 0.4, 0.1]
+                  }}
+                  transition={{
+                    duration: 4 + ring,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: ring * 0.5
+                  }}
+                  filter="drop-shadow(0 0 10px rgba(59, 130, 246, 0.5))"
+                />
+
+                {/* Connecting lines between icons */}
+                {[...Array(iconCount)].map((_, i) => {
+                  const angle = (i / iconCount) * 2 * Math.PI;
+                  const nextAngle = ((i + 1) % iconCount) / iconCount * 2 * Math.PI;
+                  const x1 = window.innerWidth / 2 + radius * Math.cos(angle);
+                  const y1 = window.innerHeight / 2 + radius * Math.sin(angle);
+                  const x2 = window.innerWidth / 2 + radius * Math.cos(nextAngle);
+                  const y2 = window.innerHeight / 2 + radius * Math.sin(nextAngle);
+
+                  return (
+                    <motion.line
+                      key={`line-${ring}-${i}`}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke="url(#line-gradient)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{
+                        pathLength: [0, 1, 0],
+                        opacity: [0, 0.3, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.1 + ring * 0.3,
+                        ease: "easeInOut"
+                      }}
+                      filter="drop-shadow(0 0 6px rgba(59, 130, 246, 0.4))"
+                    />
+                  );
+                })}
+
+
+              </g>
+            );
+          })}
+
+          {/* Central hub with pulsing effect */}
+          <motion.circle
+            cx={window.innerWidth / 2}
+            cy={window.innerHeight / 2}
+            r="60"
+            fill="url(#center-glow)"
+            initial={{ scale: 0.8, opacity: 0.5 }}
+            animate={{
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.5, 1, 0.5]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+
+
+          {/* Outer ring with flowing light */}
+          <motion.circle
+            cx={window.innerWidth / 2}
+            cy={window.innerHeight / 2}
+            r="800"
+            fill="none"
+            stroke="url(#line-gradient)"
+            strokeWidth="1"
+            strokeDasharray="10 30"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{
+              strokeDashoffset: [-40, 0],
+              strokeOpacity: [0.05, 0.2, 0.05]
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            filter="drop-shadow(0 0 15px rgba(59, 130, 246, 0.6))"
+          />
+        </svg>
+
+        {/* Enhanced grid pattern with code-like lines */}
+        <div className="absolute inset-0 opacity-5 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-transparent via-blue-500/5 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl w-full">
@@ -144,7 +276,7 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-xl border border-white/20 shadow-lg shadow-blue-500/10"
             >
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -161,7 +293,7 @@ export default function Hero() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-tight"
               >
                 Hi, I'm{" "}
-                <motion.span 
+                <motion.span
                   className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
@@ -172,7 +304,7 @@ export default function Hero() {
               </h1>
 
               {/* Enhanced role display */}
-              <motion.div 
+              <motion.div
                 className="text-xl md:text-2xl font-semibold text-slate-700 flex items-center gap-3 min-h-[2.5rem]"
                 aria-live="polite"
                 initial={{ opacity: 0 }}
@@ -194,7 +326,7 @@ export default function Hero() {
             </div>
 
             {/* Description */}
-            <motion.p 
+            <motion.p
               className="text-slate-600 max-w-2xl text-lg leading-relaxed"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
@@ -204,7 +336,7 @@ export default function Hero() {
             </motion.p>
 
             {/* CTA buttons */}
-            <motion.div 
+            <motion.div
               className="flex flex-wrap gap-4 items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -222,7 +354,7 @@ export default function Hero() {
 
               <motion.a
                 href="#contact"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-md border border-slate-300 text-slate-700 font-bold rounded-2xl hover:bg-white transform hover:scale-[1.03] transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-slate-300/50"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white/60 backdrop-blur-xl border border-white/20 text-slate-700 font-bold rounded-2xl hover:bg-white/80 transform hover:scale-[1.03] transition-all duration-300 shadow-lg shadow-blue-500/10 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -270,7 +402,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl p-5 shadow-sm"
+              className="mt-4 bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-lg shadow-blue-500/10"
             >
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>

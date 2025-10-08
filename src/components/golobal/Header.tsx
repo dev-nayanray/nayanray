@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaHome, FaUser, FaCog, FaProjectDiagram, FaBlog,
@@ -9,31 +10,38 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Bento grid navigation items
   const bentoItems = [
     {
       category: "discover",
       items: [
-        { name: "Home", href: "#home", icon: FaHome, color: "from-blue-500 to-cyan-500" },
-        { name: "About", href: "#about", icon: FaUser, color: "from-purple-500 to-pink-500" }
+        { name: "Home", to: "/", icon: FaHome, color: "from-blue-500 to-cyan-500" },
+        { name: "About", to: "/about", icon: FaUser, color: "from-purple-500 to-pink-500" }
       ]
     },
     {
       category: "work",
       items: [
-        { name: "Projects", href: "#projects", icon: FaProjectDiagram, color: "from-amber-500 to-orange-500" },
-        { name: "Services", href: "#services", icon: FaCog, color: "from-green-500 to-emerald-500" }
+        { name: "Projects", to: "/projects", icon: FaProjectDiagram, color: "from-amber-500 to-orange-500" },
+        { name: "Services", to: "/services", icon: FaCog, color: "from-green-500 to-emerald-500" }
       ]
     },
     {
-      category: "connect", 
+      category: "connect",
       items: [
-        { name: "Blog", href: "#blog", icon: FaBlog, color: "from-red-500 to-rose-500" },
-        { name: "Contact", href: "#contact", icon: FaEnvelope, color: "from-indigo-500 to-blue-500" }
+        { name: "Blog", to: "/blog", icon: FaBlog, color: "from-red-500 to-rose-500" },
+        { name: "Contact", to: "/contact", icon: FaEnvelope, color: "from-indigo-500 to-blue-500" }
       ]
     }
   ];
+
+  // Filtered bento items based on search term
+  const filteredBentoItems = bentoItems.map(category => ({
+    ...category,
+    items: category.items.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  })).filter(category => category.items.length > 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,13 +72,13 @@ const Header = () => {
             className="flex items-center gap-3"
             whileHover={{ scale: 1.02 }}
           >
-            <motion.div
-              className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 flex items-center justify-center shadow-lg"
+            <motion.img
+              src="/nayan.svg"
+              alt="Nayan Ray Logo"
+              className="w-12 h-12 rounded-2xl shadow-lg"
               whileHover={{ rotate: 5, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400 }}
-            >
-              <span className="text-white font-bold text-sm">NR</span>
-            </motion.div>
+            />
             <motion.span
               className={`font-bold text-xl bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent ${
                 scrolled ? "opacity-100" : "opacity-90"
@@ -133,6 +141,22 @@ const Header = () => {
               className="overflow-hidden"
             >
               <div className="border-t border-gray-200/50 px-6 py-6">
+                {/* Search Input */}
+                <motion.div
+                  className="mb-6"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                >
+                  <input
+                    type="text"
+                    placeholder="Search menu..."
+                    className="w-full px-4 py-2 rounded-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </motion.div>
+
                 {/* Category Filters */}
                 <motion.div 
                   className="flex flex-wrap gap-2 mb-6"
@@ -159,7 +183,7 @@ const Header = () => {
 
                 {/* Bento Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {bentoItems.map((section, sectionIndex) => (
+                  {filteredBentoItems.map((section, sectionIndex) => (
                     <motion.div
                       key={section.category}
                       className={`space-y-3 ${
@@ -176,23 +200,27 @@ const Header = () => {
                         {section.items.map((item, itemIndex) => {
                           const IconComponent = item.icon;
                           return (
-                            <motion.a
+                            <motion.div
                               key={item.name}
-                              href={item.href}
-                              className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300 group"
-                              whileHover={{ scale: 1.02, x: 4 }}
-                              whileTap={{ scale: 0.98 }}
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.3 + (sectionIndex * 0.2) + (itemIndex * 0.1) }}
                             >
-                              <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                                <IconComponent className="w-4 h-4 text-white" />
-                              </div>
-                              <span className="font-medium text-gray-700 group-hover:text-gray-900">
-                                {item.name}
-                              </span>
-                            </motion.a>
+                              <Link
+                                to={item.to}
+                                className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300 group"
+                              >
+                                <motion.div
+                                  className={`p-2 rounded-lg bg-gradient-to-r ${item.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                                  whileHover={{ scale: 1.1 }}
+                                >
+                                  <IconComponent className="w-4 h-4 text-white" />
+                                </motion.div>
+                                <span className="font-medium text-gray-700 group-hover:text-gray-900">
+                                  {item.name}
+                                </span>
+                              </Link>
+                            </motion.div>
                           );
                         })}
                       </div>

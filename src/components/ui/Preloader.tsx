@@ -62,7 +62,7 @@ export default function Preloader({
   // Use Vite envs (if available). Vite exposes env via import.meta.env
   const envBrand = typeof import.meta !== "undefined" ? (import.meta.env.VITE_APP_NAME as string | undefined) : undefined;
   const envLogo = typeof import.meta !== "undefined" ? (import.meta.env.VITE_APP_LOGO as string | undefined) : undefined;
-  const defaultLogo = envLogo || "/profile.png"; // public/profile.png served at /profile.png
+  const defaultLogo = envLogo || "/nayan.svg"; // public/nayan.svg served at /nayan.svg
   const finalLogo = logoSrc || defaultLogo;
   const finalBrand = brandName || envBrand || "Nayan Ray";
 
@@ -224,14 +224,14 @@ export default function Preloader({
                     src={finalLogo}
                     alt="Brand logo"
                     onError={() => setLogoError(true)}
-                    className={`w-24 h-24 object-contain rounded-2xl shadow-2xl transform ${
+                    className={`w-28 h-28 object-contain rounded-2xl shadow-2xl transform ${
                       prefersReduced ? "" : "animate-logo-glow"
                     }`}
                     style={gradientStyle}
                   />
                 ) : (
                   <div
-                    className={`w-24 h-24 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-2xl font-bold text-white shadow-2xl ${
+                    className={`w-28 h-28 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-3xl font-bold text-white shadow-2xl ${
                       prefersReduced ? "" : "animate-logo-glow"
                     }`}
                     style={gradientStyle}

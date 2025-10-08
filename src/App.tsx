@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/golobal/Header";
 import Footer from "./components/golobal/Footer";
 import Home from "./pages/Home";
+import AboutPage from "./pages/About";
+import ProjectsPage from "./pages/Projects";
+import ServicesPage from "./pages/Services";
+import BlogPage from "./pages/Blog";
+import ContactPage from "./pages/Contact";
 import Preloader from "./components/ui/Preloader";
 
 function App() {
@@ -23,12 +29,12 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Router>
       {/* Preloader will overlay until content fully loads */}
       {loading && (
         <Preloader
           variant="logo"
-          logoSrc="/logo192.png"
+          logoSrc="/nayan.svg"
           message="Launching portfolio..."
         />
       )}
@@ -37,11 +43,18 @@ function App() {
       <div className={`${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}>
         <Header />
         <main>
-          <Home />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
         </main>
         <Footer />
       </div>
-    </>
+    </Router>
   );
 }
 

@@ -1,0 +1,3 @@
+- [x] Update App.tsx logoSrc to /nayan.svg
+- [x] Update Preloader.tsx default logo to /nayan.svg
+- [x] Enhance modern variant styling for SVG logos
