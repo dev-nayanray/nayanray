@@ -2,66 +2,104 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/nayanray.svg" />
-
-    <!-- Responsive & IE compatibility -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- SEO Primary -->
-    <title>Nayan Ray — Web Developer & Portfolio</title>
-    <meta name="description" content="Portfolio of Nayan Ray, a professional Web Developer specializing in React, WordPress, and modern web technologies.">
-    <meta name="author" content="Nayan Ray">
-    <meta name="robots" content="index, follow">
+    <!-- ✅ Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/nayanray.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://YOUR_SITE_URL/">
+    <!-- ✅ Primary Meta Tags -->
+    <title>Nayan Ray — Full Stack Web Developer | React & WordPress Expert</title>
+    <meta
+      name="description"
+      content="Explore the portfolio of Nayan Ray, a Full Stack Web Developer specializing in React, WordPress, Node.js, and modern web technologies. View live projects, plugins, and creative web solutions."
+    />
+    <meta name="author" content="Nayan Ray" />
+    <meta name="keywords" content="Nayan Ray, Web Developer, React Developer, WordPress Developer, Full Stack Developer, Frontend, Backend, Node.js, PHP, Bangladesh, Portfolio, Freelance Developer" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0ea5a4" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Nayan Ray — Web Developer & Portfolio">
-    <meta property="og:description" content="Portfolio of Nayan Ray, a professional Web Developer specializing in React, WordPress, and modern web technologies.">
-    <meta property="og:url" content="https://YOUR_SITE_URL/">
-    <meta property="og:site_name" content="Nayan Ray Portfolio">
-    <meta property="og:image" content="https://YOUR_SITE_URL/og-image.jpg">
-    <meta property="og:image:alt" content="Nayan Ray Portfolio Preview">
+    <!-- ✅ Canonical URL -->
+    <link rel="canonical" href="https://nayanray-d8kb.vercel.app/" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Nayan Ray — Web Developer & Portfolio">
-    <meta name="twitter:description" content="Portfolio of Nayan Ray, a professional Web Developer specializing in React, WordPress, and modern web technologies.">
-    <meta name="twitter:image" content="https://YOUR_SITE_URL/og-image.jpg">
+    <!-- ✅ Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nayanray-d8kb.vercel.app/" />
+    <meta property="og:title" content="Nayan Ray — Full Stack Web Developer" />
+    <meta
+      property="og:description"
+      content="Portfolio of Nayan Ray, Full Stack Developer specializing in React, WordPress, Node.js, and modern web technologies."
+    />
+    <meta property="og:site_name" content="Nayan Ray Portfolio" />
+    <meta property="og:image" content="https://nayanray-d8kb.vercel.app/og-image.jpg" />
+    <meta property="og:image:alt" content="Preview of Nayan Ray Portfolio Website" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Structured Data (JSON-LD for personal portfolio) -->
+    <!-- ✅ Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nayan Ray — Full Stack Web Developer" />
+    <meta
+      name="twitter:description"
+      content="Explore the portfolio of Nayan Ray, a developer specializing in React, WordPress, and modern web applications."
+    />
+    <meta name="twitter:image" content="https://nayanray-d8kb.vercel.app/og-image.jpg" />
+    <meta name="twitter:creator" content="@YOUR_TWITTER" />
+
+    <!-- ✅ JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Nayan Ray",
-      "url": "https://YOUR_SITE_URL/",
+      "url": "https://nayanray-d8kb.vercel.app/",
+      "image": "https://nayanray-d8kb.vercel.app/og-image.jpg",
       "sameAs": [
-        "https://twitter.com/YOUR_TWITTER",
-        "https://github.com/YOUR_GITHUB",
-        "https://www.linkedin.com/in/YOUR_LINKEDIN"
+        "https://github.com/dev-nayanray",
+        "https://www.linkedin.com/in/YOUR_LINKEDIN",
+        "https://www.youtube.com/@ToyTastic"
       ],
-      "jobTitle": "Web Developer",
-      "description": "Portfolio of Nayan Ray showcasing React, WordPress, and modern web development projects."
+      "jobTitle": "Full Stack Web Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance / Remote Projects"
+      },
+      "description": "Portfolio of Nayan Ray showcasing projects in React, WordPress, Node.js, and web automation.",
+      "knowsAbout": [
+        "React",
+        "WordPress",
+        "Node.js",
+        "PHP",
+        "Tailwind CSS",
+        "APIs",
+        "UI/UX Design"
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Your University or Institute Name"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bangladesh",
+        "addressCountry": "BD"
+      }
     }
     </script>
 
-    <!-- Vite main script -->
+    <!-- ✅ Performance & SEO Best Practices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Example: Add a custom font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> -->
+
+    <!-- ✅ Vite entry point -->
     <script type="module" src="/src/main.tsx" defer></script>
   </head>
 
   <body>
-    
-
     <main id="root" role="main" aria-labelledby="main-heading">
       <!-- React app mounts here -->
     </main>
-
-     
-
-     
   </body>
 </html>
