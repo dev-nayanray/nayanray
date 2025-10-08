@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Nayan Ray">
+  <defs>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0" stop-color="#0f172a"></stop>
+      <stop offset="1" stop-color="#4f46e5"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- rounded square -->
+  <rect width="64" height="64" rx="12" fill="#fff"></rect>
+
+  <!-- diagonal N shape -->
+  <path d="M18 16 L18 48 L30 26 L46 48 L46 16 L34 38 L18 16 Z" fill="url(#g2)"></path>
+</svg>
