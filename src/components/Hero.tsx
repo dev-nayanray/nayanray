@@ -141,70 +141,33 @@ export default function Hero() {
           </defs>
 
           {/* Multiple concentric circles with path animations */}
-          {[1, 2, 3, 4, 5].map((ring) => {
-            const radius = 150 + ring * 100; // Balanced radius for coverage without full width
-            const iconCount = 10 + ring * 5; // Balanced icon count
+          {[1, 2, 3].map((ring) => {
+            const radius = 80 + ring * 60; // Smaller, more professional sizing
 
 
             return (
               <g key={`ring-${ring}`}>
-                {/* Animated path light effect */}
+                {/* Subtle animated path effect */}
                 <motion.circle
                   cx={window.innerWidth / 2}
                   cy={window.innerHeight / 2}
                   r={radius}
                   fill="none"
                   stroke="url(#line-gradient)"
-                  strokeWidth="2"
-                  strokeDasharray="20 40"
+                  strokeWidth="1"
+                  strokeDasharray="15 25"
                   initial={{ strokeDashoffset: 0 }}
                   animate={{
-                    strokeDashoffset: [-60, 0],
-                    strokeOpacity: [0.1, 0.4, 0.1]
+                    strokeDashoffset: [-40, 0],
+                    strokeOpacity: [0.05, 0.15, 0.05]
                   }}
                   transition={{
-                    duration: 4 + ring,
+                    duration: 8 + ring * 3,
                     repeat: Infinity,
                     ease: "linear",
-                    delay: ring * 0.5
+                    delay: ring * 1
                   }}
-                  filter="drop-shadow(0 0 10px rgba(59, 130, 246, 0.5))"
                 />
-
-                {/* Connecting lines between icons */}
-                {[...Array(iconCount)].map((_, i) => {
-                  const angle = (i / iconCount) * 2 * Math.PI;
-                  const nextAngle = ((i + 1) % iconCount) / iconCount * 2 * Math.PI;
-                  const x1 = window.innerWidth / 2 + radius * Math.cos(angle);
-                  const y1 = window.innerHeight / 2 + radius * Math.sin(angle);
-                  const x2 = window.innerWidth / 2 + radius * Math.cos(nextAngle);
-                  const y2 = window.innerHeight / 2 + radius * Math.sin(nextAngle);
-
-                  return (
-                    <motion.line
-                      key={`line-${ring}-${i}`}
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      stroke="url(#line-gradient)"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{
-                        pathLength: [0, 1, 0],
-                        opacity: [0, 0.3, 0]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: i * 0.1 + ring * 0.3,
-                        ease: "easeInOut"
-                      }}
-                      filter="drop-shadow(0 0 6px rgba(59, 130, 246, 0.4))"
-                    />
-                  );
-                })}
 
 
               </g>
