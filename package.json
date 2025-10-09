@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.12.2",
     "framer-motion": "^12.23.22",
     "i18next": "^25.5.3",
     "lucide-react": "^0.545.0",
@@ -36,5 +37,18 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
     "vite": "^7.1.7"
-  }
+  },
+  "description": "Hi, I'm **Nayan Ray**, a passionate **Full Stack Developer** with a strong focus on creating modern, secure, and user-friendly web applications.   I love building impactful digital experiences — from sleek front-end designs to powerful backend systems and automation tools.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-nayanray/nayanray.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev-nayanray/nayanray/issues"
+  },
+  "homepage": "https://github.com/dev-nayanray/nayanray#readme"
 }
