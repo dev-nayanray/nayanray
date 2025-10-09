@@ -1,78 +1,51 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, FaChartLine } from "react-icons/fa";
+import api from "../services/api";
 
-const projects = [
-  {
-    title: "Portfolio Website",
-    description: "A modern portfolio built with React, TypeScript, and Tailwind CSS featuring smooth animations and responsive design.",
-    image: "/projects/portfolio.png",
-    liveLink: "#",
-    githubLink: "#",
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    category: "Web Development",
-    icon: <FaCode className="w-5 h-5" />,
-    gradient: "from-blue-500 to-cyan-500",
-    featured: true
-  },
-  {
-    title: "E-commerce Website",
-    description: "Full-featured online store built with WooCommerce and WordPress, featuring product management and secure payments.",
-    image: "/projects/ecommerce.png",
-    liveLink: "#",
-    githubLink: "#",
-    technologies: ["WordPress", "WooCommerce", "PHP", "JavaScript"],
-    category: "E-commerce",
-    icon: <FaShoppingCart className="w-5 h-5" />,
-    gradient: "from-purple-500 to-pink-500",
-    featured: true
-  },
-  {
-    title: "Loan Management System",
-    description: "Custom PHP & MySQL application with responsive UI using Tailwind CSS for financial institutions.",
-    image: "/projects/loan.png",
-    liveLink: "#",
-    githubLink: "#",
-    technologies: ["PHP", "MySQL", "Tailwind CSS", "JavaScript"],
-    category: "Web Application",
-    icon: <FaChartLine className="w-5 h-5" />,
-    gradient: "from-green-500 to-emerald-500"
-  },
-  {
-    title: "3D Wardrobe Configurator",
-    description: "Interactive 3D product configurator built with Three.js and WordPress for custom furniture.",
-    image: "/projects/wardrobe.png",
-    liveLink: "#",
-    githubLink: "#",
-    technologies: ["Three.js", "WordPress", "JavaScript", "WebGL"],
-    category: "3D Web",
-    icon: <FaCube className="w-5 h-5" />,
-    gradient: "from-amber-500 to-orange-500"
-  },
-  {
-    title: "Mobile Fitness App",
-    description: "Cross-platform mobile application for fitness tracking with real-time analytics and social features.",
-    image: "/projects/fitness.png",
-    liveLink: "#",
-    githubLink: "#",
-    technologies: ["React Native", "Firebase", "Redux", "Node.js"],
-    category: "Mobile App",
-    icon: <FaMobile className="w-5 h-5" />,
-    gradient: "from-red-500 to-rose-500"
-  },
-  {
-    title: "SaaS Dashboard",
-    description: "Enterprise SaaS dashboard with real-time analytics, user management, and reporting features.",
-    image: "/projects/dashboard.png",
-    liveLink: "#",
-    githubLink: "#",
-    technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-    category: "Web Application",
-    icon: <FaChartLine className="w-5 h-5" />,
-    gradient: "from-indigo-500 to-blue-500"
-  }
-];
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  liveLink: string;
+  githubLink: string;
+  technologies: string[];
+  category: string;
+  icon: string;
+  gradient: string;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const Project = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await api.get("/projects");
+        setProjects(response.data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  const getIconComponent = (iconName: string) => {
+    switch (iconName) {
+      case 'FaCode': return <FaCode className="w-5 h-5" />;
+      case 'FaMobile': return <FaMobile className="w-5 h-5" />;
+      case 'FaShoppingCart': return <FaShoppingCart className="w-5 h-5" />;
+      case 'FaCube': return <FaCube className="w-5 h-5" />;
+      case 'FaChartLine': return <FaChartLine className="w-5 h-5" />;
+      default: return <FaCode className="w-5 h-5" />;
+    }
+  };
+
   return (
     <section
       id="projects"
@@ -83,7 +56,7 @@ const Project = () => {
         <div className="absolute top-10 right-10 w-72 h-72 bg-blue-200/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-purple-200/10 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/4 transform -translate-y-1/2 w-64 h-64 bg-cyan-200/10 rounded-full blur-3xl"></div>
-        
+
         {/* Grid Pattern */}
         <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
       </div>
@@ -105,15 +78,15 @@ const Project = () => {
             <FaCode className="w-4 h-4" />
             My Work
           </motion.div>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Projects</span>
           </h2>
-          
+
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
-          
+
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            A collection of projects that showcase my expertise in web development, 
+            A collection of projects that showcase my expertise in web development,
             from responsive designs to complex web applications and interactive experiences.
           </p>
         </motion.div>
@@ -122,12 +95,12 @@ const Project = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
-              key={index}
+              key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{ y: -5 }}
-              transition={{ 
-                duration: 0.5, 
+              transition={{
+                duration: 0.5,
                 delay: index * 0.1,
                 type: "spring",
                 stiffness: 300
@@ -136,10 +109,10 @@ const Project = () => {
             >
               {/* Background Gradient Effect */}
               <div className={`absolute -inset-0.5 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300`}></div>
-              
+
               {/* Main Card */}
               <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/50 shadow-sm hover:shadow-2xl transition-all duration-500">
-                
+
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
                   <img
@@ -147,11 +120,11 @@ const Project = () => {
                     alt={project.title}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  
+
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4">
                     <motion.a
-                      href={`/projects/${index}`}
+                      href={`/projects/${project.id}`}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all duration-300"
@@ -173,7 +146,7 @@ const Project = () => {
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
                     <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${project.gradient} text-white text-sm font-medium shadow-lg`}>
-                      {project.icon}
+                      {getIconComponent(project.icon)}
                       {project.category}
                     </div>
                   </div>
@@ -194,14 +167,14 @@ const Project = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors">
                     {project.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 mb-4 leading-relaxed group-hover:text-gray-700 transition-colors">
                     {project.description}
                   </p>
 
                   {/* Technologies */}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech, techIndex) => (
+                    {(Array.isArray(project.technologies) ? project.technologies : []).map((tech: string, techIndex: number) => (
                       <span
                         key={techIndex}
                         className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-200 group-hover:border-gray-300 transition-colors"
@@ -225,7 +198,7 @@ const Project = () => {
                       <FaExternalLinkAlt className="w-4 h-4 relative z-10" />
                       <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
                     </motion.a>
-                    
+
                     <motion.a
                       href={project.githubLink}
                       target="_blank"
