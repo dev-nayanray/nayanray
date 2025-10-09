@@ -21,21 +21,30 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    try {
-      // Send data to backend API
-      const response = await submitContactMessage(formData);
-      console.log("Form submitted:", response);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      console.error("Failed to submit contact message:", error.response?.data || error.message);
-      // Optionally show error to user
-    } finally {
-      setIsSubmitting(false);
+  try {
+    // Send data to backend API
+    const response = await submitContactMessage(formData);
+    console.log("Form submitted:", response);
+    setFormData({ name: "", email: "", subject: "", message: "" });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Failed to submit contact message:", error.message);
+    } else if (typeof error === "object" && error !== null && "response" in error) {
+      console.error(
+        "Failed to submit contact message:",
+        (error as any).response?.data || "Unknown error"
+      );
+    } else {
+      console.error("Unknown error:", error);
     }
-  };
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const contactInfo = [
     {
