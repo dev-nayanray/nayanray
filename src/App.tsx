@@ -10,6 +10,7 @@ import BlogPage from "./pages/Blog";
 import ContactPage from "./pages/Contact";
 import SingleProject from "./pages/SingleProject";
 import SingleBlogPost from "./pages/SingleBlogPost";
+import NotFound from "./pages/NotFound";
 import Preloader from "./components/ui/Preloader";
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<SingleBlogPost />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

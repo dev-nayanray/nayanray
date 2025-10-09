@@ -134,7 +134,7 @@ const About = () => {
     <section
       id="about"
       ref={ref}
-      className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/20 text-gray-800 overflow-hidden"
+      className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/20 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-200 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Premium Background Elements */}
@@ -244,7 +244,7 @@ const About = () => {
             whileInView={{ scaleX: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           />
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Crafting digital excellence through innovative solutions, cutting-edge technology, and a passion for creating exceptional user experiences
           </p>
         </motion.div>
@@ -347,11 +347,11 @@ const About = () => {
             {/* Tech Stack Showcase */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h4 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
                   <FaGem className="w-6 h-6 text-purple-500" />
                   Tech Stack
                 </h4>
-                <span className="text-sm text-gray-500 font-medium">Core Technologies</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Core Technologies</span>
               </div>
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-4">
                 {techStack.map((tech, index) => {
@@ -384,7 +384,7 @@ const About = () => {
 
             {/* Professional Experience Timeline */}
             <div className="space-y-6">
-              <h4 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+              <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
                 <FaBriefcase className="w-6 h-6 text-blue-500" />
                 Professional Journey
               </h4>
@@ -498,7 +498,7 @@ const About = () => {
 
             {/* Currently Working On */}
             <div className="space-y-6">
-              <h4 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+              <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
                 <FaClock className="w-6 h-6 text-orange-500" />
                 Currently Working On
               </h4>
@@ -534,7 +534,7 @@ const About = () => {
             <div className="grid md:grid-cols-2 gap-8 pt-6">
               {/* Personal Info Cards */}
               <div className="space-y-4">
-                <h4 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-3">
                   <FaCertificate className="w-5 h-5 text-green-500" />
                   Personal Information
                 </h4>

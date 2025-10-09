@@ -1,0 +1,112 @@
+{
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Nayan Ray",
+    "roles": {
+      "reactArchitect": "React Architect",
+      "wordpressEngineer": "WordPress Engineer",
+      "uiArtisan": "UI Artisan",
+      "performanceExpert": "Performance Expert"
+    },
+    "description": "I craft premium, high-performance web experiences with modern front-end tooling, robust WordPress architecture and pixel-perfect UI. Focused on performance, accessibility and delightful micro-interactions.",
+    "viewWork": "View My Work",
+    "contactMe": "Contact Me"
+  },
+  "header": {
+    "menu": "Menu",
+    "searchPlaceholder": "Search menu...",
+    "categories": {
+      "all": "All",
+      "discover": "Discover",
+      "work": "Work",
+      "connect": "Connect"
+    },
+    "sections": {
+      "discover": "Discover",
+      "work": "Work",
+      "connect": "Connect"
+    },
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "services": "Services",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "actions": {
+      "callNow": "Call Now",
+      "getQuote": "Get Quote"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "professionalOverview": "Professional Overview",
+    "craftingExcellence": "Crafting digital excellence through innovative solutions, cutting-edge technology, and a passion for creating exceptional user experiences",
+    "transformingIdeas": "Transforming Ideas Into Digital Reality",
+    "introduction1": "I'm Nayan Ray, a passionate Full-Stack Developer with expertise in modern web technologies. With over 4 years of professional experience, I specialize in creating scalable, high-performance applications that deliver exceptional user experiences.",
+    "introduction2": "My approach combines technical excellence with strategic thinking, ensuring every project not only meets technical requirements but also drives business growth and user engagement through innovative solutions.",
+    "techStack": "Tech Stack",
+    "coreTechnologies": "Core Technologies",
+    "professionalJourney": "Professional Journey",
+    "currentlyWorkingOn": "Currently Working On",
+    "personalInformation": "Personal Information",
+    "viewProjects": "View My Projects",
+    "downloadResume": "Download Resume",
+    "availableForWork": "Available for work",
+    "stats": {
+      "projectsCompleted": "Projects Completed",
+      "happyClients": "Happy Clients",
+      "clientSatisfaction": "Client Satisfaction",
+      "yearsExperience": "Years Experience"
+    },
+    "experience": {
+      "freelance": {
+        "title": "Full Stack Developer",
+        "company": "Freelance & Various Clients",
+        "description": "Developing modern web applications with React, Node.js, and cloud technologies",
+        "achievements": ["50+ projects completed", "98% client satisfaction", "Modern tech stack expertise"]
+      },
+      "wordpress": {
+        "title": "WordPress Developer",
+        "company": "Local Agencies",
+        "description": "Specialized in custom WordPress themes and e-commerce solutions",
+        "achievements": ["40+ WordPress sites", "E-commerce expertise", "Performance optimization"]
+      },
+      "frontend": {
+        "title": "Frontend Developer",
+        "company": "Tech Startup",
+        "description": "Built responsive web applications and improved user experiences",
+        "achievements": ["Modern UI frameworks", "Mobile-first design", "Performance improvements"]
+      }
+    },
+    "personalInfo": {
+      "fullName": "Full Name",
+      "location": "Location",
+      "email": "Email",
+      "experience": "Experience"
+    },
+    "currentProjects": {
+      "aiAnalytics": {
+        "name": "AI-Powered Analytics Dashboard",
+        "tech": "React, Node.js, Python",
+        "status": "In Progress"
+      },
+      "ecommerce": {
+        "name": "E-commerce Platform",
+        "tech": "Next.js, Stripe, MongoDB",
+        "status": "Review Phase"
+      },
+      "mobileBackend": {
+        "name": "Mobile App Backend",
+        "tech": "Node.js, PostgreSQL, AWS",
+        "status": "Planning"
+      }
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "reviewPhase": "Review Phase",
+      "planning": "Planning"
+    }
+  }
+}

@@ -1,16 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import { FaDownload, FaEnvelope, FaStar, FaCode, FaWordpress, FaBolt, FaUniversalAccess, FaMobileAlt, FaRocket, FaPaintBrush } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 // Enhanced roles with more specific specialties
-const roles = [
-  { text: "React Architect", icon: FaCode, color: "from-cyan-500 to-blue-500" },
-  { text: "WordPress Engineer", icon: FaWordpress, color: "from-blue-500 to-indigo-500" },
-  { text: "UI Artisan", icon: FaPaintBrush, color: "from-purple-500 to-pink-500" },
-  { text: "Performance Expert", icon: FaRocket, color: "from-amber-500 to-orange-500" }
+const getRoles = (t: any) => [
+  { text: t("hero.roles.reactArchitect"), icon: FaCode, color: "from-cyan-500 to-blue-500" },
+  { text: t("hero.roles.wordpressEngineer"), icon: FaWordpress, color: "from-blue-500 to-indigo-500" },
+  { text: t("hero.roles.uiArtisan"), icon: FaPaintBrush, color: "from-purple-500 to-pink-500" },
+  { text: t("hero.roles.performanceExpert"), icon: FaRocket, color: "from-amber-500 to-orange-500" }
 ];
 
 export default function Hero() {
+  const { t } = useTranslation();
+  const roles = getRoles(t);
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [blink, setBlink] = useState(true);
@@ -104,7 +107,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/40 overflow-hidden"
+    className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/40 dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 overflow-hidden"
       aria-label="Intro — Nayan Ray"
       onMouseMove={handleMouseMove}
       ref={ref}
@@ -246,23 +249,23 @@ export default function Hero() {
                   <FaStar key={i} className="w-3 h-3 text-amber-400 fill-current" />
                 ))}
               </div>
-              <span className="text-sm font-medium text-slate-700">Top Rated • 4.9/5</span>
+              <span className="text-sm font-medium text-slate-700 dark:text-gray-300">Top Rated • 4.9/5</span>
             </motion.div>
 
             {/* Main heading */}
             <div className="space-y-4">
               <h1
                 id="hero-heading"
-                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight"
               >
-                Hi, I'm{" "}
+                {t("hero.greeting")}{" "}
                 <motion.span
                   className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Nayan Ray
+                  {t("hero.name")}
                 </motion.span>
               </h1>
 
@@ -295,7 +298,7 @@ export default function Hero() {
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.6 }}
             >
-              I craft <span className="font-semibold text-slate-800">premium, high-performance web experiences</span> with modern front-end tooling, robust WordPress architecture and pixel-perfect UI. Focused on performance, accessibility and delightful micro-interactions.
+              {t("hero.description")}
             </motion.p>
 
             {/* CTA buttons */}
@@ -312,7 +315,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
               >
                 <FaDownload />
-                <span>View My Work</span>
+                <span>{t("hero.viewWork")}</span>
               </motion.a>
 
               <motion.a
@@ -322,7 +325,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
               >
                 <FaEnvelope />
-                <span>Contact Me</span>
+                <span>{t("hero.contactMe")}</span>
               </motion.a>
             </motion.div>
           </motion.div>

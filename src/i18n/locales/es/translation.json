@@ -1,0 +1,113 @@
+{
+  "hero": {
+    "greeting": "Hola, soy",
+    "name": "Nayan Ray",
+    "roles": {
+      "reactArchitect": "Arquitecto React",
+      "wordpressEngineer": "Ingeniero WordPress",
+      "uiArtisan": "Artesano UI",
+      "performanceExpert": "Experto en Rendimiento"
+    },
+    "description": "Creo experiencias web premium y de alto rendimiento con herramientas modernas de front-end, arquitectura robusta de WordPress y UI pixel-perfect. Enfocado en rendimiento, accesibilidad y microinteracciones agradables.",
+    "viewWork": "Ver Mi Trabajo",
+    "contactMe": "Contáctame",
+    "topRated": "Mejor Calificado • {{rating}}"
+  },
+  "header": {
+    "menu": "Menú",
+    "searchPlaceholder": "Buscar en el menú...",
+    "categories": {
+      "all": "Todo",
+      "discover": "Descubrir",
+      "work": "Trabajo",
+      "connect": "Conectar"
+    },
+    "sections": {
+      "discover": "Descubrir",
+      "work": "Trabajo",
+      "connect": "Conectar"
+    },
+    "navigation": {
+      "home": "Inicio",
+      "about": "Sobre Mí",
+      "projects": "Proyectos",
+      "services": "Servicios",
+      "blog": "Blog",
+      "contact": "Contacto"
+    },
+    "actions": {
+      "callNow": "Llamar Ahora",
+      "getQuote": "Obtener Cotización"
+    }
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "professionalOverview": "Resumen Profesional",
+    "craftingExcellence": "Creando excelencia digital a través de soluciones innovadoras, tecnología de vanguardia y una pasión por crear experiencias de usuario excepcionales",
+    "transformingIdeas": "Transformando Ideas en Realidad Digital",
+    "introduction1": "Soy Nayan Ray, un desarrollador Full-Stack apasionado con experiencia en tecnologías web modernas. Con más de 4 años de experiencia profesional, me especializo en crear aplicaciones escalables y de alto rendimiento que ofrecen experiencias de usuario excepcionales.",
+    "introduction2": "Mi enfoque combina la excelencia técnica con el pensamiento estratégico, asegurando que cada proyecto no solo cumpla con los requisitos técnicos, sino que también impulse el crecimiento empresarial y la participación del usuario a través de soluciones innovadoras.",
+    "techStack": "Stack Tecnológico",
+    "coreTechnologies": "Tecnologías Principales",
+    "professionalJourney": "Trayectoria Profesional",
+    "currentlyWorkingOn": "Actualmente Trabajando En",
+    "personalInformation": "Información Personal",
+    "viewProjects": "Ver Mis Proyectos",
+    "downloadResume": "Descargar CV",
+    "availableForWork": "Disponible para trabajar",
+    "stats": {
+      "projectsCompleted": "Proyectos Completados",
+      "happyClients": "Clientes Satisfechos",
+      "clientSatisfaction": "Satisfacción del Cliente",
+      "yearsExperience": "Años de Experiencia"
+    },
+    "experience": {
+      "freelance": {
+        "title": "Desarrollador Full Stack",
+        "company": "Freelance y Varios Clientes",
+        "description": "Desarrollando aplicaciones web modernas con React, Node.js y tecnologías en la nube",
+        "achievements": ["50+ proyectos completados", "98% satisfacción del cliente", "Experiencia en stack moderno"]
+      },
+      "wordpress": {
+        "title": "Desarrollador WordPress",
+        "company": "Agencias Locales",
+        "description": "Especializado en temas personalizados de WordPress y soluciones de e-commerce",
+        "achievements": ["40+ sitios WordPress", "Experiencia en e-commerce", "Optimización de rendimiento"]
+      },
+      "frontend": {
+        "title": "Desarrollador Frontend",
+        "company": "Startup Tecnológica",
+        "description": "Construyó aplicaciones web responsivas y mejoró las experiencias de usuario",
+        "achievements": ["Frameworks UI modernos", "Diseño mobile-first", "Mejoras de rendimiento"]
+      }
+    },
+    "personalInfo": {
+      "fullName": "Nombre Completo",
+      "location": "Ubicación",
+      "email": "Correo Electrónico",
+      "experience": "Experiencia"
+    },
+    "currentProjects": {
+      "aiAnalytics": {
+        "name": "Panel de Análisis con IA",
+        "tech": "React, Node.js, Python",
+        "status": "En Progreso"
+      },
+      "ecommerce": {
+        "name": "Plataforma de E-commerce",
+        "tech": "Next.js, Stripe, MongoDB",
+        "status": "Fase de Revisión"
+      },
+      "mobileBackend": {
+        "name": "Backend de App Móvil",
+        "tech": "Node.js, PostgreSQL, AWS",
+        "status": "Planificación"
+      }
+    },
+    "status": {
+      "inProgress": "En Progreso",
+      "reviewPhase": "Fase de Revisión",
+      "planning": "Planificación"
+    }
+  }
+}
