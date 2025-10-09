@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaPaperPlane, FaWhatsapp, FaTelegram } from "react-icons/fa";
+import { submitContactMessage } from "../services/api";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -22,14 +23,18 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // Here you would typically send the data to your backend
-      console.log("Form submitted:", formData);
+
+    try {
+      // Send data to backend API
+      const response = await submitContactMessage(formData);
+      console.log("Form submitted:", response);
       setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 2000);
+    } catch (error) {
+      console.error("Failed to submit contact message:", error);
+      // Optionally show error to user
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
