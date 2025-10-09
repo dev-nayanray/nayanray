@@ -30,7 +30,7 @@ const Contact = () => {
       console.log("Form submitted:", response);
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      console.error("Failed to submit contact message:", error);
+      console.error("Failed to submit contact message:", error.response?.data || error.message);
       // Optionally show error to user
     } finally {
       setIsSubmitting(false);
