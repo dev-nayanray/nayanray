@@ -8,6 +8,8 @@ import ProjectsPage from "./pages/Projects";
 import ServicesPage from "./pages/Services";
 import BlogPage from "./pages/Blog";
 import ContactPage from "./pages/Contact";
+import SingleProject from "./pages/SingleProject";
+import SingleBlogPost from "./pages/SingleBlogPost";
 import Preloader from "./components/ui/Preloader";
 
 function App() {
@@ -47,8 +49,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:id" element={<SingleProject />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:id" element={<SingleBlogPost />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaCalendar, FaUser, FaArrowRight, FaClock, FaTags, FaShare } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 interface BlogPost {
   id: number;
@@ -212,15 +213,19 @@ const Blog = () => {
 
                   {/* Action Buttons */}
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200/50">
-                    <motion.a
-                      href="#"
+                    <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-300 group/read"
                     >
-                      Read Article
-                      <FaArrowRight className="w-4 h-4 group-hover/read:translate-x-1 transition-transform duration-300" />
-                    </motion.a>
+                      <Link
+                        to={`/blog/${post.id}`}
+                        className="flex items-center gap-2"
+                      >
+                        Read Article
+                        <FaArrowRight className="w-4 h-4 group-hover/read:translate-x-1 transition-transform duration-300" />
+                      </Link>
+                    </motion.div>
                     
                     <motion.button
                       whileHover={{ scale: 1.1 }}
