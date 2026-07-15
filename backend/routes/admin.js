@@ -291,14 +291,8 @@ router.post("/users", async (req, res) => {
       return res.status(400).json({ error: "User with this email already exists" });
     }
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(value.password, salt);
-
-    const user = await User.create({
-      ...value,
-      password: hashedPassword
-    });
+    // Password is passed plain - the User model's beforeCreate hook hashes it.
+    const user = await User.create(value);
 
     const { password, ...userWithoutPassword } = user.toJSON();
     res.status(201).json(userWithoutPassword);

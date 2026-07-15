@@ -3,23 +3,18 @@ import Project from "../models/Project.js";
 import BlogPost from "../models/BlogPost.js";
 import Service from "../models/Service.js";
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
 
 const seedDatabase = async () => {
   try {
     // Seed Admin User (only if no users exist yet)
+    // Password is passed plain - the User model's beforeCreate hook hashes it.
+    // Pre-hashing here would double-hash it, breaking login.
     const userCount = await User.count();
     if (userCount === 0) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(
-        process.env.ADMIN_SEED_PASSWORD || 'admin123',
-        salt
-      );
-
       const adminUser = {
         username: 'admin',
         email: 'admin@nayanray.com',
-        password: hashedPassword,
+        password: process.env.ADMIN_SEED_PASSWORD || 'admin123',
         role: 'admin'
       };
 
