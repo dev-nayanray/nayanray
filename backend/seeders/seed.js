@@ -7,19 +7,27 @@ import bcrypt from "bcryptjs";
 
 const seedDatabase = async () => {
   try {
-    // Seed Admin User
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('admin123', salt);
+    // Seed Admin User (only if no users exist yet)
+    const userCount = await User.count();
+    if (userCount === 0) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(
+        process.env.ADMIN_SEED_PASSWORD || 'admin123',
+        salt
+      );
 
-    const adminUser = {
-      username: 'admin',
-      email: 'admin@nayanray.com',
-      password: hashedPassword,
-      role: 'admin'
-    };
+      const adminUser = {
+        username: 'admin',
+        email: 'admin@nayanray.com',
+        password: hashedPassword,
+        role: 'admin'
+      };
 
-    await User.create(adminUser);
-    console.log("Admin user seeded successfully");
+      await User.create(adminUser);
+      console.log("Admin user seeded successfully");
+    } else {
+      console.log("Users already exist, skipping admin seed");
+    }
 
     // Seed Projects
     const projects = [
@@ -93,8 +101,12 @@ const seedDatabase = async () => {
       }
     ];
 
-    await Project.bulkCreate(projects);
-    console.log("Projects seeded successfully");
+    if ((await Project.count()) === 0) {
+      await Project.bulkCreate(projects);
+      console.log("Projects seeded successfully");
+    } else {
+      console.log("Projects already exist, skipping seed");
+    }
 
     // Seed Blog Posts
     const blogPosts = [
@@ -160,8 +172,12 @@ const seedDatabase = async () => {
       }
     ];
 
-    await BlogPost.bulkCreate(blogPosts);
-    console.log("Blog posts seeded successfully");
+    if ((await BlogPost.count()) === 0) {
+      await BlogPost.bulkCreate(blogPosts);
+      console.log("Blog posts seeded successfully");
+    } else {
+      console.log("Blog posts already exist, skipping seed");
+    }
 
     // Seed Services
     const services = [
@@ -191,8 +207,12 @@ const seedDatabase = async () => {
       }
     ];
 
-    await Service.bulkCreate(services);
-    console.log("Services seeded successfully");
+    if ((await Service.count()) === 0) {
+      await Service.bulkCreate(services);
+      console.log("Services seeded successfully");
+    } else {
+      console.log("Services already exist, skipping seed");
+    }
 
     console.log("Database seeded successfully!");
   } catch (error) {

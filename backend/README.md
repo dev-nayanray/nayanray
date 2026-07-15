@@ -1,19 +1,19 @@
 # Nayan Ray Backend API
 
-A secure and fast backend API built with Node.js, Express, and MySQL for the Nayan Ray portfolio website.
+A secure and fast backend API built with Node.js, Express, and PostgreSQL for the Nayan Ray portfolio website.
 
 ## Features
 
-- **Secure**: Helmet for security headers, CORS, rate limiting, input validation
-- **Fast**: MySQL with connection pooling, optimized queries
+- **Secure**: Helmet for security headers, CORS (restricted via `FRONTEND_URL`), rate limiting, input validation
+- **Fast**: Postgres with connection pooling, optimized queries
 - **RESTful API**: Clean REST endpoints for projects, blog, services, and contact
-- **Database**: Sequelize ORM with MySQL
+- **Database**: Sequelize ORM with PostgreSQL (works with any Postgres host, e.g. Supabase, Neon)
 - **Validation**: Joi for input validation
 
 ## Prerequisites
 
-- Node.js (v16 or higher)
-- MySQL Server
+- Node.js (v18 or higher)
+- A PostgreSQL database (e.g. free tier on [Supabase](https://supabase.com))
 - npm or yarn
 
 ## Installation
@@ -28,22 +28,17 @@ A secure and fast backend API built with Node.js, Express, and MySQL for the Nay
    npm install
    ```
 
-3. **Set up MySQL database:**
-   - Create a new database named `nayanraydb`
-   - Update the `.env` file with your MySQL credentials:
+3. **Set up the database:**
+   - Create a free Postgres project (e.g. on Supabase) and copy its connection string.
+   - Copy `.env.example` to `.env` and fill in:
      ```
-     DB_HOST=localhost
-     DB_USER=your_mysql_username
-     DB_PASSWORD=your_mysql_password
-     DB_NAME=nayanraydb
+     DATABASE_URL=postgresql://user:password@host:5432/postgres
      JWT_SECRET=your_jwt_secret_key
      PORT=5000
+     FRONTEND_URL=http://localhost:5173
      ```
 
-4. **Run the seeder to populate database:**
-   ```bash
-   node -e "import('./seeders/seed.js').then(m => m.default())"
-   ```
+4. The first server start (`npm run dev` / `npm start`) automatically syncs tables and seeds sample data if the tables are empty — no manual seeder step needed.
 
 ## Running the Server
 
@@ -128,15 +123,13 @@ The server will start on port 5000 (or the port specified in .env).
 
 ## Environment Variables
 
-Create a `.env` file in the backend directory:
+Create a `.env` file in the backend directory (see `.env.example`):
 
 ```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=yourpassword
-DB_NAME=nayanraydb
+DATABASE_URL=postgresql://user:password@host:5432/postgres
 JWT_SECRET=your_jwt_secret_key
 PORT=5000
+FRONTEND_URL=http://localhost:5173
 ```
 
 ## Testing the API
@@ -161,12 +154,12 @@ curl -X POST http://localhost:5000/api/contact \
   }'
 ```
 
-## Deployment
+## Deployment (free hosting)
 
-1. Set up your production MySQL database
-2. Update `.env` with production credentials
-3. Run `npm start` to start the server
-4. Use a process manager like PM2 for production
+1. Create a free Postgres database on [Supabase](https://supabase.com) and copy the connection string.
+2. Deploy this repo to [Render](https://render.com) as a Web Service (root directory: `backend`, build command: `npm install`, start command: `npm start`). A `render.yaml` blueprint is included at the repo root.
+3. Set the `DATABASE_URL`, `JWT_SECRET`, and `FRONTEND_URL` environment variables on Render.
+4. Update the frontend's `VITE_API_URL` env var (on Vercel) to point at the deployed Render URL, e.g. `https://your-service.onrender.com/api`.
 
 ## License
 

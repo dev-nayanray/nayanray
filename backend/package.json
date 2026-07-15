@@ -1,7 +1,7 @@
 {
   "name": "nayanray-backend",
   "version": "1.0.0",
-  "description": "Backend API for Nayan Ray portfolio using Node.js, Express, and MySQL",
+  "description": "Backend API for Nayan Ray portfolio using Node.js, Express, and PostgreSQL",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,7 +20,8 @@
     "helmet": "^7.0.0",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.0",
-    "mysql2": "^3.3.3",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1"
   },
   "devDependencies": {
