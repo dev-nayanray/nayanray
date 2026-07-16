@@ -1,7 +1,9 @@
 import express from "express";
 import Joi from "joi";
 import bcrypt from "bcryptjs";
+import multer from "multer";
 import { authenticateToken, requireAdmin } from "../middleware/auth.js";
+import { upload } from "../middleware/upload.js";
 import Project from "../models/Project.js";
 import BlogPost from "../models/BlogPost.js";
 import Service from "../models/Service.js";
@@ -13,6 +15,23 @@ const router = express.Router();
 // Apply auth middleware to all admin routes
 router.use(authenticateToken);
 router.use(requireAdmin);
+
+// POST /api/admin/upload — image upload used by Project/Blog forms
+router.post("/upload", (req, res) => {
+  upload.single("image")(req, res, (err) => {
+    if (err) {
+      if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({ error: "Image must be smaller than 5MB" });
+      }
+      return res.status(400).json({ error: err.message || "Upload failed" });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: "No image file provided" });
+    }
+    const url = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+    res.status(201).json({ url, filename: req.file.filename });
+  });
+});
 
 // Project CRUD
 const projectSchema = Joi.object({

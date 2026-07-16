@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Project } from '../services/api';
+import ImageUpload from './ui/ImageUpload';
 
 interface ProjectFormProps {
   initialData?: Project;
@@ -89,14 +90,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ initialData, onSubmit, onCanc
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-surface-900/70 dark:text-white/60">Image URL</label>
-        <input
-          type="url"
-          name="image"
+        <ImageUpload
+          label="Image"
           value={formData.image}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-0 px-3 py-2 text-sm text-surface-900 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-white/10 dark:bg-white/5 dark:text-white"
+          onChange={(url) => setFormData((prev) => ({ ...prev, image: url }))}
         />
       </div>
 
