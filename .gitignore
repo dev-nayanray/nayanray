@@ -18,6 +18,10 @@ dist-ssr
 .env.*.local
 backend/.env
 
+# User-uploaded files (keep the folder, ignore its contents)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

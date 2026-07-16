@@ -3,6 +3,8 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import { sequelize } from "./models/index.js";
 import projectRoutes from "./routes/projects.js";
 import blogRoutes from "./routes/blog.js";
@@ -14,11 +16,18 @@ import seedDatabase from "./seeders/seed.js";
 
 dotenv.config();
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(helmet());
+app.use(
+  helmet({
+    // Allow images served from /uploads to be embedded cross-origin (admin panel on a
+    // different port/domain during development and in most production setups).
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 app.use(
   cors({
     origin: process.env.FRONTEND_URL
@@ -27,6 +36,9 @@ app.use(
   })
 );
 app.use(express.json());
+
+// Serve uploaded images
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Rate Limiter
 const limiter = rateLimit({
