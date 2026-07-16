@@ -1,1 +1,53 @@
 @import "tailwindcss";
+
+/* Enable class-based dark mode (was silently broken — Tailwind v4 defaults to
+   prefers-color-scheme unless this variant is declared). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------
+   Premium design tokens
+   A dedicated brand palette (indigo/violet) + refined neutrals, replacing
+   the untouched Tailwind defaults the dashboard shipped with.
+--------------------------------------------------------------------- */
+@theme {
+  --font-sans: "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #f2f1ff;
+  --color-brand-100: #e6e4ff;
+  --color-brand-200: #d0ccff;
+  --color-brand-300: #aca4ff;
+  --color-brand-400: #8b7bff;
+  --color-brand-500: #7c5cff;
+  --color-brand-600: #6a3ff5;
+  --color-brand-700: #5a2fd8;
+  --color-brand-800: #4a27ae;
+  --color-brand-900: #3d2389;
+
+  --color-surface-0: #ffffff;
+  --color-surface-50: #f8f8fc;
+  --color-surface-100: #f1f1f9;
+  --color-surface-800: #16161f;
+  --color-surface-900: #0e0e15;
+  --color-surface-950: #08080c;
+
+  --shadow-soft: 0 1px 2px rgba(16, 15, 40, 0.04), 0 8px 24px -8px rgba(16, 15, 40, 0.08);
+  --shadow-card: 0 2px 4px rgba(16, 15, 40, 0.04), 0 12px 32px -12px rgba(16, 15, 40, 0.12);
+  --shadow-glow: 0 0 0 1px rgba(124, 92, 255, 0.08), 0 8px 24px -4px rgba(124, 92, 255, 0.25);
+
+  --radius-2xl: 1.1rem;
+  --radius-3xl: 1.5rem;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply bg-surface-50 text-surface-900 dark:bg-surface-950 dark:text-surface-50;
+}
+
+/* thin, unobtrusive scrollbar for panels/sidebar */
+.scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(124,92,255,0.35); border-radius: 999px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }

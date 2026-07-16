@@ -11,10 +11,27 @@ import ServicesManagement from './components/ServicesManagement';
 import ContactsManagement from './components/ContactsManagement';
 import UsersManagement from './components/UsersManagement';
 
+const TAB_LABELS: Record<string, string> = {
+  dashboard: 'Dashboard',
+  projects: 'Projects',
+  blog: 'Blog Posts',
+  services: 'Services',
+  contacts: 'Contact Messages',
+  users: 'Users',
+};
+
 function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem('adminToken'));
   const [user, setUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(
+    () => localStorage.getItem('admin-sidebar-collapsed') === '1'
+  );
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('admin-sidebar-collapsed', sidebarCollapsed ? '1' : '0');
+  }, [sidebarCollapsed]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [services, setServices] = useState<Service[]>([]);
@@ -266,12 +283,32 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <Header user={user} onLogout={handleLogout} />
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-950">
       <div className="flex">
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <main className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto">
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          collapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
+          mobileOpen={mobileSidebarOpen}
+          onCloseMobile={() => setMobileSidebarOpen(false)}
+          contactsCount={contacts.length}
+        />
+        <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+          <Header
+            user={user}
+            onLogout={handleLogout}
+            onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
+            activeLabel={TAB_LABELS[activeTab] || 'Dashboard'}
+            notifications={contacts.length}
+          />
+          <main className="flex-1 p-4 sm:p-6 lg:p-8">
+            <div className="mx-auto max-w-7xl">
+              {error && (
+                <div className="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-400">
+                  {error}
+                </div>
+              )}
             {activeTab === 'dashboard' && (
               <DashboardOverview
                 projects={projects}
@@ -359,8 +396,9 @@ function App() {
                 handleSaveUser={handleSaveUser}
               />
             )}
-          </div>
-        </main>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );
