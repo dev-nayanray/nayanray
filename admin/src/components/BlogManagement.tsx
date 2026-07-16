@@ -39,7 +39,7 @@ const BlogManagement: React.FC<BlogManagementProps> = ({
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Blog Posts</h2>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2 transition-colors"
+          className="bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 shadow-glow flex items-center space-x-2 transition-colors"
         >
           <FaPlus />
           <span>Add Post</span>
@@ -109,6 +109,7 @@ const BlogManagement: React.FC<BlogManagementProps> = ({
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} title={editingBlogPost ? 'Edit Blog Post' : 'Add Blog Post'}>
         <BlogForm
+          key={editingBlogPost?.id ?? 'new'}
           initialData={editingBlogPost || undefined}
           onSubmit={handleSaveBlogPost}
           onCancel={closeModal}

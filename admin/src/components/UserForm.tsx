@@ -33,7 +33,7 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmit, onCancel }) 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="username" className="block text-sm font-medium text-surface-900/70 dark:text-white/60">
           Username
         </label>
         <input
@@ -43,12 +43,12 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmit, onCancel }) 
           value={formData.username}
           onChange={handleChange}
           required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-0 px-3 py-2 text-sm text-surface-900 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-white/10 dark:bg-white/5 dark:text-white"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-surface-900/70 dark:text-white/60">
           Email
         </label>
         <input
@@ -58,12 +58,12 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmit, onCancel }) 
           value={formData.email}
           onChange={handleChange}
           required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-0 px-3 py-2 text-sm text-surface-900 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-white/10 dark:bg-white/5 dark:text-white"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="password" className="block text-sm font-medium text-surface-900/70 dark:text-white/60">
           Password {initialData ? '(leave blank to keep current)' : ''}
         </label>
         <input
@@ -73,12 +73,12 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmit, onCancel }) 
           value={formData.password}
           onChange={handleChange}
           required={!initialData}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-0 px-3 py-2 text-sm text-surface-900 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-white/10 dark:bg-white/5 dark:text-white"
         />
       </div>
 
       <div>
-        <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="role" className="block text-sm font-medium text-surface-900/70 dark:text-white/60">
           Role
         </label>
         <select
@@ -86,7 +86,7 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmit, onCancel }) 
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-0 px-3 py-2 text-sm text-surface-900 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-white/10 dark:bg-white/5 dark:text-white"
         >
           <option value="user">User</option>
           <option value="admin">Admin</option>
@@ -97,13 +97,13 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmit, onCancel }) 
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="px-4 py-2 rounded-lg border border-surface-100 text-sm font-medium text-surface-900/70 hover:bg-surface-50 dark:border-white/10 dark:text-white/60 dark:hover:bg-white/5"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700"
+          className="px-4 py-2 rounded-lg bg-brand-600 text-sm font-medium text-white hover:bg-brand-700 shadow-glow"
         >
           {initialData ? 'Update User' : 'Create User'}
         </button>
