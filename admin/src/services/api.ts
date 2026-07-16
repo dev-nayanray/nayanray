@@ -96,6 +96,10 @@ export interface AuthResponse {
   };
 }
 
+export const getErrorMessage = (err: any, fallback: string): string => {
+  return err?.response?.data?.error || err?.response?.data?.message || err?.message || fallback;
+};
+
 // Auth API
 export const authAPI = {
   login: async (data: LoginData): Promise<AuthResponse> => {
@@ -117,7 +121,6 @@ export const uploadAPI = {
     const formData = new FormData();
     formData.append('image', file);
     const response = await api.post('/admin/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: (evt) => {
         if (onProgress && evt.total) {
           onProgress(Math.round((evt.loaded / evt.total) * 100));
