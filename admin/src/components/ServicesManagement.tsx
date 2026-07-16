@@ -39,7 +39,7 @@ const ServicesManagement: React.FC<ServicesManagementProps> = ({
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Services</h2>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2 transition-colors"
+          className="bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 shadow-glow flex items-center space-x-2 transition-colors"
         >
           <FaPlus />
           <span>Add Service</span>
@@ -109,6 +109,7 @@ const ServicesManagement: React.FC<ServicesManagementProps> = ({
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} title={editingService ? 'Edit Service' : 'Add Service'}>
         <ServiceForm
+          key={editingService?.id ?? 'new'}
           initialData={editingService || undefined}
           onSubmit={handleSaveService}
           onCancel={closeModal}

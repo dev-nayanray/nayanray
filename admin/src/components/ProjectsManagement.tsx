@@ -39,7 +39,7 @@ const ProjectsManagement: React.FC<ProjectsManagementProps> = ({
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Projects</h2>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2 transition-colors"
+          className="bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 shadow-glow flex items-center space-x-2 transition-colors"
         >
           <FaPlus />
           <span>Add Project</span>
@@ -109,6 +109,7 @@ const ProjectsManagement: React.FC<ProjectsManagementProps> = ({
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} title={editingProject ? 'Edit Project' : 'Add Project'}>
         <ProjectForm
+          key={editingProject?.id ?? 'new'}
           initialData={editingProject || undefined}
           onSubmit={handleSaveProject}
           onCancel={closeModal}

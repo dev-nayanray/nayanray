@@ -10,36 +10,36 @@ const ContactForm: React.FC<ContactFormProps> = ({ initialData, onCancel }) => {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700">Name</label>
-        <p className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 shadow-sm sm:text-sm">
+        <label className="block text-sm font-medium text-surface-900/70 dark:text-white/60">Name</label>
+        <p className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-50 px-3 py-2 text-sm text-surface-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white">
           {initialData.name}
         </p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
-        <p className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 shadow-sm sm:text-sm">
+        <label className="block text-sm font-medium text-surface-900/70 dark:text-white/60">Email</label>
+        <p className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-50 px-3 py-2 text-sm text-surface-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white">
           {initialData.email}
         </p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Subject</label>
-        <p className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 shadow-sm sm:text-sm">
+        <label className="block text-sm font-medium text-surface-900/70 dark:text-white/60">Subject</label>
+        <p className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-50 px-3 py-2 text-sm text-surface-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white">
           {initialData.subject}
         </p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Message</label>
-        <div className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 shadow-sm sm:text-sm">
+        <label className="block text-sm font-medium text-surface-900/70 dark:text-white/60">Message</label>
+        <div className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-50 px-3 py-2 text-sm text-surface-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white">
           {initialData.message}
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Date</label>
-        <p className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 shadow-sm sm:text-sm">
+        <label className="block text-sm font-medium text-surface-900/70 dark:text-white/60">Date</label>
+        <p className="mt-1 block w-full rounded-lg border border-surface-100 bg-surface-50 px-3 py-2 text-sm text-surface-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white">
           {new Date(initialData.createdAt || '').toLocaleString()}
         </p>
       </div>
@@ -48,7 +48,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ initialData, onCancel }) => {
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100"
+          className="px-4 py-2 rounded-lg border border-surface-100 text-surface-900/70 hover:bg-surface-50 dark:border-white/10 dark:text-white/60 dark:hover:bg-white/5"
         >
           Close
         </button>
