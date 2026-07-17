@@ -9,4 +9,13 @@
    
 }
 
+/* Hides the scrollbar on the scroll-snap showcase container while keeping it scrollable. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
  

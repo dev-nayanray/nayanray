@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Login from './components/Login';
-import { projectsAPI, blogAPI, servicesAPI, contactsAPI, usersAPI } from './services/api';
+import { projectsAPI, blogAPI, servicesAPI, contactsAPI, usersAPI, getErrorMessage } from './services/api';
 import type { Project, BlogPost, Service, ContactMessage, User } from './services/api';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -83,7 +83,7 @@ function App() {
       setContacts(contactsData);
       setUsers(usersData);
     } catch (err: any) {
-      setError(err.message || 'Failed to fetch data');
+      setError(getErrorMessage(err, 'Failed to fetch data'));
     } finally {
       setLoading(false);
     }
@@ -140,7 +140,7 @@ function App() {
       // Optionally fetch all data in background to sync
       fetchAllData().catch(err => console.error('Failed to sync data:', err));
     } catch (err: any) {
-      setError(err.message || 'Failed to save project');
+      setError(getErrorMessage(err, 'Failed to save project'));
     } finally {
       setLoading(false);
     }
@@ -154,7 +154,7 @@ function App() {
       await projectsAPI.delete(id);
       await fetchAllData();
     } catch (err: any) {
-      setError(err.message || 'Failed to delete project');
+      setError(getErrorMessage(err, 'Failed to delete project'));
     } finally {
       setLoading(false);
     }
@@ -176,7 +176,7 @@ function App() {
       // Optionally fetch all data in background to sync
       fetchAllData().catch(err => console.error('Failed to sync data:', err));
     } catch (err: any) {
-      setError(err.message || 'Failed to save blog post');
+      setError(getErrorMessage(err, 'Failed to save blog post'));
     } finally {
       setLoading(false);
     }
@@ -190,7 +190,7 @@ function App() {
       await blogAPI.delete(id);
       await fetchAllData();
     } catch (err: any) {
-      setError(err.message || 'Failed to delete blog post');
+      setError(getErrorMessage(err, 'Failed to delete blog post'));
     } finally {
       setLoading(false);
     }
@@ -212,7 +212,7 @@ function App() {
       // Optionally fetch all data in background to sync
       fetchAllData().catch(err => console.error('Failed to sync data:', err));
     } catch (err: any) {
-      setError(err.message || 'Failed to save service');
+      setError(getErrorMessage(err, 'Failed to save service'));
     } finally {
       setLoading(false);
     }
@@ -226,7 +226,7 @@ function App() {
       await servicesAPI.delete(id);
       await fetchAllData();
     } catch (err: any) {
-      setError(err.message || 'Failed to delete service');
+      setError(getErrorMessage(err, 'Failed to delete service'));
     } finally {
       setLoading(false);
     }
@@ -240,7 +240,7 @@ function App() {
       await contactsAPI.delete(id);
       await fetchAllData();
     } catch (err: any) {
-      setError(err.message || 'Failed to delete contact message');
+      setError(getErrorMessage(err, 'Failed to delete contact message'));
     } finally {
       setLoading(false);
     }
@@ -258,7 +258,7 @@ function App() {
       await fetchAllData();
       closeModal();
     } catch (err: any) {
-      setError(err.message || 'Failed to save user');
+      setError(getErrorMessage(err, 'Failed to save user'));
     } finally {
       setLoading(false);
     }
@@ -272,7 +272,7 @@ function App() {
       await usersAPI.delete(id);
       await fetchAllData();
     } catch (err: any) {
-      setError(err.message || 'Failed to delete user');
+      setError(getErrorMessage(err, 'Failed to delete user'));
     } finally {
       setLoading(false);
     }

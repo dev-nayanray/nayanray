@@ -2,8 +2,11 @@ import express from "express";
 import Joi from "joi";
 import bcrypt from "bcryptjs";
 import multer from "multer";
+import fs from "fs";
+import path from "path";
 import { authenticateToken, requireAdmin } from "../middleware/auth.js";
-import { upload } from "../middleware/upload.js";
+import { upload, UPLOADS_DIR, generateFilename } from "../middleware/upload.js";
+import { supabase, SUPABASE_STORAGE_BUCKET, isSupabaseStorageConfigured } from "../lib/supabaseClient.js";
 import Project from "../models/Project.js";
 import BlogPost from "../models/BlogPost.js";
 import Service from "../models/Service.js";
@@ -16,9 +19,13 @@ const router = express.Router();
 router.use(authenticateToken);
 router.use(requireAdmin);
 
-// POST /api/admin/upload — image upload used by Project/Blog forms
+// POST /api/admin/upload — image upload used by Project/Blog forms.
+// Uploads to Supabase Storage when SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
+// are configured (recommended for any deployed/"live" server, since most
+// hosts have an ephemeral or read-only filesystem). Falls back to writing
+// into backend/uploads/ for local development without a Supabase project.
 router.post("/upload", (req, res) => {
-  upload.single("image")(req, res, (err) => {
+  upload.single("image")(req, res, async (err) => {
     if (err) {
       if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
         return res.status(400).json({ error: "Image must be smaller than 5MB" });
@@ -28,8 +35,37 @@ router.post("/upload", (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: "No image file provided" });
     }
-    const url = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-    res.status(201).json({ url, filename: req.file.filename });
+
+    const filename = generateFilename(req.file.mimetype);
+
+    try {
+      if (isSupabaseStorageConfigured()) {
+        const { error: uploadError } = await supabase.storage
+          .from(SUPABASE_STORAGE_BUCKET)
+          .upload(filename, req.file.buffer, {
+            contentType: req.file.mimetype,
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error("Supabase Storage upload failed:", uploadError.message);
+          return res.status(502).json({
+            error: `Image storage upload failed: ${uploadError.message}`,
+          });
+        }
+
+        const { data } = supabase.storage.from(SUPABASE_STORAGE_BUCKET).getPublicUrl(filename);
+        return res.status(201).json({ url: data.publicUrl, filename });
+      }
+
+      // Local-disk fallback (development only)
+      fs.writeFileSync(path.join(UPLOADS_DIR, filename), req.file.buffer);
+      const url = `${req.protocol}://${req.get("host")}/uploads/${filename}`;
+      return res.status(201).json({ url, filename });
+    } catch (storageErr) {
+      console.error("Image upload failed:", storageErr);
+      return res.status(500).json({ error: "Image upload failed. Please try again." });
+    }
   });
 });
 

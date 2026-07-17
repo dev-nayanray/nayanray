@@ -18,16 +18,18 @@ const ALLOWED_MIME_TYPES = new Set([
   "image/gif",
 ]);
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, UPLOADS_DIR);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const unique = crypto.randomBytes(16).toString("hex");
-    cb(null, `${Date.now()}-${unique}${ext}`);
-  },
-});
+const EXT_BY_MIME = {
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp",
+  "image/gif": ".gif",
+};
+
+export const generateFilename = (mimetype) => {
+  const ext = EXT_BY_MIME[mimetype] || ".jpg";
+  const unique = crypto.randomBytes(16).toString("hex");
+  return `${Date.now()}-${unique}${ext}`;
+};
 
 const fileFilter = (req, file, cb) => {
   if (!ALLOWED_MIME_TYPES.has(file.mimetype)) {
@@ -37,8 +39,13 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
+// Memory storage: the file arrives as a buffer (req.file.buffer) so the
+// route handler can send it straight to Supabase Storage, with no
+// dependency on a writable/persistent local disk in production. The route
+// falls back to writing that buffer to backend/uploads/ when Supabase
+// Storage isn't configured (local dev).
 export const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB

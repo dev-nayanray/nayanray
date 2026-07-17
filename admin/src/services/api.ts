@@ -20,8 +20,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      // Session is invalid/expired. This app has no router — Login vs.
+      // the dashboard is just conditional on the presence of a token in
+      // App.tsx — so reload in place rather than navigating to a '/login'
+      // route that doesn't actually exist and would 404 on most static
+      // hosts. The reload re-mounts App, which reads localStorage (now
+      // cleared) and renders the Login screen.
       localStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      window.location.reload();
     }
     return Promise.reject(error);
   }
@@ -96,6 +102,10 @@ export interface AuthResponse {
   };
 }
 
+export const getErrorMessage = (err: any, fallback: string): string => {
+  return err?.response?.data?.error || err?.response?.data?.message || err?.message || fallback;
+};
+
 // Auth API
 export const authAPI = {
   login: async (data: LoginData): Promise<AuthResponse> => {
@@ -117,7 +127,6 @@ export const uploadAPI = {
     const formData = new FormData();
     formData.append('image', file);
     const response = await api.post('/admin/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: (evt) => {
         if (onProgress && evt.total) {
           onProgress(Math.round((evt.loaded / evt.total) * 100));
