@@ -10,7 +10,11 @@ export const authenticateToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res.status(403).json({ error: "Invalid or expired token" });
+      // 401, not 403: the caller isn't authenticated at all (no valid
+      // session), as opposed to being authenticated but lacking
+      // permission. The frontend's auto-logout/redirect-to-login only
+      // triggers on 401, so this distinction actually matters.
+      return res.status(401).json({ error: "Invalid or expired token" });
     }
     req.user = user;
     next();

@@ -20,8 +20,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      // Session is invalid/expired. This app has no router — Login vs.
+      // the dashboard is just conditional on the presence of a token in
+      // App.tsx — so reload in place rather than navigating to a '/login'
+      // route that doesn't actually exist and would 404 on most static
+      // hosts. The reload re-mounts App, which reads localStorage (now
+      // cleared) and renders the Login screen.
       localStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      window.location.reload();
     }
     return Promise.reject(error);
   }
