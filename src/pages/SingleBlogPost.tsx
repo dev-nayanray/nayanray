@@ -28,7 +28,7 @@ interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   liveLink: string;
   githubLink: string;
   technologies: string[];
@@ -471,8 +471,9 @@ const SingleBlogPost = () => {
                         >
                           <div className="relative overflow-hidden">
                             <img
-                              src={project.image}
+                              src={project.images?.[0]}
                               alt={project.title}
+                              loading="lazy"
                               className="w-full h-48 object-cover transition-transform duration-500 hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>

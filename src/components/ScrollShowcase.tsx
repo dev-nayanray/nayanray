@@ -7,7 +7,7 @@ interface ShowcaseProject {
   id: number;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   liveLink: string;
   githubLink: string;
   technologies: string[];
@@ -45,7 +45,7 @@ const Slide: React.FC<SlideProps> = ({ project, index, total, containerRef }) =>
     >
       <motion.div className="absolute inset-0" style={{ scale }}>
         <img
-          src={project.image}
+          src={project.images?.[0]}
           alt={project.title}
           className="h-full w-full object-cover"
           loading={index === 0 ? 'eager' : 'lazy'}
@@ -133,7 +133,7 @@ const ScrollShowcase = () => {
     const fetchProjects = async () => {
       try {
         const response = await api.get("/projects");
-        const withImages = (response.data as ShowcaseProject[]).filter((p) => p.image);
+        const withImages = (response.data as ShowcaseProject[]).filter((p) => p.images?.length > 0);
         setProjects(withImages.slice(0, 6));
       } catch (error) {
         console.error("Failed to fetch showcase projects:", error);

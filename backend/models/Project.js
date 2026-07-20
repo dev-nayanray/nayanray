@@ -15,9 +15,16 @@ const Project = sequelize.define("Project", {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.STRING,
+  images: {
+    type: DataTypes.JSON,
     allowNull: false,
+    validate: {
+      isValidImageList(value) {
+        if (!Array.isArray(value) || value.length === 0 || value.length > 8) {
+          throw new Error("images must be an array of 1 to 8 URLs");
+        }
+      },
+    },
   },
   liveLink: {
     type: DataTypes.STRING,

@@ -73,7 +73,7 @@ router.post("/upload", (req, res) => {
 const projectSchema = Joi.object({
   title: Joi.string().min(1).max(255).required(),
   description: Joi.string().min(1).required(),
-  image: Joi.string().uri().required(),
+  images: Joi.array().items(Joi.string().uri()).min(1).max(8).required(),
   liveLink: Joi.string().uri().allow(null, ""),
   githubLink: Joi.string().uri().allow(null, ""),
   technologies: Joi.array().items(Joi.string()).required(),

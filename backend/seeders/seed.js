@@ -25,11 +25,17 @@ const seedDatabase = async () => {
     }
 
     // Seed Projects
+    // Each project ships 2 demo images so the scroll gallery has something to
+    // show out of the box — swap these for real project screenshots via the
+    // admin panel.
     const projects = [
       {
         title: "Portfolio Website",
         description: "A modern portfolio built with React, TypeScript, and Tailwind CSS featuring smooth animations and responsive design.",
-        image: "/projects/portfolio.png",
+        images: [
+          "https://images.unsplash.com/photo-1522204501860-5b2cb5300d40?auto=format&fit=crop&w=1200&q=60",
+          "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=1200&q=60"
+        ],
         liveLink: "#",
         githubLink: "#",
         technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
@@ -41,7 +47,10 @@ const seedDatabase = async () => {
       {
         title: "E-commerce Website",
         description: "Full-featured online store built with WooCommerce and WordPress, featuring product management and secure payments.",
-        image: "/projects/ecommerce.png",
+        images: [
+          "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=60",
+          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60"
+        ],
         liveLink: "#",
         githubLink: "#",
         technologies: ["WordPress", "WooCommerce", "PHP", "JavaScript"],
@@ -53,7 +62,10 @@ const seedDatabase = async () => {
       {
         title: "Loan Management System",
         description: "Custom PHP & MySQL application with responsive UI using Tailwind CSS for financial institutions.",
-        image: "/projects/loan.png",
+        images: [
+          "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=60",
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=60"
+        ],
         liveLink: "#",
         githubLink: "#",
         technologies: ["PHP", "MySQL", "Tailwind CSS", "JavaScript"],
@@ -64,7 +76,10 @@ const seedDatabase = async () => {
       {
         title: "3D Wardrobe Configurator",
         description: "Interactive 3D product configurator built with Three.js and WordPress for custom furniture.",
-        image: "/projects/wardrobe.png",
+        images: [
+          "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=1200&q=60",
+          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60"
+        ],
         liveLink: "#",
         githubLink: "#",
         technologies: ["Three.js", "WordPress", "JavaScript", "WebGL"],
@@ -75,7 +90,10 @@ const seedDatabase = async () => {
       {
         title: "Mobile Fitness App",
         description: "Cross-platform mobile application for fitness tracking with real-time analytics and social features.",
-        image: "/projects/fitness.png",
+        images: [
+          "https://images.unsplash.com/photo-1522204501860-5b2cb5300d40?auto=format&fit=crop&w=1200&q=60",
+          "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=60"
+        ],
         liveLink: "#",
         githubLink: "#",
         technologies: ["React Native", "Firebase", "Redux", "Node.js"],
@@ -86,7 +104,10 @@ const seedDatabase = async () => {
       {
         title: "SaaS Dashboard",
         description: "Enterprise SaaS dashboard with real-time analytics, user management, and reporting features.",
-        image: "/projects/dashboard.png",
+        images: [
+          "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=60",
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=60"
+        ],
         liveLink: "#",
         githubLink: "#",
         technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],

@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, FaChartLine } from "react-icons/fa";
 import api from "../services/api";
+import ProjectGallery from "./ui/ProjectGallery";
 
 interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   liveLink: string;
   githubLink: string;
   technologies: string[];
@@ -115,14 +116,15 @@ const Project = () => {
 
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
+                  <ProjectGallery
+                    images={project.images}
                     alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
+                    variant="card"
+                    className="group-hover:[&_img]:scale-110 [&_img]:transition-transform [&_img]:duration-700"
                   />
 
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4">
+                  <div className="absolute inset-0 z-10 flex items-center justify-center gap-4 bg-black/60 opacity-0 pointer-events-none transition-all duration-500 group-hover:opacity-100 group-hover:pointer-events-auto">
                     <motion.a
                       href={`/projects/${project.id}`}
                       whileHover={{ scale: 1.1 }}

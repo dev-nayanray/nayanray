@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import api from "../services/api";
 import Premium from "../components/Premium";
 import Portfolio from "../components/Portfolio";
+import ProjectGallery from "../components/ui/ProjectGallery";
 
 interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   liveLink: string;
   githubLink: string;
   technologies: string[];
@@ -157,10 +158,11 @@ const SingleProject = () => {
 
           <h1 className="text-4xl font-bold mb-6">{project.title}</h1>
 
-          <img
-            src={project.image}
+          <ProjectGallery
+            images={project.images}
             alt={project.title}
-            className="w-full rounded-lg mb-8 object-cover max-h-96 mx-auto"
+            variant="detail"
+            className="mb-8 rounded-lg overflow-hidden"
           />
 
           <p className="text-lg text-gray-700 leading-relaxed mb-8">{project.description}</p>

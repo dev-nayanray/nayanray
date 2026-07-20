@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import type { Project } from '../services/api';
 import ImageUpload from './ui/ImageUpload';
 
@@ -8,11 +9,13 @@ interface ProjectFormProps {
   onCancel: () => void;
 }
 
+const MAX_IMAGES = 8;
+
 const ProjectForm: React.FC<ProjectFormProps> = ({ initialData, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState<Project>({
     title: '',
     description: '',
-    image: '',
+    images: [],
     liveLink: '',
     githubLink: '',
     technologies: [],
@@ -24,6 +27,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ initialData, onSubmit, onCanc
   });
 
   const [techInput, setTechInput] = useState('');
+  const [imageError, setImageError] = useState('');
 
   useEffect(() => {
     if (initialData) {
@@ -58,8 +62,36 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ initialData, onSubmit, onCanc
     });
   };
 
+  const handleAddImage = (url: string) => {
+    if (!url || formData.images.length >= MAX_IMAGES) return;
+    setImageError('');
+    setFormData({ ...formData, images: [...formData.images, url] });
+  };
+
+  const handleReplaceImage = (index: number, url: string) => {
+    const next = [...formData.images];
+    next[index] = url;
+    setFormData({ ...formData, images: next });
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
+  };
+
+  const handleMoveImage = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= formData.images.length) return;
+    const next = [...formData.images];
+    [next[index], next[target]] = [next[target], next[index]];
+    setFormData({ ...formData, images: next });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.images.length === 0) {
+      setImageError('Add at least one image before saving.');
+      return;
+    }
     onSubmit(formData);
   };
 
@@ -90,11 +122,59 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ initialData, onSubmit, onCanc
       </div>
 
       <div>
-        <ImageUpload
-          label="Image"
-          value={formData.image}
-          onChange={(url) => setFormData((prev) => ({ ...prev, image: url }))}
-        />
+        <div className="mb-1.5 flex items-center justify-between">
+          <span className="text-sm font-medium text-surface-900/70 dark:text-white/60">
+            Images <span className="font-normal text-surface-900/40 dark:text-white/30">({formData.images.length}/{MAX_IMAGES})</span>
+          </span>
+        </div>
+        <p className="mb-3 text-xs text-surface-900/50 dark:text-white/40">
+          The first image is the cover shown in listings. Visitors can scroll through all of them on the project card.
+        </p>
+
+        <div className="space-y-4">
+          {formData.images.map((url, index) => (
+            <div key={index}>
+              <div className="mb-1.5 flex items-center gap-2">
+                <span className="text-xs font-medium text-surface-900/50 dark:text-white/40">
+                  {index === 0 ? 'Cover image' : `Image ${index + 1}`}
+                </span>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => handleMoveImage(index, -1)}
+                    disabled={index === 0}
+                    aria-label="Move up"
+                    className="rounded p-1 text-surface-900/40 hover:bg-surface-50 hover:text-surface-900 disabled:pointer-events-none disabled:opacity-30 dark:text-white/30 dark:hover:bg-white/5 dark:hover:text-white"
+                  >
+                    <FaChevronUp className="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleMoveImage(index, 1)}
+                    disabled={index === formData.images.length - 1}
+                    aria-label="Move down"
+                    className="rounded p-1 text-surface-900/40 hover:bg-surface-50 hover:text-surface-900 disabled:pointer-events-none disabled:opacity-30 dark:text-white/30 dark:hover:bg-white/5 dark:hover:text-white"
+                  >
+                    <FaChevronDown className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+              <ImageUpload
+                value={url}
+                onChange={(newUrl) => (newUrl ? handleReplaceImage(index, newUrl) : handleRemoveImage(index))}
+              />
+            </div>
+          ))}
+
+          {formData.images.length < MAX_IMAGES && (
+            <ImageUpload
+              label={formData.images.length === 0 ? 'Cover image' : `Image ${formData.images.length + 1}`}
+              value=""
+              onChange={(newUrl) => handleAddImage(newUrl)}
+            />
+          )}
+        </div>
+        {imageError && <p className="mt-2 text-xs text-rose-600 dark:text-rose-400">{imageError}</p>}
       </div>
 
       <div>

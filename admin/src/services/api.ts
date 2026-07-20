@@ -37,7 +37,7 @@ export interface Project {
   id?: number;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   liveLink: string;
   githubLink: string;
   technologies: string[];

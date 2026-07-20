@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "migrate:images": "node migrate_project_images.js"
   },
   "keywords": [],
   "author": "Nayan Ray",
