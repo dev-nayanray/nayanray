@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, FaChartLine } from "react-icons/fa";
 import api from "../services/api";
 import ProjectGallery from "./ui/ProjectGallery";
@@ -50,16 +51,16 @@ const Project = () => {
   return (
     <section
       id="projects"
-      className="relative py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden"
+      className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-blue-200/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-purple-200/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-10 right-10 w-72 h-72 bg-brand-200/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-brand-200/10 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/4 transform -translate-y-1/2 w-64 h-64 bg-cyan-200/10 rounded-full blur-3xl"></div>
 
         {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,19 +75,19 @@ const Project = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaCode className="w-4 h-4" />
             My Work
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Projects</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
+            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Projects</span>
           </h2>
 
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
 
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             A collection of projects that showcase my expertise in web development,
             from responsive designs to complex web applications and interactive experiences.
           </p>
@@ -112,7 +113,7 @@ const Project = () => {
               <div className={`absolute -inset-0.5 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300`}></div>
 
               {/* Main Card */}
-              <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/50 shadow-sm hover:shadow-2xl transition-all duration-500">
+              <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500">
 
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
@@ -166,11 +167,11 @@ const Project = () => {
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors">
+                  <h3 className="text-xl font-bold text-surface-900 dark:text-white mb-3 group-hover:text-surface-900/80 dark:group-hover:text-white/90 transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-gray-600 mb-4 leading-relaxed group-hover:text-gray-700 transition-colors">
+                  <p className="text-surface-900/60 dark:text-white/50 mb-4 leading-relaxed group-hover:text-surface-900/70 dark:group-hover:text-white/60 transition-colors">
                     {project.description}
                   </p>
 
@@ -179,7 +180,7 @@ const Project = () => {
                     {(Array.isArray(project.technologies) ? project.technologies : []).map((tech: string, techIndex: number) => (
                       <span
                         key={techIndex}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-200 group-hover:border-gray-300 transition-colors"
+                        className="px-3 py-1 bg-surface-50 dark:bg-white/5 text-surface-900/70 dark:text-white/60 text-sm rounded-full border border-surface-100 dark:border-white/10 group-hover:border-surface-100/80 dark:group-hover:border-white/20 transition-colors"
                       >
                         {tech}
                       </span>
@@ -194,7 +195,7 @@ const Project = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group/btn overflow-hidden relative"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl shadow-glow hover:shadow-xl transition-all duration-300 group/btn overflow-hidden relative"
                     >
                       <span className="relative z-10">Live Demo</span>
                       <FaExternalLinkAlt className="w-4 h-4 relative z-10" />
@@ -207,16 +208,16 @@ const Project = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 text-gray-700 font-semibold rounded-xl border border-gray-200 shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-300 group/code"
+                      className="flex items-center justify-center gap-2 py-3 px-4 bg-surface-50 dark:bg-white/5 text-surface-900/70 dark:text-white/60 font-semibold rounded-xl border border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300 group/code"
                     >
-                      <FaGithub className="w-4 h-4 group-hover:text-blue-600 transition-colors" />
+                      <FaGithub className="w-4 h-4 group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors" />
                     </motion.a>
                   </div>
                 </div>
 
                 {/* Hover Border Effect */}
                 <div className={`absolute inset-0 border-2 border-transparent bg-gradient-to-r ${project.gradient} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}>
-                  <div className="absolute inset-[2px] bg-white rounded-3xl"></div>
+                  <div className="absolute inset-[2px] bg-surface-0 dark:bg-surface-900 rounded-3xl"></div>
                 </div>
               </div>
             </motion.div>
@@ -230,30 +231,32 @@ const Project = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 md:p-12 border border-blue-100/50 shadow-sm">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="bg-gradient-to-r from-brand-50 to-brand-100/60 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
+            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
               Interested in Working Together?
             </h3>
-            <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-surface-900/60 dark:text-white/50 text-lg mb-8 max-w-2xl mx-auto">
               Have a project in mind? Let's discuss how we can bring your ideas to life with cutting-edge technology and creative solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                Start a Project
-              </motion.a>
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-gray-800 font-semibold rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-300"
-              >
-                View All Projects
-              </motion.a>
+              <Link to="/start-a-project">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300 cursor-pointer"
+                >
+                  Start a Project
+                </motion.div>
+              </Link>
+              <Link to="/projects">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-surface-0 dark:bg-surface-900 text-surface-900 dark:text-white font-semibold rounded-2xl border-2 border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300 cursor-pointer"
+                >
+                  View All Projects
+                </motion.div>
+              </Link>
             </div>
           </div>
         </motion.div>

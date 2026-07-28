@@ -74,7 +74,7 @@ const Testimonial = () => {
   return (
     <section
       id="testimonials"
-      className="relative py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden"
+      className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
@@ -98,19 +98,19 @@ const Testimonial = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaAward className="w-4 h-4" />
             Client Testimonials
           </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            What My <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Clients Say</span>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
+            What My <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Clients Say</span>
           </h2>
-          
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+          <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
+
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             Don't just take my word for it. Here's what clients have to say about working with me 
             and the results we've achieved together.
           </p>
@@ -133,14 +133,14 @@ const Testimonial = () => {
               className="group relative"
             >
               {/* Background Gradient Effect */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
-              
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+
               {/* Main Card */}
-              <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-white/50 shadow-sm hover:shadow-2xl transition-all duration-500">
-                
+              <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl p-6 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500">
+
                 {/* Quote Icon */}
                 <div className="absolute top-6 right-6">
-                  <FaQuoteLeft className="w-8 h-8 text-blue-200 group-hover:text-blue-300 transition-colors" />
+                  <FaQuoteLeft className="w-8 h-8 text-brand-200 dark:text-brand-500/30 group-hover:text-brand-300 dark:group-hover:text-brand-500/50 transition-colors" />
                 </div>
 
                 {/* Rating Stars */}
@@ -151,14 +151,14 @@ const Testimonial = () => {
                 </div>
 
                 {/* Feedback Text */}
-                <blockquote className="text-gray-700 mb-6 leading-relaxed group-hover:text-gray-800 transition-colors">
+                <blockquote className="text-surface-900/80 dark:text-white/70 mb-6 leading-relaxed group-hover:text-surface-900 dark:group-hover:text-white transition-colors">
                   "{testimonial.feedback}"
                 </blockquote>
 
                 {/* Project Info */}
-                <div className="mb-6 p-3 bg-blue-50 rounded-xl border border-blue-100">
-                  <div className="text-sm text-blue-600 font-medium">Project:</div>
-                  <div className="text-sm text-gray-700">{testimonial.project}</div>
+                <div className="mb-6 p-3 bg-brand-50 dark:bg-brand-500/10 rounded-xl border border-brand-100 dark:border-brand-500/20">
+                  <div className="text-sm text-brand-700 dark:text-brand-300 font-medium">Project:</div>
+                  <div className="text-sm text-surface-900/80 dark:text-white/70">{testimonial.project}</div>
                 </div>
 
                 {/* Client Info */}
@@ -167,17 +167,17 @@ const Testimonial = () => {
                     <img
                       src={testimonial.photo}
                       alt={testimonial.name}
-                      className="w-14 h-14 rounded-2xl object-cover border-2 border-white shadow-lg group-hover:scale-110 transition-transform duration-300"
+                      className="w-14 h-14 rounded-2xl object-cover border-2 border-surface-0 dark:border-surface-900 shadow-lg group-hover:scale-110 transition-transform duration-300"
                     />
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-surface-0 dark:border-surface-900"></div>
                   </div>
-                  
+
                   <div className="flex-1">
-                    <h4 className="font-bold text-gray-900 group-hover:text-gray-800 transition-colors">
+                    <h4 className="font-bold text-surface-900 dark:text-white group-hover:text-surface-900/80 dark:group-hover:text-white/80 transition-colors">
                       {testimonial.name}
                     </h4>
-                    <p className="text-sm text-gray-600">{testimonial.position}</p>
-                    <p className="text-sm text-blue-600 font-medium">{testimonial.company}</p>
+                    <p className="text-sm text-surface-900/60 dark:text-white/50">{testimonial.position}</p>
+                    <p className="text-sm text-brand-700 dark:text-brand-300 font-medium">{testimonial.company}</p>
                   </div>
 
                   {/* Social Links */}
@@ -185,15 +185,15 @@ const Testimonial = () => {
                     href={testimonial.linkedin}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="p-2 text-gray-400 hover:text-blue-600 transition-colors duration-300"
+                    className="p-2 text-surface-900/40 dark:text-white/40 hover:text-brand-600 dark:hover:text-brand-300 transition-colors duration-300"
                   >
                     <FaLinkedin className="w-5 h-5" />
                   </motion.a>
                 </div>
 
                 {/* Hover Border Effect */}
-                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
-                  <div className="absolute inset-[2px] bg-white rounded-3xl"></div>
+                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
+                  <div className="absolute inset-[2px] bg-surface-0 dark:bg-surface-900 rounded-3xl"></div>
                 </div>
               </div>
             </motion.div>
@@ -216,12 +216,12 @@ const Testimonial = () => {
             <motion.div
               key={index}
               whileHover={{ scale: 1.05 }}
-              className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm hover:shadow-lg transition-all duration-300"
+              className="text-center p-6 rounded-2xl bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-lg transition-all duration-300"
             >
-              <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+              <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-brand-500 to-brand-700 text-transparent bg-clip-text">
                 {stat.number}
               </div>
-              <div className="text-sm text-gray-600 mt-2 font-medium">{stat.label}</div>
+              <div className="text-sm text-surface-900/60 dark:text-white/50 mt-2 font-medium">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -233,12 +233,12 @@ const Testimonial = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 md:p-12 border border-blue-100/50 shadow-sm">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="bg-gradient-to-r from-brand-50 to-brand-100 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
+            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
               Ready to Start Your Project?
             </h3>
-            <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-              Join dozens of satisfied clients who have transformed their digital presence. 
+            <p className="text-surface-900/60 dark:text-white/50 text-lg mb-8 max-w-2xl mx-auto">
+              Join dozens of satisfied clients who have transformed their digital presence.
               Let's discuss how we can bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -246,7 +246,7 @@ const Testimonial = () => {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300"
               >
                 Start Your Project
               </motion.a>
@@ -254,7 +254,7 @@ const Testimonial = () => {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-gray-800 font-semibold rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-300"
+                className="px-8 py-4 bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 font-semibold rounded-2xl border-2 border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/50 transition-all duration-300"
               >
                 Schedule a Call
               </motion.a>

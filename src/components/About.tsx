@@ -134,7 +134,7 @@ const About = () => {
     <section
       id="about"
       ref={ref}
-      className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/20 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-200 overflow-hidden"
+      className="relative py-24 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/20 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 text-surface-900/80 dark:text-white/70 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Premium Background Elements */}
@@ -226,25 +226,25 @@ const About = () => {
             initial={{ scale: 0, rotate: -180 }}
             whileInView={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 text-blue-600 text-sm font-semibold mb-8 shadow-lg backdrop-blur-sm"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-brand-50 to-brand-100 border border-brand-200/50 text-brand-700 dark:from-brand-500/10 dark:to-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-semibold mb-8 shadow-lg backdrop-blur-sm"
           >
             <FaStar className="w-4 h-4 animate-pulse" />
             Professional Overview
             <FaStar className="w-4 h-4 animate-pulse" />
           </motion.div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-surface-900 dark:text-white">
             About{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">
               Me
             </span>
           </h2>
           <motion.div
-            className="w-32 h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mx-auto rounded-full mb-8"
+            className="w-32 h-2 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           />
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             Crafting digital excellence through innovative solutions, cutting-edge technology, and a passion for creating exceptional user experiences
           </p>
         </motion.div>
@@ -266,7 +266,7 @@ const About = () => {
                 <div className="absolute -inset-2 bg-gradient-to-r from-purple-400 to-pink-500 rounded-3xl opacity-40 group-hover:opacity-50 transition-opacity duration-700" />
 
                 {/* Main Image Container */}
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/80 bg-white transform group-hover:scale-105 transition-all duration-700 backdrop-blur-sm">
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/80 dark:border-white/10 bg-surface-0 dark:bg-surface-900 transform group-hover:scale-105 transition-all duration-700 backdrop-blur-sm">
                   <img
                     src="/profile.png"
                     alt="Nayan Ray - Professional Full Stack Developer"
@@ -275,7 +275,7 @@ const About = () => {
 
                   {/* Premium Status Badge */}
                   <motion.div
-                    className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-2xl border border-gray-100/50"
+                    className="absolute bottom-6 right-6 bg-surface-0/95 dark:bg-surface-900/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-2xl border border-surface-100 dark:border-white/10"
                     whileHover={{ scale: 1.05 }}
                   >
                     <div className="flex items-center gap-3">
@@ -283,7 +283,7 @@ const About = () => {
                         <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                         <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping opacity-75" />
                       </div>
-                      <span className="text-sm font-bold text-gray-700">Available for work</span>
+                      <span className="text-sm font-bold text-surface-900 dark:text-white">Available for work</span>
                     </div>
                   </motion.div>
 
@@ -293,7 +293,7 @@ const About = () => {
                       href="#"
                       whileHover={{ scale: 1.2, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100/50 text-gray-700 hover:text-blue-600 transition-all duration-300 hover:shadow-2xl"
+                      className="p-3 bg-surface-0/95 dark:bg-surface-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-surface-100 dark:border-white/10 text-surface-900/80 dark:text-white/70 hover:text-brand-600 dark:hover:text-brand-400 transition-all duration-300 hover:shadow-2xl"
                     >
                       <FaLinkedin className="w-5 h-5" />
                     </motion.a>
@@ -301,7 +301,7 @@ const About = () => {
                       href="#"
                       whileHover={{ scale: 1.2, rotate: -5 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100/50 text-gray-700 hover:text-gray-900 transition-all duration-300 hover:shadow-2xl"
+                      className="p-3 bg-surface-0/95 dark:bg-surface-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-surface-100 dark:border-white/10 text-surface-900/80 dark:text-white/70 hover:text-surface-900 dark:hover:text-white transition-all duration-300 hover:shadow-2xl"
                     >
                       <FaGithub className="w-5 h-5" />
                     </motion.a>
@@ -347,11 +347,11 @@ const About = () => {
             {/* Tech Stack Showcase */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
+                <h4 className="text-2xl font-bold text-surface-900 dark:text-white flex items-center gap-3">
                   <FaGem className="w-6 h-6 text-purple-500" />
                   Tech Stack
                 </h4>
-                <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Core Technologies</span>
+                <span className="text-sm text-surface-900/40 dark:text-white/40 font-medium">Core Technologies</span>
               </div>
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-4">
                 {techStack.map((tech, index) => {
@@ -363,7 +363,7 @@ const About = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.05 }}
                       whileHover={{ scale: 1.1, y: -5 }}
-                      className={`p-4 rounded-2xl ${tech.bg} border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer`}
+                      className={`p-4 rounded-2xl ${tech.bg} dark:bg-white/5 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer`}
                     >
                       <div className="text-center space-y-2">
                         <motion.div
@@ -372,7 +372,7 @@ const About = () => {
                         >
                           <IconComponent className="w-full h-full" />
                         </motion.div>
-                        <div className="text-xs font-semibold text-gray-700 group-hover:text-gray-900 transition-colors">
+                        <div className="text-xs font-semibold text-surface-900/80 dark:text-white/70 group-hover:text-surface-900 dark:group-hover:text-white transition-colors">
                           {tech.name}
                         </div>
                       </div>
@@ -384,7 +384,7 @@ const About = () => {
 
             {/* Professional Experience Timeline */}
             <div className="space-y-6">
-              <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
+              <h4 className="text-2xl font-bold text-surface-900 dark:text-white flex items-center gap-3">
                 <FaBriefcase className="w-6 h-6 text-blue-500" />
                 Professional Journey
               </h4>
@@ -397,25 +397,25 @@ const About = () => {
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.2 }}
-                      className="relative pl-8 pb-8 border-l-2 border-blue-200 last:border-l-0 last:pb-0"
+                      className="relative pl-8 pb-8 border-l-2 border-brand-200 dark:border-brand-500/30 last:border-l-0 last:pb-0"
                     >
-                      <div className="absolute -left-4 top-0 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+                      <div className="absolute -left-4 top-0 w-8 h-8 bg-gradient-to-r from-brand-500 to-brand-700 rounded-full flex items-center justify-center shadow-lg">
                         <IconComponent className="w-4 h-4 text-white" />
                       </div>
-                      <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300">
+                      <div className="bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-surface-100 dark:border-white/10 hover:shadow-xl transition-all duration-300">
                         <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                           <div>
-                            <h5 className="text-xl font-bold text-gray-900">{exp.title}</h5>
-                            <p className="text-blue-600 font-semibold">{exp.company}</p>
+                            <h5 className="text-xl font-bold text-surface-900 dark:text-white">{exp.title}</h5>
+                            <p className="text-brand-600 dark:text-brand-400 font-semibold">{exp.company}</p>
                           </div>
-                          <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium">
+                          <span className="px-3 py-1 bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-300 rounded-full text-sm font-medium">
                             {exp.year}
                           </span>
                         </div>
-                        <p className="text-gray-600 mb-4">{exp.description}</p>
+                        <p className="text-surface-900/60 dark:text-white/50 mb-4">{exp.description}</p>
                         <div className="flex flex-wrap gap-2">
                           {exp.achievements.map((achievement, i) => (
-                            <span key={i} className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium flex items-center gap-2">
+                            <span key={i} className="px-3 py-1 bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400 rounded-full text-xs font-medium flex items-center gap-2">
                               <FaCheckCircle className="w-3 h-3" />
                               {achievement}
                             </span>
@@ -438,16 +438,16 @@ const About = () => {
           >
             {/* Professional Introduction */}
             <div className="space-y-6">
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-surface-900 dark:text-white leading-tight">
                 Transforming Ideas Into{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">
                   Digital Reality
                 </span>
               </h3>
-              <div className="space-y-4 text-gray-700 leading-relaxed">
+              <div className="space-y-4 text-surface-900/80 dark:text-white/70 leading-relaxed">
                 <p className="text-lg">
-                  I'm <span className="font-bold text-gray-900">Nayan Ray</span>, a passionate{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-bold">
+                  I'm <span className="font-bold text-surface-900 dark:text-white">Nayan Ray</span>, a passionate{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700 font-bold">
                     Full-Stack Developer
                   </span>{" "}
                   with expertise in modern web technologies. With over 4 years of professional experience, I specialize in creating scalable, high-performance applications that deliver exceptional user experiences.
@@ -471,25 +471,25 @@ const About = () => {
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.05, y: -8 }}
-                    className="text-center p-6 rounded-3xl bg-white/80 backdrop-blur-md border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-500 group relative overflow-hidden"
+                    className="text-center p-6 rounded-3xl bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-md border border-surface-100 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-500 group relative overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-50/50 to-brand-100/50 dark:from-brand-500/10 dark:to-brand-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="relative z-10">
                       <motion.div
                         className="flex justify-center mb-3"
                         whileHover={{ scale: 1.2, rotate: 5 }}
                       >
-                        <IconComponent className="w-8 h-8 text-blue-500 group-hover:text-purple-600 transition-colors duration-300" />
+                        <IconComponent className="w-8 h-8 text-brand-500 group-hover:text-brand-700 dark:group-hover:text-brand-300 transition-colors duration-300" />
                       </motion.div>
                       <motion.div
-                        className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text mb-1"
+                        className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-brand-500 to-brand-700 text-transparent bg-clip-text mb-1"
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
                         transition={{ delay: index * 0.1 + 0.5, type: "spring" }}
                       >
                         {Math.round(animatedStats[index])}{stat.suffix}
                       </motion.div>
-                      <div className="text-sm text-gray-600 font-semibold">{stat.label}</div>
+                      <div className="text-sm text-surface-900/60 dark:text-white/50 font-semibold">{stat.label}</div>
                     </div>
                   </motion.div>
                 );
@@ -498,7 +498,7 @@ const About = () => {
 
             {/* Currently Working On */}
             <div className="space-y-6">
-              <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
+              <h4 className="text-2xl font-bold text-surface-900 dark:text-white flex items-center gap-3">
                 <FaClock className="w-6 h-6 text-orange-500" />
                 Currently Working On
               </h4>
@@ -509,17 +509,17 @@ const About = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300"
+                    className="bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-surface-100 dark:border-white/10 hover:shadow-xl transition-all duration-300"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <h5 className="text-lg font-bold text-gray-900 mb-2">{project.name}</h5>
-                        <p className="text-gray-600 text-sm mb-3">{project.tech}</p>
+                        <h5 className="text-lg font-bold text-surface-900 dark:text-white mb-2">{project.name}</h5>
+                        <p className="text-surface-900/60 dark:text-white/50 text-sm mb-3">{project.tech}</p>
                       </div>
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        project.status === 'In Progress' ? 'bg-blue-50 text-blue-600' :
-                        project.status === 'Review Phase' ? 'bg-yellow-50 text-yellow-600' :
-                        'bg-gray-50 text-gray-600'
+                        project.status === 'In Progress' ? 'bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-300' :
+                        project.status === 'Review Phase' ? 'bg-yellow-50 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400' :
+                        'bg-surface-50 dark:bg-white/5 text-surface-900/60 dark:text-white/50'
                       }`}>
                         {project.status}
                       </span>
@@ -534,7 +534,7 @@ const About = () => {
             <div className="grid md:grid-cols-2 gap-8 pt-6">
               {/* Personal Info Cards */}
               <div className="space-y-4">
-                <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-3">
+                <h4 className="text-xl font-bold text-surface-900 dark:text-white mb-6 flex items-center gap-3">
                   <FaCertificate className="w-5 h-5 text-green-500" />
                   Personal Information
                 </h4>
@@ -548,22 +548,22 @@ const About = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                         whileHover={{ scale: 1.02, x: 5 }}
-                        className="flex items-center gap-4 p-4 rounded-2xl bg-white/80 backdrop-blur-md border border-white/50 shadow-sm hover:shadow-lg transition-all duration-300 group"
+                        className="flex items-center gap-4 p-4 rounded-2xl bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-md border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-lg transition-all duration-300 group"
                       >
-                        <div className={`p-3 rounded-xl bg-gray-50 group-hover:bg-white transition-colors duration-300 ${info.color}`}>
+                        <div className={`p-3 rounded-xl bg-surface-50 dark:bg-white/5 group-hover:bg-white dark:group-hover:bg-white/10 transition-colors duration-300 ${info.color}`}>
                           <IconComponent className="w-5 h-5" />
                         </div>
                         <div className="flex-1">
-                          <div className="text-sm text-gray-600 font-medium">{info.label}</div>
+                          <div className="text-sm text-surface-900/60 dark:text-white/50 font-medium">{info.label}</div>
                           {info.link ? (
                             <a
                               href={info.link}
-                              className="text-gray-800 font-bold hover:text-blue-600 transition-colors duration-300"
+                              className="text-surface-900/80 dark:text-white/70 font-bold hover:text-brand-600 dark:hover:text-brand-400 transition-colors duration-300"
                             >
                               {info.value}
                             </a>
                           ) : (
-                            <div className="text-gray-800 font-bold">{info.value}</div>
+                            <div className="text-surface-900/80 dark:text-white/70 font-bold">{info.value}</div>
                           )}
                         </div>
                       </motion.div>
@@ -578,7 +578,7 @@ const About = () => {
                   href="#projects"
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-8 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 text-center group relative overflow-hidden"
+                  className="px-8 py-5 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-3xl shadow-glow hover:shadow-3xl transition-all duration-300 text-center group relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                   <div className="relative z-10 flex items-center justify-center gap-3">
@@ -590,7 +590,7 @@ const About = () => {
                   href="/resume.pdf"
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-8 py-5 bg-white text-gray-800 font-bold rounded-3xl border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-blue-300 transition-all duration-300 text-center flex items-center justify-center gap-3 group"
+                  className="px-8 py-5 bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 font-bold rounded-3xl border-2 border-surface-100 dark:border-white/10 shadow-xl hover:shadow-2xl hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300 text-center flex items-center justify-center gap-3 group"
                 >
                   <FaDownload className="w-5 h-5 group-hover:animate-bounce transition-transform" />
                   Download Resume
@@ -599,14 +599,14 @@ const About = () => {
                   <motion.a
                     href="#"
                     whileHover={{ scale: 1.2, y: -3, rotate: 5 }}
-                    className="p-4 bg-gray-100 rounded-2xl text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="p-4 bg-surface-50 dark:bg-white/5 rounded-2xl text-surface-900/60 dark:text-white/50 hover:bg-brand-50 dark:hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     <FaLinkedin className="w-6 h-6" />
                   </motion.a>
                   <motion.a
                     href="#"
                     whileHover={{ scale: 1.2, y: -3, rotate: -5 }}
-                    className="p-4 bg-gray-100 rounded-2xl text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="p-4 bg-surface-50 dark:bg-white/5 rounded-2xl text-surface-900/60 dark:text-white/50 hover:bg-surface-100 dark:hover:bg-white/10 hover:text-surface-900 dark:hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     <FaGithub className="w-6 h-6" />
                   </motion.a>

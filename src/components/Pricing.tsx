@@ -119,7 +119,7 @@ const Pricing = () => {
   ];
 
   return (
-    <section id="pricing" className="relative py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden">
+    <section id="pricing" className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-10 w-72 h-72 bg-blue-200/10 rounded-full blur-3xl"></div>
@@ -142,19 +142,19 @@ const Pricing = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaGem className="w-4 h-4" />
             Pricing & Packages
           </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Affordable <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Pricing</span>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
+            Affordable <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Pricing</span>
           </h2>
-          
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+          <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
+
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             Transparent pricing with no hidden fees. Choose the perfect package for your business 
             or request a custom quote for your specific needs.
           </p>
@@ -190,26 +190,26 @@ const Pricing = () => {
               <div className={`absolute -inset-0.5 bg-gradient-to-r ${plan.gradient} rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300`}></div>
               
               {/* Main Card */}
-              <div className={`relative h-full bg-white/80 backdrop-blur-sm rounded-3xl p-8 border-2 transition-all duration-500 ${
-                plan.featured 
-                  ? 'border-purple-200 shadow-2xl' 
-                  : 'border-white/50 shadow-sm hover:shadow-xl'
+              <div className={`relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl p-8 border-2 transition-all duration-500 ${
+                plan.featured
+                  ? 'border-purple-200 dark:border-purple-500/30 shadow-2xl'
+                  : 'border-surface-100 dark:border-white/10 shadow-sm hover:shadow-xl'
               }`}>
-                
+
                 {/* Header */}
                 <div className="text-center mb-8">
                   <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${plan.gradient} text-white shadow-lg mb-4`}>
                     {plan.icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                  <p className="text-gray-600">{plan.description}</p>
+                  <h3 className="text-2xl font-bold text-surface-900 dark:text-white mb-2">{plan.name}</h3>
+                  <p className="text-surface-900/60 dark:text-white/50">{plan.description}</p>
                 </div>
 
                 {/* Price */}
                 <div className="text-center mb-8">
                   <div className="flex items-baseline justify-center gap-2">
-                    <span className="text-4xl md:text-5xl font-bold text-gray-900">{plan.price}</span>
-                    <span className="text-gray-600">/{plan.duration}</span>
+                    <span className="text-4xl md:text-5xl font-bold text-surface-900 dark:text-white">{plan.price}</span>
+                    <span className="text-surface-900/60 dark:text-white/50">/{plan.duration}</span>
                   </div>
                 </div>
 
@@ -221,7 +221,7 @@ const Pricing = () => {
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.2 + featureIndex * 0.1 }}
-                      className="flex items-center gap-3 text-gray-700"
+                      className="flex items-center gap-3 text-surface-900/80 dark:text-white/70"
                     >
                       <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r ${plan.gradient} text-white flex items-center justify-center`}>
                         <FaCheck className="w-3 h-3" />
@@ -238,7 +238,7 @@ const Pricing = () => {
                   className={`w-full py-4 px-6 rounded-2xl font-semibold transition-all duration-300 ${
                     plan.buttonVariant === 'primary'
                       ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl'
-                      : 'bg-white text-gray-800 border-2 border-gray-200 hover:border-blue-300 shadow-sm hover:shadow-lg'
+                      : 'bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 border-2 border-surface-100 dark:border-white/10 hover:border-brand-300 dark:hover:border-brand-500/50 shadow-sm hover:shadow-lg'
                   }`}
                 >
                   {plan.buttonText}
@@ -256,10 +256,10 @@ const Pricing = () => {
           className="mb-20"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Additional <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Services</span>
+            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
+              Additional <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Services</span>
             </h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-surface-900/60 dark:text-white/50 max-w-2xl mx-auto">
               Need something specific? I offer standalone services to complement your existing setup.
             </p>
           </div>
@@ -274,13 +274,13 @@ const Pricing = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-sm hover:shadow-xl transition-all duration-500 text-center">
-                  <div className="inline-flex p-3 rounded-xl bg-blue-100 text-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                <div className="relative bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-6 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-500 text-center">
+                  <div className="inline-flex p-3 rounded-xl bg-brand-100 dark:bg-brand-500/10 text-brand-600 dark:text-brand-300 mb-4 group-hover:scale-110 transition-transform duration-300">
                     {service.icon}
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">{service.name}</h4>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
+                  <h4 className="font-semibold text-surface-900 dark:text-white mb-2">{service.name}</h4>
+                  <p className="text-surface-900/60 dark:text-white/50 text-sm">{service.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -292,13 +292,13 @@ const Pricing = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 md:p-12 border border-blue-100/50 shadow-sm"
+          className="bg-gradient-to-r from-brand-50 to-brand-100 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Questions</span>
+            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
+              Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Questions</span>
             </h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-surface-900/60 dark:text-white/50 max-w-2xl mx-auto">
               Get answers to common questions about my pricing and services.
             </p>
           </div>
@@ -310,10 +310,10 @@ const Pricing = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-sm"
+                className="bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-6 border border-surface-100 dark:border-white/10 shadow-sm"
               >
-                <h4 className="font-semibold text-gray-900 mb-3">{faq.question}</h4>
-                <p className="text-gray-600 text-sm leading-relaxed">{faq.answer}</p>
+                <h4 className="font-semibold text-surface-900 dark:text-white mb-3">{faq.question}</h4>
+                <p className="text-surface-900/60 dark:text-white/50 text-sm leading-relaxed">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
@@ -326,11 +326,11 @@ const Pricing = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+          <div className="bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Start Your Project?
             </h3>
-            <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-brand-100 text-lg mb-8 max-w-2xl mx-auto">
               Let's discuss your project requirements and find the perfect solution for your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -338,7 +338,7 @@ const Pricing = () => {
                 href="#contact"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-gray-800 font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="px-8 py-4 bg-white text-surface-900 font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Get Free Quote
               </motion.a>

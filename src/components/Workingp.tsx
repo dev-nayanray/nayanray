@@ -109,14 +109,14 @@ const Workingp = () => {
   return (
     <section
       id="working-process"
-      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden"
+      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-surface-50 to-surface-100 dark:from-surface-950 dark:to-surface-900 overflow-hidden"
       ref={ref}
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-32 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-gray-300/50 to-transparent" />
+        <div className="absolute top-1/4 -left-32 w-80 h-80 bg-brand-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-brand-700/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-surface-900/10 dark:via-white/10 to-transparent" />
       </div>
 
       <motion.div
@@ -131,20 +131,20 @@ const Workingp = () => {
           className="text-center mb-16"
         >
           <motion.span
-            className="inline-block px-4 py-2 rounded-full bg-blue-500/10 text-blue-600 font-medium text-sm mb-4"
+            className="inline-block px-4 py-2 rounded-full bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-300 font-medium text-sm mb-4"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
             transition={{ delay: 0.2 }}
           >
             WORKING PROCESS
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-surface-900 dark:text-white mb-4">
             How I Create{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">
               Digital Excellence
             </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             A structured, transparent process that ensures your project is delivered on time, 
             within budget, and exceeds expectations at every stage.
           </p>
@@ -169,10 +169,10 @@ const Workingp = () => {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer group ${
                       isActive
-                        ? "bg-white border-blue-200 shadow-2xl shadow-blue-500/10 scale-105"
+                        ? "bg-surface-0 dark:bg-surface-900 border-brand-200 dark:border-brand-500/30 shadow-2xl shadow-brand-500/10 scale-105"
                         : isCompleted
-                        ? "bg-white/80 border-green-200/50 shadow-lg shadow-green-500/5"
-                        : "bg-white/50 border-gray-200/50 shadow-md hover:shadow-lg hover:border-gray-300"
+                        ? "bg-surface-0/80 dark:bg-surface-900/80 border-green-200/50 dark:border-green-500/30 shadow-lg shadow-green-500/5"
+                        : "bg-surface-0/50 dark:bg-surface-900/50 border-surface-100/50 dark:border-white/10 shadow-md hover:shadow-lg hover:border-surface-200 dark:hover:border-white/20"
                     }`}
                     onClick={() => {
                       setActiveStep(index);
@@ -203,7 +203,7 @@ const Workingp = () => {
                   <div className="flex-1">
                     <h3
                       className={`font-semibold text-lg transition-colors duration-300 ${
-                        isActive ? "text-slate-900" : "text-slate-700"
+                        isActive ? "text-surface-900 dark:text-white" : "text-surface-900/80 dark:text-white/70"
                       }`}
                     >
                       {step.title}
@@ -212,10 +212,10 @@ const Workingp = () => {
                       <span
                         className={`text-xs font-medium px-2 py-1 rounded-full ${
                           isActive
-                            ? "bg-blue-100 text-blue-600"
+                            ? "bg-brand-100 dark:bg-brand-500/10 text-brand-600 dark:text-brand-300"
                             : isCompleted
-                            ? "bg-green-100 text-green-600"
-                            : "bg-gray-100 text-gray-600"
+                            ? "bg-green-100 dark:bg-green-500/10 text-green-600 dark:text-green-400"
+                            : "bg-surface-50 dark:bg-white/5 text-surface-900/60 dark:text-white/50"
                         }`}
                       >
                         {step.duration}
@@ -227,10 +227,10 @@ const Workingp = () => {
                   <StepIcon
                     className={`w-6 h-6 transition-colors duration-300 ${
                       isActive
-                        ? "text-blue-600"
+                        ? "text-brand-600 dark:text-brand-300"
                         : isCompleted
-                        ? "text-green-600"
-                        : "text-gray-400"
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-surface-900/40 dark:text-white/40"
                     }`}
                   />
                 </div>
@@ -245,7 +245,7 @@ const Workingp = () => {
                       transition={{ duration: 0.3 }}
                       className="mt-4"
                     >
-                      <p className="text-slate-600 leading-relaxed mb-4">
+                      <p className="text-surface-900/60 dark:text-white/50 leading-relaxed mb-4">
                         {step.description}
                       </p>
                       <div className="grid grid-cols-2 gap-2">
@@ -255,9 +255,9 @@ const Workingp = () => {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: taskIndex * 0.1 }}
-                            className="flex items-center gap-2 text-sm text-slate-600"
+                            className="flex items-center gap-2 text-sm text-surface-900/60 dark:text-white/50"
                           >
-                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-500" />
                             {task}
                           </motion.div>
                         ))}
@@ -279,7 +279,7 @@ const Workingp = () => {
             >
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-gray-300 shadow-lg hover:shadow-xl transition-all duration-300 text-slate-700 font-medium"
+                className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-surface-0 dark:bg-surface-900 border border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 text-surface-900/80 dark:text-white/70 font-medium"
               >
                 {isPlaying ? (
                   <>
@@ -305,7 +305,7 @@ const Workingp = () => {
               className="sticky top-24"
             >
               {/* Current Step Card */}
-              <div className="bg-white rounded-3xl shadow-2xl border border-gray-200/80 overflow-hidden">
+              <div className="bg-surface-0 dark:bg-surface-900 rounded-3xl shadow-2xl border border-surface-100 dark:border-white/10 overflow-hidden">
                 {/* Card Header */}
                 <div
                   className={`bg-gradient-to-r ${currentStep.color} p-8 text-white`}
@@ -333,11 +333,11 @@ const Workingp = () => {
                   <div className="space-y-6">
                     {/* Progress Bar */}
                     <div>
-                      <div className="flex justify-between text-sm text-slate-600 mb-2">
+                      <div className="flex justify-between text-sm text-surface-900/60 dark:text-white/50 mb-2">
                         <span>Progress</span>
                         <span>{Math.round(((activeStep + 1) / processSteps.length) * 100)}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-surface-100 dark:bg-white/10 rounded-full h-2">
                         <motion.div
                           className={`h-2 rounded-full bg-gradient-to-r ${currentStep.color}`}
                           initial={{ width: 0 }}
@@ -351,7 +351,7 @@ const Workingp = () => {
 
                     {/* Key Tasks */}
                     <div>
-                      <h4 className="font-semibold text-slate-900 mb-3">
+                      <h4 className="font-semibold text-surface-900 dark:text-white mb-3">
                         Key Tasks
                       </h4>
                       <div className="space-y-2">
@@ -361,24 +361,24 @@ const Workingp = () => {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: index * 0.1 }}
-                            className="flex items-center gap-3 p-3 rounded-xl bg-slate-50/80 hover:bg-slate-100 transition-colors duration-300"
+                            className="flex items-center gap-3 p-3 rounded-xl bg-surface-50/80 dark:bg-white/5 hover:bg-surface-100 dark:hover:bg-white/10 transition-colors duration-300"
                           >
                             <div
                               className={`w-2 h-2 rounded-full bg-gradient-to-r ${currentStep.color}`}
                             />
-                            <span className="text-slate-700">{task}</span>
+                            <span className="text-surface-900/80 dark:text-white/70">{task}</span>
                           </motion.div>
                         ))}
                       </div>
                     </div>
 
                     {/* Duration */}
-                    <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/50">
+                    <div className="p-4 rounded-2xl bg-brand-50/50 dark:bg-brand-500/10 border border-brand-200/50 dark:border-brand-500/30">
                       <div className="flex items-center justify-between">
-                        <span className="text-blue-700 font-medium">
+                        <span className="text-brand-700 dark:text-brand-300 font-medium">
                           Estimated Duration
                         </span>
-                        <span className="text-blue-600 font-bold">
+                        <span className="text-brand-600 dark:text-brand-300 font-bold">
                           {currentStep.duration}
                         </span>
                       </div>
@@ -386,8 +386,8 @@ const Workingp = () => {
 
                     {/* CTA Button */}
                     <motion.a
-                      href="#contact"
-                      className="block w-full py-4 bg-gradient-to-r from-slate-900 to-slate-700 text-white font-semibold rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300"
+                      href="/start-a-project"
+                      className="block w-full py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl text-center shadow-glow hover:shadow-xl transition-all duration-300"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -412,13 +412,13 @@ const Workingp = () => {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.6 + index * 0.1 }}
-                      className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center border border-gray-200/50 shadow-lg"
+                      className="bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-4 text-center border border-surface-100 dark:border-white/10 shadow-lg"
                     >
-                      <MetricIcon className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-slate-900">
+                      <MetricIcon className="w-6 h-6 text-brand-600 dark:text-brand-300 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-surface-900 dark:text-white">
                         {metric.value}
                       </div>
-                      <div className="text-sm text-slate-600 mt-1">
+                      <div className="text-sm text-surface-900/60 dark:text-white/50 mt-1">
                         {metric.label}
                       </div>
                     </motion.div>

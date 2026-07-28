@@ -76,6 +76,24 @@ export interface ContactMessage {
   createdAt?: string;
 }
 
+export type ProposalStatus = 'new' | 'reviewed' | 'in_discussion' | 'accepted' | 'declined';
+
+export interface Proposal {
+  id?: number;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  serviceId?: number | null;
+  serviceName?: string;
+  projectType?: string;
+  budgetRange: string;
+  timeline: string;
+  description: string;
+  status: ProposalStatus;
+  createdAt?: string;
+}
+
 export interface User {
   id?: number;
   username: string;
@@ -191,6 +209,21 @@ export const servicesAPI = {
   },
   delete: async (id: number): Promise<void> => {
     await api.delete(`/admin/services/${id}`);
+  },
+};
+
+// Proposals API
+export const proposalsAPI = {
+  getAll: async (): Promise<Proposal[]> => {
+    const response = await api.get('/admin/proposals');
+    return response.data;
+  },
+  updateStatus: async (id: number, status: ProposalStatus): Promise<Proposal> => {
+    const response = await api.patch(`/admin/proposals/${id}/status`, { status });
+    return response.data;
+  },
+  delete: async (id: number): Promise<void> => {
+    await api.delete(`/admin/proposals/${id}`);
   },
 };
 

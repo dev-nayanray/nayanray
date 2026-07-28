@@ -1,14 +1,47 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode. Tailwind v4 defaults to prefers-color-scheme
+   unless this variant is declared — without it, ThemeContext's toggle writes
+   the "dark"/"light" class to <html> but nothing in Tailwind ever reads it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------
+   Shared design tokens
+   Same brand (indigo/violet) + surface palette as admin/src/index.css, so
+   the public site and the admin dashboard read as one product.
+--------------------------------------------------------------------- */
+@theme {
+  --color-brand-50: #f2f1ff;
+  --color-brand-100: #e6e4ff;
+  --color-brand-200: #d0ccff;
+  --color-brand-300: #aca4ff;
+  --color-brand-400: #8b7bff;
+  --color-brand-500: #7c5cff;
+  --color-brand-600: #6a3ff5;
+  --color-brand-700: #5a2fd8;
+  --color-brand-800: #4a27ae;
+  --color-brand-900: #3d2389;
+
+  --color-surface-0: #ffffff;
+  --color-surface-50: #f8f8fc;
+  --color-surface-100: #f1f1f9;
+  --color-surface-800: #16161f;
+  --color-surface-900: #0e0e15;
+  --color-surface-950: #08080c;
+
+  --shadow-soft: 0 1px 2px rgba(16, 15, 40, 0.04), 0 8px 24px -8px rgba(16, 15, 40, 0.08);
+  --shadow-card: 0 2px 4px rgba(16, 15, 40, 0.04), 0 12px 32px -12px rgba(16, 15, 40, 0.12);
+  --shadow-glow: 0 0 0 1px rgba(124, 92, 255, 0.08), 0 8px 24px -4px rgba(124, 92, 255, 0.25);
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-
 }
 
+/* Hides the scrollbar on scroll-snap containers (image galleries, the
+   full-page showcase) while keeping them scrollable. */
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -16,14 +49,3 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
-/* Hides the scrollbar on the scroll-snap showcase container while keeping it scrollable. */
-.no-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
- 

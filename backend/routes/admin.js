@@ -11,6 +11,7 @@ import Project from "../models/Project.js";
 import BlogPost from "../models/BlogPost.js";
 import Service from "../models/Service.js";
 import ContactMessage from "../models/ContactMessage.js";
+import Proposal, { PROPOSAL_STATUSES } from "../models/Proposal.js";
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -305,6 +306,55 @@ router.delete("/contacts/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting contact message:", error);
     res.status(500).json({ error: "Failed to delete contact message" });
+  }
+});
+
+// Proposals
+// GET /api/admin/proposals
+router.get("/proposals", async (req, res) => {
+  try {
+    const proposals = await Proposal.findAll({ order: [["createdAt", "DESC"]] });
+    res.json(proposals);
+  } catch (error) {
+    console.error("Error fetching proposals:", error);
+    res.status(500).json({ error: "Failed to fetch proposals" });
+  }
+});
+
+// PATCH /api/admin/proposals/:id/status
+const proposalStatusSchema = Joi.object({
+  status: Joi.string().valid(...PROPOSAL_STATUSES).required(),
+});
+
+router.patch("/proposals/:id/status", async (req, res) => {
+  try {
+    const { error, value } = proposalStatusSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+    const [updated] = await Proposal.update(value, { where: { id: req.params.id } });
+    if (!updated) {
+      return res.status(404).json({ error: "Proposal not found" });
+    }
+    const proposal = await Proposal.findByPk(req.params.id);
+    res.json(proposal);
+  } catch (error) {
+    console.error("Error updating proposal status:", error);
+    res.status(500).json({ error: "Failed to update proposal status" });
+  }
+});
+
+// DELETE /api/admin/proposals/:id
+router.delete("/proposals/:id", async (req, res) => {
+  try {
+    const deleted = await Proposal.destroy({ where: { id: req.params.id } });
+    if (!deleted) {
+      return res.status(404).json({ error: "Proposal not found" });
+    }
+    res.json({ message: "Proposal deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting proposal:", error);
+    res.status(500).json({ error: "Failed to delete proposal" });
   }
 });
 

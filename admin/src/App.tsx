@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Login from './components/Login';
-import { projectsAPI, blogAPI, servicesAPI, contactsAPI, usersAPI, getErrorMessage } from './services/api';
-import type { Project, BlogPost, Service, ContactMessage, User } from './services/api';
+import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage } from './services/api';
+import type { Project, BlogPost, Service, ContactMessage, Proposal, ProposalStatus, User } from './services/api';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import DashboardOverview from './components/DashboardOverview';
@@ -9,6 +9,7 @@ import ProjectsManagement from './components/ProjectsManagement';
 import BlogManagement from './components/BlogManagement';
 import ServicesManagement from './components/ServicesManagement';
 import ContactsManagement from './components/ContactsManagement';
+import ProposalsManagement from './components/ProposalsManagement';
 import UsersManagement from './components/UsersManagement';
 
 const TAB_LABELS: Record<string, string> = {
@@ -17,6 +18,7 @@ const TAB_LABELS: Record<string, string> = {
   blog: 'Blog Posts',
   services: 'Services',
   contacts: 'Contact Messages',
+  proposals: 'Proposals',
   users: 'Users',
 };
 
@@ -36,6 +38,7 @@ function App() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [contacts, setContacts] = useState<ContactMessage[]>([]);
+  const [proposals, setProposals] = useState<Proposal[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -44,10 +47,12 @@ function App() {
   const [editingBlogPost, setEditingBlogPost] = useState<BlogPost | null>(null);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [viewingContact, setViewingContact] = useState<ContactMessage | null>(null);
+  const [viewingProposal, setViewingProposal] = useState<Proposal | null>(null);
   const [searchProjects, setSearchProjects] = useState('');
   const [searchBlog, setSearchBlog] = useState('');
   const [searchServices, setSearchServices] = useState('');
   const [searchContacts, setSearchContacts] = useState('');
+  const [searchProposals, setSearchProposals] = useState('');
   const [searchUsers, setSearchUsers] = useState('');
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
@@ -62,6 +67,7 @@ function App() {
       setBlogPosts([]);
       setServices([]);
       setContacts([]);
+      setProposals([]);
       setUsers([]);
     }
   }, [token]);
@@ -70,17 +76,19 @@ function App() {
     setLoading(true);
     setError('');
     try {
-      const [projectsData, blogData, servicesData, contactsData, usersData] = await Promise.all([
+      const [projectsData, blogData, servicesData, contactsData, proposalsData, usersData] = await Promise.all([
         projectsAPI.getAll(),
         blogAPI.getAll(),
         servicesAPI.getAll(),
         contactsAPI.getAll(),
+        proposalsAPI.getAll(),
         usersAPI.getAll(),
       ]);
       setProjects(projectsData);
       setBlogPosts(blogData);
       setServices(servicesData);
       setContacts(contactsData);
+      setProposals(proposalsData);
       setUsers(usersData);
     } catch (err: any) {
       setError(getErrorMessage(err, 'Failed to fetch data'));
@@ -111,6 +119,7 @@ function App() {
     if (type === 'blog') setEditingBlogPost(item);
     if (type === 'service') setEditingService(item);
     if (type === 'contact') setViewingContact(item);
+    if (type === 'proposal') setViewingProposal(item);
     if (type === 'user') setEditingUser(item);
     setIsModalOpen(true);
   };
@@ -121,6 +130,7 @@ function App() {
     setEditingBlogPost(null);
     setEditingService(null);
     setViewingContact(null);
+    setViewingProposal(null);
     setEditingUser(null);
   };
 
@@ -246,6 +256,31 @@ function App() {
     }
   };
 
+  const handleUpdateProposalStatus = async (id: number, status: ProposalStatus) => {
+    setError('');
+    try {
+      const updated = await proposalsAPI.updateStatus(id, status);
+      setProposals(proposals.map((p) => (p.id === id ? updated : p)));
+      setViewingProposal((prev) => (prev && prev.id === id ? updated : prev));
+    } catch (err: any) {
+      setError(getErrorMessage(err, 'Failed to update proposal status'));
+    }
+  };
+
+  const handleDeleteProposal = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this proposal?')) return;
+    setLoading(true);
+    setError('');
+    try {
+      await proposalsAPI.delete(id);
+      await fetchAllData();
+    } catch (err: any) {
+      setError(getErrorMessage(err, 'Failed to delete proposal'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSaveUser = async (user: User) => {
     setLoading(true);
     setError('');
@@ -293,6 +328,7 @@ function App() {
           mobileOpen={mobileSidebarOpen}
           onCloseMobile={() => setMobileSidebarOpen(false)}
           contactsCount={contacts.length}
+          proposalsCount={proposals.filter((p) => p.status === 'new').length}
         />
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
           <Header
@@ -315,6 +351,7 @@ function App() {
                 blogPosts={blogPosts}
                 services={services}
                 contacts={contacts}
+                proposals={proposals}
                 users={users}
               />
             )}
@@ -378,6 +415,21 @@ function App() {
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
                 viewingContact={viewingContact}
+              />
+            )}
+            {activeTab === 'proposals' && (
+              <ProposalsManagement
+                proposals={proposals}
+                loading={loading}
+                error={error}
+                searchProposals={searchProposals}
+                setSearchProposals={setSearchProposals}
+                openViewModal={(proposal) => openEditModal('proposal', proposal)}
+                handleDeleteProposal={handleDeleteProposal}
+                handleUpdateProposalStatus={handleUpdateProposalStatus}
+                isModalOpen={isModalOpen}
+                closeModal={closeModal}
+                viewingProposal={viewingProposal}
               />
             )}
             {activeTab === 'users' && (

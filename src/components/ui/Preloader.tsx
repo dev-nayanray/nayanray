@@ -221,7 +221,7 @@ export default function Preloader({
       role="status"
       aria-live="polite"
       aria-busy={show}
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 backdrop-blur-2xl transition-all duration-700 ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-surface-50 via-brand-50 to-brand-100 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 backdrop-blur-2xl transition-all duration-700 ${
         exiting ? "opacity-0 scale-105 pointer-events-none" : "opacity-100 scale-100"
       }`}
     >
@@ -260,7 +260,7 @@ export default function Preloader({
 
       {/* Main Content Container with Glass Morphism */}
       <div className="relative z-10 w-full max-w-lg px-8">
-        <div className="glass-effect rounded-3xl p-8 shadow-2xl border border-white/10 dark:bg-gray-900/80 dark:border-gray-700/50 dark:shadow-black/30">
+        <div className="glass-effect rounded-3xl p-8 shadow-2xl border border-white/10 dark:bg-surface-900/80 dark:border-white/10 dark:shadow-black/30">
           {(variant === "modern" || variant === "elegant") && (
             <div className="flex flex-col items-center gap-6 text-center">
               <div className="relative mb-4">
@@ -372,7 +372,7 @@ export default function Preloader({
                     className={`w-32 h-32 object-contain rounded-2xl shadow-2xl transform ${prefersReduced ? "" : "animate-logo-3d"}`}
                   />
                 ) : (
-                  <div className={`w-32 h-32 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center text-4xl font-bold text-white shadow-2xl ${prefersReduced ? "" : "animate-logo-3d"}`}>
+                  <div className={`w-32 h-32 rounded-2xl bg-gradient-to-br from-brand-500/20 to-brand-700/20 border border-white/10 flex items-center justify-center text-4xl font-bold text-white shadow-2xl ${prefersReduced ? "" : "animate-logo-3d"}`}>
                     NR
                   </div>
                 )}
@@ -380,7 +380,7 @@ export default function Preloader({
 
               {!prefersReduced ? (
                 <div className="w-48 h-1 rounded-full overflow-hidden bg-white/10 backdrop-blur-sm">
-                  <div className="h-full bg-gradient-to-r from-blue-400 to-purple-400 animate-slide-premium rounded-full" style={{ width: "40%" }} />
+                  <div className="h-full bg-gradient-to-r from-brand-400 to-brand-600 animate-slide-premium rounded-full" style={{ width: "40%" }} />
                 </div>
               ) : (
                 <div className="h-1 w-48 bg-white/10 rounded-full" />

@@ -9,7 +9,9 @@ import ServicesPage from "./pages/Services";
 import BlogPage from "./pages/Blog";
 import ContactPage from "./pages/Contact";
 import SingleProject from "./pages/SingleProject";
+import SingleService from "./pages/SingleService";
 import SingleBlogPost from "./pages/SingleBlogPost";
+import StartProject from "./pages/StartProject";
 import NotFound from "./pages/NotFound";
 import Preloader from "./components/ui/Preloader";
 
@@ -52,9 +54,11 @@ function App() {
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:id" element={<SingleProject />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:id" element={<SingleService />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<SingleBlogPost />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/start-a-project" element={<StartProject />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

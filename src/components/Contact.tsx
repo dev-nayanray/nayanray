@@ -107,7 +107,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden"
+      className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
@@ -131,19 +131,19 @@ const Contact = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaPaperPlane className="w-4 h-4" />
             Get In Touch
           </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Work Together</span>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
+            Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Work Together</span>
           </h2>
-          
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+          <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
+
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             Ready to bring your ideas to life? Let's discuss your project and create something amazing together. 
             I'm always excited to take on new challenges and help businesses grow.
           </p>
@@ -175,14 +175,14 @@ const Contact = () => {
                   <div className={`absolute -inset-0.5 bg-gradient-to-r ${info.color} rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300`}></div>
                   
                   {/* Contact Card */}
-                  <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-sm hover:shadow-xl transition-all duration-500">
+                  <div className="relative bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-6 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-500">
                     <div className="flex items-center gap-4">
                       <div className={`p-3 rounded-xl bg-gradient-to-r ${info.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         {info.icon}
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm text-gray-600 font-medium">{info.label}</div>
-                        <div className="text-gray-900 font-semibold">{info.value}</div>
+                        <div className="text-sm text-surface-900/60 dark:text-white/50 font-medium">{info.label}</div>
+                        <div className="text-surface-900 dark:text-white font-semibold">{info.value}</div>
                       </div>
                     </div>
                   </div>
@@ -195,9 +195,9 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-sm"
+              className="bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-6 border border-surface-100 dark:border-white/10 shadow-sm"
             >
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Follow Me</h3>
+              <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-4">Follow Me</h3>
               <div className="flex gap-3">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -207,7 +207,7 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all duration-300 ${social.color}`}
+                    className={`flex items-center justify-center w-12 h-12 rounded-xl bg-surface-50 dark:bg-white/5 text-surface-900/60 dark:text-white/50 border border-surface-100 dark:border-white/10 shadow-sm transition-all duration-300 ${social.color}`}
                     title={social.label}
                   >
                     {social.icon}
@@ -221,13 +221,13 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100/50 shadow-sm"
+              className="bg-gradient-to-r from-brand-50 to-brand-100 dark:from-brand-500/10 dark:to-brand-500/10 rounded-2xl p-6 border border-brand-100/50 dark:border-brand-500/20 shadow-sm"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="font-semibold text-gray-900">Currently Available</span>
+                <span className="font-semibold text-surface-900 dark:text-white">Currently Available</span>
               </div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-surface-900/60 dark:text-white/50 text-sm">
                 I'm currently accepting new projects and would love to hear about yours. 
                 Get in touch and let's discuss how we can work together.
               </p>
@@ -242,15 +242,15 @@ const Contact = () => {
             className="relative"
           >
             {/* Background Gradient Effect */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur opacity-30 transition duration-300"></div>
-            
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl blur opacity-30 transition duration-300"></div>
+
             {/* Form Container */}
-            <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+            <div className="relative bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl p-8 border border-surface-100 dark:border-white/10 shadow-xl">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name & Email Row */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-surface-900/80 dark:text-white/70 mb-2">
                       Your Name *
                     </label>
                     <input
@@ -260,12 +260,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
                       placeholder="Enter your name"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-surface-900/80 dark:text-white/70 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -275,7 +275,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -283,7 +283,7 @@ const Contact = () => {
 
                 {/* Subject */}
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-surface-900/80 dark:text-white/70 mb-2">
                     Subject *
                   </label>
                   <input
@@ -293,14 +293,14 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
                     placeholder="What's this about?"
                   />
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-surface-900/80 dark:text-white/70 mb-2">
                     Your Message *
                   </label>
                   <textarea
@@ -310,7 +310,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 outline-none resize-none"
+                    className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none resize-none"
                     placeholder="Tell me about your project..."
                   />
                 </div>
@@ -321,7 +321,7 @@ const Contact = () => {
                   disabled={isSubmitting}
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group/btn relative overflow-hidden"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group/btn relative overflow-hidden"
                 >
                   {isSubmitting ? (
                     <>
@@ -339,7 +339,7 @@ const Contact = () => {
               </form>
 
               {/* Form Footer */}
-              <p className="text-center text-gray-500 text-sm mt-6">
+              <p className="text-center text-surface-900/40 dark:text-white/40 text-sm mt-6">
                 I typically respond within 24 hours. Your information is safe with me.
               </p>
             </div>

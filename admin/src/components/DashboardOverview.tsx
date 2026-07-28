@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaProjectDiagram, FaBlog, FaServicestack, FaEnvelope, FaUsers, FaArrowUp } from 'react-icons/fa';
+import { FaProjectDiagram, FaBlog, FaServicestack, FaEnvelope, FaFileInvoice, FaUsers, FaArrowUp } from 'react-icons/fa';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -12,13 +12,14 @@ import {
   Pie,
   Cell,
 } from 'recharts';
-import type { Project, BlogPost, Service, ContactMessage, User } from '../services/api';
+import type { Project, BlogPost, Service, ContactMessage, Proposal, User } from '../services/api';
 
 interface DashboardOverviewProps {
   projects: Project[];
   blogPosts: BlogPost[];
   services: Service[];
   contacts: ContactMessage[];
+  proposals: Proposal[];
   users: User[];
 }
 
@@ -26,11 +27,12 @@ const KPI_META = [
   { key: 'projects', icon: FaProjectDiagram, label: 'Projects', accent: 'from-brand-500 to-brand-700' },
   { key: 'blog', icon: FaBlog, label: 'Blog Posts', accent: 'from-emerald-400 to-emerald-600' },
   { key: 'services', icon: FaServicestack, label: 'Services', accent: 'from-amber-400 to-orange-500' },
+  { key: 'proposals', icon: FaFileInvoice, label: 'Proposals', accent: 'from-violet-400 to-violet-600' },
   { key: 'contacts', icon: FaEnvelope, label: 'Messages', accent: 'from-rose-400 to-rose-600' },
   { key: 'users', icon: FaUsers, label: 'Users', accent: 'from-sky-400 to-sky-600' },
 ] as const;
 
-const PIE_COLORS = ['#7c5cff', '#10b981', '#f59e0b', '#f43f5e', '#0ea5e9'];
+const PIE_COLORS = ['#7c5cff', '#10b981', '#f59e0b', '#8b5cf6', '#f43f5e', '#0ea5e9'];
 
 const timeAgo = (dateStr?: string) => {
   if (!dateStr) return '';
@@ -49,12 +51,14 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
   blogPosts,
   services,
   contacts,
+  proposals,
   users,
 }) => {
   const counts = {
     projects: projects.length,
     blog: blogPosts.length,
     services: services.length,
+    proposals: proposals.length,
     contacts: contacts.length,
     users: users.length,
   };
@@ -63,6 +67,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
     { name: 'Projects', value: counts.projects },
     { name: 'Blog Posts', value: counts.blog },
     { name: 'Services', value: counts.services },
+    { name: 'Proposals', value: counts.proposals },
     { name: 'Messages', value: counts.contacts },
     { name: 'Users', value: counts.users },
   ].filter((d) => d.value > 0);
@@ -77,6 +82,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
   const recentActivity = [
     ...projects.slice(-3).map((p) => ({ label: p.title, type: 'Project', date: undefined as string | undefined })),
     ...blogPosts.slice(-3).map((b) => ({ label: b.title, type: 'Blog Post', date: b.date })),
+    ...proposals.slice(-3).map((p) => ({ label: `${p.name} — ${p.serviceName || 'General inquiry'}`, type: 'Proposal', date: p.createdAt })),
     ...contacts.slice(-3).map((c: any) => ({ label: c.name || c.email || 'New message', type: 'Message', date: c.createdAt })),
   ].slice(0, 6);
 
@@ -90,7 +96,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       </div>
 
       {/* KPI cards */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {KPI_META.map((meta) => (
           <div
             key={meta.key}

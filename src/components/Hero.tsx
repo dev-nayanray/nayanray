@@ -62,8 +62,17 @@ export default function Hero() {
     mouseY.set(clientY - target.top);
   };
 
-  // Remove unused colors variable to fix TS6133 error
-  // const colors = [...]; // removed as unused
+  // Viewport size for the background SVG's circle centers — tracked via a
+  // resize listener instead of reading window.innerWidth/Height directly at
+  // render time, so the rings re-center on rotate/resize instead of staying
+  // pinned to whatever size was current on first paint.
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
+  useEffect(() => {
+    const updateViewport = () => setViewport({ width: window.innerWidth, height: window.innerHeight });
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
 
   const currentRole = roles[index];
   const CurrentIcon = currentRole.icon;
@@ -107,7 +116,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-    className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/40 dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 bg-gradient-to-br from-surface-50 via-brand-50/30 to-brand-100/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden"
       aria-label="Intro — Nayan Ray"
       onMouseMove={handleMouseMove}
       ref={ref}
@@ -118,7 +127,7 @@ export default function Hero() {
         <motion.div
           className="absolute inset-0 opacity-20"
           style={{
-            background: `radial-gradient(circle at ${cursorX}px ${cursorY}px, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.1) 25%, rgba(236, 72, 153, 0.05) 50%, transparent 70%)`,
+            background: `radial-gradient(circle at ${cursorX}px ${cursorY}px, rgba(124, 92, 255, 0.15) 0%, rgba(139, 92, 246, 0.1) 25%, rgba(236, 72, 153, 0.05) 50%, transparent 70%)`,
           }}
         />
 
@@ -128,16 +137,16 @@ export default function Hero() {
             <linearGradient id="line-gradient" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#06b6d4" />
               <stop offset="25%" stopColor="#3b82f6" />
-              <stop offset="50%" stopColor="#8b5cf6" />
+              <stop offset="50%" stopColor="#7c5cff" />
               <stop offset="75%" stopColor="#ec4899" />
               <stop offset="100%" stopColor="#f97316" />
             </linearGradient>
             <radialGradient id="icon-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(59, 130, 246, 0.4)" />
+              <stop offset="0%" stopColor="rgba(124, 92, 255, 0.4)" />
               <stop offset="100%" stopColor="rgba(139, 92, 246, 0.1)" />
             </radialGradient>
             <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(59, 130, 246, 0.8)" />
+              <stop offset="0%" stopColor="rgba(124, 92, 255, 0.8)" />
               <stop offset="50%" stopColor="rgba(139, 92, 246, 0.6)" />
               <stop offset="100%" stopColor="rgba(236, 72, 153, 0.4)" />
             </radialGradient>
@@ -147,13 +156,12 @@ export default function Hero() {
           {[1, 2, 3].map((ring) => {
             const radius = 80 + ring * 60; // Smaller, more professional sizing
 
-
             return (
               <g key={`ring-${ring}`}>
                 {/* Subtle animated path effect */}
                 <motion.circle
-                  cx={window.innerWidth / 2}
-                  cy={window.innerHeight / 2}
+                  cx={viewport.width / 2}
+                  cy={viewport.height / 2}
                   r={radius}
                   fill="none"
                   stroke="url(#line-gradient)"
@@ -171,16 +179,14 @@ export default function Hero() {
                     delay: ring * 1
                   }}
                 />
-
-
               </g>
             );
           })}
 
           {/* Central hub with pulsing effect */}
           <motion.circle
-            cx={window.innerWidth / 2}
-            cy={window.innerHeight / 2}
+            cx={viewport.width / 2}
+            cy={viewport.height / 2}
             r="60"
             fill="url(#center-glow)"
             initial={{ scale: 0.8, opacity: 0.5 }}
@@ -195,12 +201,10 @@ export default function Hero() {
             }}
           />
 
-
-
           {/* Outer ring with flowing light */}
           <motion.circle
-            cx={window.innerWidth / 2}
-            cy={window.innerHeight / 2}
+            cx={viewport.width / 2}
+            cy={viewport.height / 2}
             r="800"
             fill="none"
             stroke="url(#line-gradient)"
@@ -216,13 +220,13 @@ export default function Hero() {
               repeat: Infinity,
               ease: "linear"
             }}
-            filter="drop-shadow(0 0 15px rgba(59, 130, 246, 0.6))"
+            filter="drop-shadow(0 0 15px rgba(124, 92, 255, 0.6))"
           />
         </svg>
 
         {/* Enhanced grid pattern with code-like lines */}
-        <div className="absolute inset-0 opacity-5 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
-        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-transparent via-blue-500/5 to-transparent" />
+        <div className="absolute inset-0 opacity-5 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-transparent via-brand-500/5 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl w-full">
@@ -242,25 +246,25 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-xl border border-white/20 shadow-lg shadow-blue-500/10"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-0/60 dark:bg-surface-900/50 backdrop-blur-xl border border-surface-100/40 dark:border-white/10 shadow-lg shadow-brand-500/10"
             >
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <FaStar key={i} className="w-3 h-3 text-amber-400 fill-current" />
                 ))}
               </div>
-              <span className="text-sm font-medium text-slate-700 dark:text-gray-300">Top Rated • 4.9/5</span>
+              <span className="text-sm font-medium text-surface-900/70 dark:text-white/60">Top Rated • 4.9/5</span>
             </motion.div>
 
             {/* Main heading */}
             <div className="space-y-4">
               <h1
                 id="hero-heading"
-                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-surface-900 dark:text-white leading-tight"
               >
                 {t("hero.greeting")}{" "}
                 <motion.span
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700"
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 0.2 }}
@@ -271,7 +275,7 @@ export default function Hero() {
 
               {/* Enhanced role display */}
               <motion.div
-                className="text-xl md:text-2xl font-semibold text-slate-700 flex items-center gap-3 min-h-[2.5rem]"
+                className="text-xl md:text-2xl font-semibold text-surface-900/80 dark:text-white/70 flex items-center gap-3 min-h-[2.5rem]"
                 aria-live="polite"
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : { opacity: 0 }}
@@ -293,7 +297,7 @@ export default function Hero() {
 
             {/* Description */}
             <motion.p
-              className="text-slate-600 max-w-2xl text-lg leading-relaxed"
+              className="text-surface-900/60 dark:text-white/50 max-w-2xl text-lg leading-relaxed"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.6 }}
@@ -310,7 +314,7 @@ export default function Hero() {
             >
               <motion.a
                 href="#projects"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.03] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300/50"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-2xl shadow-glow hover:shadow-xl transform hover:scale-[1.03] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-brand-300/50"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -320,7 +324,7 @@ export default function Hero() {
 
               <motion.a
                 href="#contact"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white/60 backdrop-blur-xl border border-white/20 text-slate-700 font-bold rounded-2xl hover:bg-white/80 transform hover:scale-[1.03] transition-all duration-300 shadow-lg shadow-blue-500/10 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-surface-0/60 dark:bg-surface-900/50 backdrop-blur-xl border border-surface-100/40 dark:border-white/10 text-surface-900 dark:text-white font-bold rounded-2xl hover:bg-surface-0/80 dark:hover:bg-surface-900/80 transform hover:scale-[1.03] transition-all duration-300 shadow-lg shadow-brand-500/10 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-brand-300/30"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -347,16 +351,16 @@ export default function Hero() {
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, delay: item.delay }}
                     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    className={`bg-gradient-to-br ${item.color} backdrop-blur-md ${item.borderColor} border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 cursor-default`}
+                    className={`bg-gradient-to-br ${item.color} dark:bg-surface-900/40 backdrop-blur-md ${item.borderColor} border dark:border-white/10 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 cursor-default`}
                   >
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color.replace('/15', '/20')} ${item.borderColor}`}>
-                          <IconComponent className="w-4 h-4 text-slate-700" />
+                          <IconComponent className="w-4 h-4 text-surface-900/80 dark:text-white/80" />
                         </div>
-                        <h3 className="font-semibold text-slate-800 text-sm">{item.title}</h3>
+                        <h3 className="font-semibold text-surface-900 dark:text-white text-sm">{item.title}</h3>
                       </div>
-                      <p className="text-slate-600 text-xs leading-relaxed">{item.description}</p>
+                      <p className="text-surface-900/60 dark:text-white/50 text-xs leading-relaxed">{item.description}</p>
                     </div>
                   </motion.div>
                 );
@@ -368,20 +372,20 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-4 bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-lg shadow-blue-500/10"
+              className="mt-4 bg-surface-0/60 dark:bg-surface-900/50 backdrop-blur-xl border border-surface-100/40 dark:border-white/10 rounded-2xl p-5 shadow-lg shadow-brand-500/10"
             >
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-slate-900">50+</div>
-                  <div className="text-xs text-slate-500 mt-1">Projects</div>
+                  <div className="text-2xl font-bold text-surface-900 dark:text-white">50+</div>
+                  <div className="text-xs text-surface-900/40 dark:text-white/40 mt-1">Projects</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-slate-900">98%</div>
-                  <div className="text-xs text-slate-500 mt-1">Satisfaction</div>
+                  <div className="text-2xl font-bold text-surface-900 dark:text-white">98%</div>
+                  <div className="text-xs text-surface-900/40 dark:text-white/40 mt-1">Satisfaction</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-slate-900">A+</div>
-                  <div className="text-xs text-slate-500 mt-1">Accessibility</div>
+                  <div className="text-2xl font-bold text-surface-900 dark:text-white">A+</div>
+                  <div className="text-xs text-surface-900/40 dark:text-white/40 mt-1">Accessibility</div>
                 </div>
               </div>
             </motion.div>
@@ -395,8 +399,8 @@ export default function Hero() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ delay: 1.2 }}
         >
-          <p className="text-slate-600 text-lg">
-            Available for <span className="text-slate-800 font-semibold">freelance</span> & <span className="text-slate-800 font-semibold">remote roles</span> • Based in Bangladesh
+          <p className="text-surface-900/60 dark:text-white/50 text-lg">
+            Available for <span className="text-surface-900 dark:text-white font-semibold">freelance</span> & <span className="text-surface-900 dark:text-white font-semibold">remote roles</span> • Based in Bangladesh
           </p>
         </motion.div>
       </div>

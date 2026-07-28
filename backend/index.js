@@ -10,6 +10,7 @@ import projectRoutes from "./routes/projects.js";
 import blogRoutes from "./routes/blog.js";
 import contactRoutes from "./routes/contact.js";
 import serviceRoutes from "./routes/services.js";
+import proposalRoutes from "./routes/proposals.js";
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
 import seedDatabase from "./seeders/seed.js";
@@ -54,6 +55,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/proposals", proposalRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

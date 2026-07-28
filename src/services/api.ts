@@ -18,4 +18,26 @@ export const submitContactMessage = async (contactData: {
   return response.data;
 };
 
+// Proposal API
+export interface ProposalData {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  serviceId?: number | null;
+  serviceName?: string;
+  projectType?: string;
+  budgetRange: string;
+  timeline: string;
+  description: string;
+}
+
+export const BUDGET_RANGES = ["Under $1k", "$1k–5k", "$5k–15k", "$15k+", "Not sure yet"];
+export const TIMELINES = ["ASAP", "1–3 months", "3–6 months", "Flexible"];
+
+export const submitProposal = async (data: ProposalData) => {
+  const response = await api.post('/proposals', data);
+  return response.data;
+};
+
 export default api;

@@ -63,8 +63,8 @@ const Header = () => {
       <motion.div
         className={`rounded-2xl backdrop-blur-xl border transition-all duration-500 ${
           scrolled
-            ? "bg-white/90 border-gray-200/80 shadow-lg dark:bg-gray-900/90 dark:border-gray-700/80"
-            : "bg-white/80 border-white/40 shadow-md dark:bg-gray-900/80 dark:border-gray-700/40"
+            ? "bg-surface-0/90 border-surface-100/80 shadow-lg dark:bg-surface-900/90 dark:border-white/10"
+            : "bg-surface-0/80 border-surface-100/40 shadow-md dark:bg-surface-900/80 dark:border-white/10"
         }`}
         layoutId="header-background"
       >
@@ -82,7 +82,7 @@ const Header = () => {
               transition={{ type: "spring", stiffness: 400 }}
             />
             <motion.span
-              className={`font-bold text-xl bg-gradient-to-r from-slate-800 to-slate-600 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent ${
+              className={`font-bold text-xl text-surface-900 dark:text-white ${
                 scrolled ? "opacity-100" : "opacity-90"
               }`}
             >
@@ -96,7 +96,7 @@ const Header = () => {
             <ThemeToggle />
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-slate-800 to-slate-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-medium shadow-glow hover:shadow-xl transition-all duration-300"
               whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -108,7 +108,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-3 rounded-xl bg-slate-800 text-white shadow-lg"
+            className="lg:hidden p-3 rounded-xl bg-brand-600 text-white shadow-lg"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -146,7 +146,7 @@ const Header = () => {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="border-t border-gray-200/50 dark:border-gray-700/50 px-6 py-6">
+              <div className="border-t border-surface-100 dark:border-white/10 px-6 py-6">
                 {/* Search Input */}
                 <motion.div
                   className="mb-6"
@@ -157,14 +157,14 @@ const Header = () => {
                   <input
                     type="text"
                     placeholder="Search menu..."
-                    className="w-full px-4 py-2 rounded-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+                    className="w-full px-4 py-2 rounded-full bg-surface-50 border border-surface-100 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-white/5 dark:border-white/10 dark:text-white dark:placeholder-white/30"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </motion.div>
 
                 {/* Category Filters */}
-                <motion.div 
+                <motion.div
                   className="flex flex-wrap gap-2 mb-6"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -176,8 +176,8 @@ const Header = () => {
                       onClick={() => setActiveCategory(category)}
                       className={`px-4 py-2 rounded-full text-sm font-medium capitalize transition-all duration-300 ${
                         activeCategory === category
-                          ? "bg-blue-500 text-white shadow-lg"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                          ? "bg-brand-500 text-white shadow-lg"
+                          : "bg-surface-50 text-surface-900/60 hover:bg-surface-100 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10"
                       }`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -199,7 +199,7 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 + sectionIndex * 0.1 }}
                     >
-                      <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <h3 className="text-xs font-semibold text-surface-900/40 dark:text-white/40 uppercase tracking-wider">
                         {section.category}
                       </h3>
                       <div className="space-y-2">
@@ -214,7 +214,7 @@ const Header = () => {
                             >
                               <Link
                                 to={item.to}
-                                className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300 group dark:from-gray-800 dark:to-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-surface-50 to-surface-0 border border-surface-100/60 shadow-sm hover:shadow-md transition-all duration-300 group dark:from-white/5 dark:to-white/10 dark:border-white/10 dark:text-white/70 dark:hover:text-white"
                               >
                                 <motion.div
                                   className={`p-2 rounded-lg bg-gradient-to-r ${item.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}
@@ -222,7 +222,7 @@ const Header = () => {
                                 >
                                   <IconComponent className="w-4 h-4 text-white" />
                                 </motion.div>
-                                <span className="font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">
+                                <span className="font-medium text-surface-900/70 dark:text-white/70 group-hover:text-surface-900 dark:group-hover:text-white">
                                   {item.name}
                                 </span>
                               </Link>
@@ -236,14 +236,14 @@ const Header = () => {
 
                 {/* Quick Actions */}
                 <motion.div
-                  className="grid grid-cols-2 gap-3 mt-6 pt-6 border-t border-gray-200/50 dark:border-gray-700/50"
+                  className="grid grid-cols-2 gap-3 mt-6 pt-6 border-t border-surface-100 dark:border-white/10"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
                 >
                   <motion.a
                     href="tel:+8801981308611"
-                    className="flex items-center gap-3 p-3 rounded-xl bg-green-50 border border-green-200 text-green-700 hover:bg-green-100 transition-colors duration-300 dark:bg-green-900/20 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-900/30"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-green-50 border border-green-200 text-green-700 hover:bg-green-100 transition-colors duration-300 dark:bg-green-500/10 dark:border-green-500/30 dark:text-green-400 dark:hover:bg-green-500/20"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -251,8 +251,8 @@ const Header = () => {
                     <span className="font-medium">Call Now</span>
                   </motion.a>
                   <motion.a
-                    href="#contact"
-                    className="flex items-center gap-3 p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 transition-colors duration-300 dark:bg-blue-900/20 dark:border-blue-700 dark:text-blue-400 dark:hover:bg-blue-900/30"
+                    href="/start-a-project"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-brand-50 border border-brand-200 text-brand-700 hover:bg-brand-100 transition-colors duration-300 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 dark:hover:bg-brand-500/20"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >

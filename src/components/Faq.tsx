@@ -85,7 +85,7 @@ const Faq = () => {
   return (
     <section
       id="faq"
-      className="relative py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden"
+      className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
@@ -109,19 +109,19 @@ const Faq = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaQuestion className="w-4 h-4" />
             FAQ
           </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Questions</span>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
+            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Questions</span>
           </h2>
-          
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+          <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
+
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             Find answers to common questions about my services, process, and how we can work together 
             to bring your digital ideas to life.
           </p>
@@ -142,8 +142,8 @@ const Faq = () => {
               whileTap={{ scale: 0.95 }}
               className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all duration-300 ${
                 activeCategory === category.id
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                  : "bg-white/80 text-gray-700 border border-gray-200 hover:border-blue-300 shadow-sm hover:shadow-md"
+                  ? "bg-gradient-to-r from-brand-500 to-brand-700 text-white shadow-glow"
+                  : "bg-surface-0/80 dark:bg-surface-900/80 text-surface-900/80 dark:text-white/70 border border-surface-100 dark:border-white/10 hover:border-brand-300 dark:hover:border-brand-500/50 shadow-sm hover:shadow-md"
               }`}
             >
               {category.icon}
@@ -163,30 +163,30 @@ const Faq = () => {
               className="group relative"
             >
               {/* Background Gradient Effect */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
-              
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+
               {/* FAQ Card */}
-              <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl border border-white/50 shadow-sm hover:shadow-lg transition-all duration-500 overflow-hidden">
+              <div className="relative bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-lg transition-all duration-500 overflow-hidden">
                 <motion.button
                   className="w-full px-6 py-6 flex items-start gap-4 text-left group/button"
                   onClick={() => toggleFaq(faq.id)}
                   whileHover={{ backgroundColor: "rgba(59, 130, 246, 0.05)" }}
                 >
                   {/* Icon */}
-                  <div className="flex-shrink-0 p-2 rounded-xl bg-blue-100 text-blue-600 group-hover/button:bg-blue-600 group-hover/button:text-white transition-colors duration-300">
+                  <div className="flex-shrink-0 p-2 rounded-xl bg-brand-100 dark:bg-brand-500/10 text-brand-600 dark:text-brand-300 group-hover/button:bg-brand-600 group-hover/button:text-white transition-colors duration-300">
                     {faq.icon}
                   </div>
 
                   {/* Content */}
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-lg font-semibold text-gray-900 pr-8 group-hover/button:text-gray-800 transition-colors">
+                      <h3 className="text-lg font-semibold text-surface-900 dark:text-white pr-8 group-hover/button:text-surface-900/80 dark:group-hover/button:text-white/80 transition-colors">
                         {faq.question}
                       </h3>
                       <motion.div
                         animate={{ rotate: openIndex === faq.id ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
-                        className="flex-shrink-0 p-1 rounded-lg bg-gray-100 text-gray-600 group-hover/button:bg-blue-100 group-hover/button:text-blue-600 transition-colors duration-300"
+                        className="flex-shrink-0 p-1 rounded-lg bg-surface-50 dark:bg-white/5 text-surface-900/60 dark:text-white/50 group-hover/button:bg-brand-100 dark:group-hover/button:bg-brand-500/10 group-hover/button:text-brand-600 dark:group-hover/button:text-brand-300 transition-colors duration-300"
                       >
                         <FaChevronDown className="w-4 h-4" />
                       </motion.div>
@@ -205,7 +205,7 @@ const Faq = () => {
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-gray-600 leading-relaxed mt-4 pr-8"
+                            className="text-surface-900/60 dark:text-white/50 leading-relaxed mt-4 pr-8"
                           >
                             {faq.answer}
                           </motion.p>
@@ -216,8 +216,8 @@ const Faq = () => {
                 </motion.button>
 
                 {/* Hover Border Effect */}
-                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
-                  <div className="absolute inset-[2px] bg-white rounded-2xl"></div>
+                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-brand-500 to-brand-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
+                  <div className="absolute inset-[2px] bg-surface-0 dark:bg-surface-900 rounded-2xl"></div>
                 </div>
               </div>
             </motion.div>
@@ -231,11 +231,11 @@ const Faq = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 md:p-12 border border-blue-100/50 shadow-sm">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="bg-gradient-to-r from-brand-50 to-brand-100 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
+            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
               Still Have Questions?
             </h3>
-            <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-surface-900/60 dark:text-white/50 text-lg mb-8 max-w-2xl mx-auto">
               Can't find the answer you're looking for? Please reach out to our friendly team.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -243,7 +243,7 @@ const Faq = () => {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300"
               >
                 Contact Me
               </motion.a>
@@ -251,7 +251,7 @@ const Faq = () => {
                 href="mailto:wpnayanray@gmail.com"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-gray-800 font-semibold rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-300"
+                className="px-8 py-4 bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 font-semibold rounded-2xl border-2 border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/50 transition-all duration-300"
               >
                 Send Email
               </motion.a>

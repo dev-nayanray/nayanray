@@ -65,12 +65,15 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-slate-900 text-gray-300 overflow-hidden border-t border-slate-700/50">
+    // Footer stays a permanently dark band regardless of the site's light/dark
+    // toggle (same deliberate choice as ScrollShowcase) — reskinned onto the
+    // shared surface/brand tokens rather than the old ad-hoc slate/blue/purple mix.
+    <footer className="relative bg-surface-950 text-white/60 overflow-hidden border-t border-white/10">
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
-        
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-brand-500/5 rounded-full blur-3xl"></div>
+
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 opacity-5 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       </div>
@@ -81,14 +84,14 @@ const Footer = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 py-8 border-b border-slate-700/30"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 py-8 border-b border-white/10"
         >
           {trustBadges.map((badge, index) => {
             const IconComponent = badge.icon;
             return (
               <motion.div
                 key={index}
-                className="flex items-center gap-3 p-4 rounded-2xl bg-slate-800/30 backdrop-blur-sm border border-slate-700/50"
+                className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10"
                 whileHover={{ scale: 1.02, y: -2 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
@@ -112,10 +115,10 @@ const Footer = () => {
           >
             <div className="space-y-4">
               <h3 className="text-2xl font-bold text-white">
-                Nayan <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Ray</span>
+                Nayan <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">Ray</span>
               </h3>
-              <p className="text-slate-400 leading-relaxed text-sm">
-                Full-Stack Developer & WordPress Specialist. Building performant, 
+              <p className="text-white/40 leading-relaxed text-sm">
+                Full-Stack Developer & WordPress Specialist. Building performant,
                 accessible web experiences that drive business growth.
               </p>
             </div>
@@ -132,7 +135,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`p-3 rounded-xl bg-slate-800/50 text-slate-400 border border-slate-700 backdrop-blur-sm transition-all duration-300 ${social.color} hover:text-white hover:border-current`}
+                    className={`p-3 rounded-xl bg-white/5 text-white/40 border border-white/10 backdrop-blur-sm transition-all duration-300 ${social.color} hover:text-white hover:border-current`}
                     title={social.name}
                   >
                     {social.icon}
@@ -152,14 +155,14 @@ const Footer = () => {
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Navigation</h4>
             <div className="grid grid-cols-2 gap-4">
               {[
-                "About", "Services", "Projects", "Blog", 
+                "About", "Services", "Projects", "Blog",
                 "Testimonials", "Contact", "Process", "Learning"
               ].map((item, index) => (
                 <motion.a
                   key={index}
                   href={`#${item.toLowerCase()}`}
                   whileHover={{ x: 4, color: "#ffffff" }}
-                  className="text-slate-400 hover:text-white transition-colors duration-300 text-sm p-2 rounded-lg hover:bg-slate-800/30"
+                  className="text-white/40 hover:text-white transition-colors duration-300 text-sm p-2 rounded-lg hover:bg-white/5"
                 >
                   {item}
                 </motion.a>
@@ -183,7 +186,7 @@ const Footer = () => {
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.02 }}
-                  className="p-3 rounded-xl bg-slate-800/30 border border-slate-700/50 text-slate-400 text-xs text-center hover:border-blue-500/30 transition-colors"
+                  className="p-3 rounded-xl bg-white/5 border border-white/10 text-white/40 text-xs text-center hover:border-brand-500/30 transition-colors"
                 >
                   {service}
                 </motion.div>
@@ -203,30 +206,30 @@ const Footer = () => {
               <motion.a
                 href="mailto:wpnayanray@gmail.com"
                 whileHover={{ x: 4, color: "#ffffff" }}
-                className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-300 group text-sm"
+                className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300 group text-sm"
               >
-                <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 transition-colors duration-300">
+                <div className="p-2 rounded-lg bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors duration-300">
                   <FaEnvelope className="w-3 h-3" />
                 </div>
                 <span>wpnayanray@gmail.com</span>
               </motion.a>
-              
+
               <motion.a
                 href="tel:+8801981308611"
                 whileHover={{ x: 4, color: "#ffffff" }}
-                className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-300 group text-sm"
+                className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300 group text-sm"
               >
                 <div className="p-2 rounded-lg bg-green-500/10 text-green-400 group-hover:bg-green-500/20 transition-colors duration-300">
                   <FaPhone className="w-3 h-3" />
                 </div>
                 <span>+8801981308611</span>
               </motion.a>
-              
+
               <motion.div
                 whileHover={{ x: 4, color: "#ffffff" }}
-                className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-300 group text-sm"
+                className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300 group text-sm"
               >
-                <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400 group-hover:bg-purple-500/20 transition-colors duration-300">
+                <div className="p-2 rounded-lg bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors duration-300">
                   <FaMapMarkerAlt className="w-3 h-3" />
                 </div>
                 <span>Khulna, Bangladesh</span>
@@ -237,15 +240,15 @@ const Footer = () => {
             <div className="space-y-3">
               <h5 className="text-xs font-semibold text-white uppercase tracking-wider">Stay Updated</h5>
               <div className="flex gap-2">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="Your email"
-                  className="flex-1 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                  className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand-500"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg text-sm font-medium"
+                  className="px-4 py-2 bg-gradient-to-r from-brand-500 to-brand-700 text-white rounded-lg text-sm font-medium"
                 >
                   Join
                 </motion.button>
@@ -255,19 +258,19 @@ const Footer = () => {
         </div>
 
         {/* Bottom Footer - Enhanced */}
-        <div className="py-8 border-t border-slate-700/30">
+        <div className="py-8 border-t border-white/10">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             {/* Copyright */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col sm:flex-row items-center gap-3 text-slate-400 text-sm"
+              className="flex flex-col sm:flex-row items-center gap-3 text-white/40 text-sm"
             >
               <span>© {currentYear} Nayan Ray. All rights reserved.</span>
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1">
-                  Made with <FaHeart className="w-3 h-3 text-red-400 animate-pulse" /> and <FaCode className="w-3 h-3 text-blue-400" />
+                  Made with <FaHeart className="w-3 h-3 text-red-400 animate-pulse" /> and <FaCode className="w-3 h-3 text-brand-400" />
                 </span>
               </div>
             </motion.div>
@@ -277,7 +280,7 @@ const Footer = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center gap-6 text-sm text-slate-400"
+              className="flex items-center gap-6 text-sm text-white/40"
             >
               {["Privacy Policy", "Terms of Service", "Cookies", "Sitemap"].map((item, index) => (
                 <motion.a
@@ -296,7 +299,7 @@ const Footer = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex items-center gap-6 text-xs text-slate-500"
+              className="flex items-center gap-6 text-xs text-white/30"
             >
               <span>🚀 50+ Projects</span>
               <span>⭐ 4.9/5 Rating</span>
@@ -316,7 +319,7 @@ const Footer = () => {
             onClick={scrollToTop}
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            className="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 group backdrop-blur-sm border border-blue-400/20"
+            className="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white rounded-2xl shadow-glow hover:shadow-3xl transition-all duration-300 group backdrop-blur-sm border border-brand-400/20"
             aria-label="Back to top"
           >
             <FaArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform duration-300" />

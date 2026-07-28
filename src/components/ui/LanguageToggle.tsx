@@ -14,7 +14,7 @@ const LanguageToggle: React.FC = () => {
   return (
     <motion.button
       onClick={toggleLanguage}
-      className="p-3 rounded-xl bg-gradient-to-r from-slate-800 to-slate-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 dark:from-slate-700 dark:to-slate-600"
+      className="p-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white shadow-glow hover:shadow-xl transition-all duration-300"
       whileHover={{ scale: 1.05, y: -1 }}
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${i18n.language === 'en' ? 'Spanish' : 'English'}`}

@@ -35,7 +35,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <section id="blog" className="relative py-20 bg-gradient-to-br from-slate-50 via-white to-purple-50/30 overflow-hidden">
+    <section id="blog" className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-10 w-72 h-72 bg-blue-200/10 rounded-full blur-3xl"></div>
@@ -58,19 +58,19 @@ const Blog = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaTags className="w-4 h-4" />
             Latest Articles
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Blog</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
+            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Blog</span>
           </h2>
 
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
 
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
             Insights, tutorials, and thoughts on web development, design, and technology.
             Stay updated with the latest trends and best practices.
           </p>
@@ -93,10 +93,10 @@ const Blog = () => {
               className="group relative"
             >
               {/* Background Gradient Effect */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
 
               {/* Main Card */}
-              <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/50 shadow-sm hover:shadow-2xl transition-all duration-500">
+              <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500">
 
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
@@ -108,7 +108,7 @@ const Blog = () => {
 
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
-                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-lg">
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-brand-600 text-white text-sm font-medium shadow-lg">
                       {post.category}
                     </span>
                   </div>
@@ -128,7 +128,7 @@ const Blog = () => {
                 {/* Content */}
                 <div className="p-6">
                   {/* Meta Information */}
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+                  <div className="flex items-center gap-4 text-sm text-surface-900/60 dark:text-white/50 mb-4">
                     <span className="flex items-center gap-2">
                       <FaCalendar className="w-3 h-3" />
                       {post.date}
@@ -140,12 +140,12 @@ const Blog = () => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors line-clamp-2">
+                  <h3 className="text-xl font-bold text-surface-900 dark:text-white mb-3 group-hover:text-surface-900/80 dark:group-hover:text-white/80 transition-colors line-clamp-2">
                     {post.title}
                   </h3>
 
                   {/* Excerpt */}
-                  <p className="text-gray-600 mb-4 leading-relaxed group-hover:text-gray-700 transition-colors line-clamp-3">
+                  <p className="text-surface-900/60 dark:text-white/50 mb-4 leading-relaxed group-hover:text-surface-900/80 dark:group-hover:text-white/70 transition-colors line-clamp-3">
                     {post.excerpt}
                   </p>
 
@@ -154,7 +154,7 @@ const Blog = () => {
                     {(Array.isArray(post.tags) ? post.tags : []).map((tag: string, tagIndex: number) => (
                       <span
                         key={tagIndex}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-200 group-hover:border-gray-300 transition-colors"
+                        className="px-3 py-1 bg-surface-50 dark:bg-white/5 text-surface-900/80 dark:text-white/70 text-sm rounded-full border border-surface-100 dark:border-white/10 group-hover:border-surface-200 dark:group-hover:border-white/20 transition-colors"
                       >
                         #{tag}
                       </span>
@@ -162,11 +162,11 @@ const Blog = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-200/50">
+                  <div className="flex items-center justify-between pt-4 border-t border-surface-100 dark:border-white/10">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-300 group/read"
+                      className="flex items-center gap-2 text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 font-semibold transition-colors duration-300 group/read"
                     >
                       <Link
                         to={`/blog/${post.id}`}
@@ -180,7 +180,7 @@ const Blog = () => {
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-2 text-gray-400 hover:text-blue-600 transition-colors duration-300"
+                      className="p-2 text-surface-900/40 dark:text-white/40 hover:text-brand-600 dark:hover:text-brand-400 transition-colors duration-300"
                     >
                       <FaShare className="w-4 h-4" />
                     </motion.button>
@@ -188,8 +188,8 @@ const Blog = () => {
                 </div>
 
                 {/* Hover Border Effect */}
-                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
-                  <div className="absolute inset-[2px] bg-white rounded-3xl"></div>
+                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
+                  <div className="absolute inset-[2px] bg-surface-0 dark:bg-surface-900 rounded-3xl"></div>
                 </div>
               </div>
             </motion.article>
@@ -207,13 +207,13 @@ const Blog = () => {
             href="#"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group/cta"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300 group/cta"
           >
             View All Articles
             <FaArrowRight className="w-5 h-5 group-hover/cta:translate-x-1 transition-transform duration-300" />
           </motion.a>
 
-          <p className="text-gray-600 mt-6">
+          <p className="text-surface-900/60 dark:text-white/50 mt-6">
             More articles on web development, design systems, and technology trends
           </p>
         </motion.div>

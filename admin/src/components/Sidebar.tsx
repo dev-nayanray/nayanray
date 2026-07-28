@@ -5,6 +5,7 @@ import {
   FaBlog,
   FaServicestack,
   FaEnvelope,
+  FaFileInvoice,
   FaUsers,
   FaChevronLeft,
   FaTimes,
@@ -18,6 +19,7 @@ interface SidebarProps {
   mobileOpen: boolean;
   onCloseMobile: () => void;
   contactsCount?: number;
+  proposalsCount?: number;
 }
 
 const menuItems = [
@@ -25,6 +27,7 @@ const menuItems = [
   { key: 'projects', icon: FaProjectDiagram, label: 'Projects' },
   { key: 'blog', icon: FaBlog, label: 'Blog Posts' },
   { key: 'services', icon: FaServicestack, label: 'Services' },
+  { key: 'proposals', icon: FaFileInvoice, label: 'Proposals' },
   { key: 'contacts', icon: FaEnvelope, label: 'Messages' },
   { key: 'users', icon: FaUsers, label: 'Users' },
 ];
@@ -37,6 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   mobileOpen,
   onCloseMobile,
   contactsCount = 0,
+  proposalsCount = 0,
 }) => {
   const handleSelect = (key: string) => {
     setActiveTab(key);
@@ -85,7 +89,10 @@ const Sidebar: React.FC<SidebarProps> = ({
         <ul className="scrollbar-thin flex-1 space-y-1 overflow-y-auto px-3 py-2">
           {menuItems.map((item) => {
             const isActive = activeTab === item.key;
-            const badge = item.key === 'contacts' && contactsCount > 0 ? contactsCount : null;
+            const badge =
+              (item.key === 'contacts' && contactsCount > 0 && contactsCount) ||
+              (item.key === 'proposals' && proposalsCount > 0 && proposalsCount) ||
+              null;
             return (
               <li key={item.key} className="relative">
                 <button
