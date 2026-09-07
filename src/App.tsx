@@ -12,6 +12,7 @@ import SingleProject from "./pages/SingleProject";
 import SingleService from "./pages/SingleService";
 import SingleBlogPost from "./pages/SingleBlogPost";
 import StartProject from "./pages/StartProject";
+import MarkhubsPlugin from "./pages/MarkhubsPlugin";
 import NotFound from "./pages/NotFound";
 import Preloader from "./components/ui/Preloader";
 
@@ -59,6 +60,7 @@ function App() {
             <Route path="/blog/:id" element={<SingleBlogPost />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/start-a-project" element={<StartProject />} />
+            <Route path="/markhubs-store-manager-for-telegram" element={<MarkhubsPlugin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
