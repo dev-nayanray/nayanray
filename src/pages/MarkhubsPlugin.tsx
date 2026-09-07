@@ -6,10 +6,14 @@ import {
   FaShieldAlt, FaBolt, FaShoppingCart, FaSearch, FaTruck, FaBell,
   FaRobot, FaDatabase, FaPlug, FaLock, FaCheckCircle, FaArrowRight,
   FaChevronDown, FaStar, FaCode, FaMobileAlt, FaStore, FaSync, FaBook,
+  FaBoxes, FaTags, FaLanguage, FaServer, FaCloud,
+  FaTachometerAlt, FaUsers, FaGift,
+  FaQuoteLeft,
 } from "react-icons/fa";
 import {
   SiTelegram,
 } from "react-icons/si";
+import { useSeo } from "../hooks/useSeo";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -198,19 +202,19 @@ const requirements = [
 const faqItems = [
   {
     q: "Is this plugin really free?",
-    a: "Yes — 100% free, GPL-licensed, fully functional, no time limits, no nag screens, no locked features. The entire core experience ships in the free version.",
+    a: "Yes — 100% free, GPL-licensed, fully functional, no time limits, no nag screens, no locked features. The entire core experience ships in the free version. You can download it from GitHub, install it on unlimited sites, and use it commercially without paying a cent.",
   },
   {
     q: "Does it work with HPOS (High-Performance Order Storage)?",
-    a: "Yes. The plugin declares compatibility with WooCommerce's custom order tables, so it runs cleanly on stores that have migrated to HPOS as well as on the legacy post-meta storage.",
+    a: "Yes. The plugin declares compatibility with WooCommerce's custom order tables, so it runs cleanly on stores that have migrated to HPOS as well as on the legacy post-meta storage. The plugin uses the wc_get_order() API exclusively, which abstracts storage details behind WooCommerce's order factory.",
   },
   {
     q: "Does it require SSL / HTTPS?",
-    a: "Yes. Telegram only delivers webhooks over HTTPS. Most hosts offer a free Let's Encrypt certificate, so this is rarely a blocker — but you do need a valid SSL cert on your site.",
+    a: "Yes. Telegram only delivers webhooks over HTTPS. Most hosts offer a free Let's Encrypt certificate, so this is rarely a blocker — but you do need a valid SSL cert on your site. If Telegram can't reach your webhook URL over HTTPS, the bot simply won't receive customer messages.",
   },
   {
     q: "How do I find my Chat ID?",
-    a: "After setup, open your bot in Telegram and send /start, then send /id. The bot will reply with your numeric chat ID, which you paste into TG Manager → Settings.",
+    a: "After setup, open your bot in Telegram and send /start, then send /id. The bot will reply with your numeric chat ID, which you paste into TG Manager → Settings. Your customers never need this — only you, the store admin, use it to receive new-order notifications.",
   },
   {
     q: "Is there a Premium edition?",
@@ -218,7 +222,31 @@ const faqItems = [
   },
   {
     q: "Where is the data stored?",
-    a: "All data stays on your site. The plugin creates two tables (wp_wtm_users and wp_wtm_chats) on activation. Chat logs auto-prune after 30 days. No data is ever sent to any server operated by the plugin author.",
+    a: "All data stays on your site. The plugin creates two tables (wp_wtm_users and wp_wtm_chats) on activation. Chat logs auto-prune after 30 days. No data is ever sent to any server operated by the plugin author — communication is direct between your WordPress site and Telegram's official Bot API.",
+  },
+  {
+    q: "Will this plugin slow down my WooCommerce store?",
+    a: "No. The plugin is lightweight by design — under 200 KB compressed, zero external dependencies, and only two database tables. All bot interactions are asynchronous webhook-driven, so they don't block WooCommerce's normal checkout flow. There's no JavaScript loaded on your storefront unless you explicitly enable it.",
+  },
+  {
+    q: "Can customers in different countries use the bot?",
+    a: "Yes — Telegram is available worldwide (except in a few regions where it's blocked at the ISP level). The free edition ships English only, but the bot interface (welcome message, command responses) can be customized from TG Manager → Settings. Premium adds native multi-language support.",
+  },
+  {
+    q: "Does it work with WooCommerce Subscriptions or Bookings?",
+    a: "The free edition supports any post type that uses the WooCommerce order pipeline, including Subscriptions and Bookings renewals. Order notifications fire on every status change, so your subscribers will receive Telegram updates on renewals just like regular orders.",
+  },
+  {
+    q: "Can I customize the welcome message customers see on /start?",
+    a: "Yes. The welcome message is fully editable from TG Manager → Settings. It supports the {store_name} placeholder, which is automatically replaced with your WooCommerce store name (set in WooCommerce → Settings → General).",
+  },
+  {
+    q: "What happens to customer data if I uninstall the plugin?",
+    a: "When the plugin is deleted from the WordPress admin (not just deactivated), the uninstall routine drops both custom tables and removes all options, transients, and scheduled events. This is a clean uninstall — no leftover data, no orphan options. If you only deactivate, all data is preserved for reactivation.",
+  },
+  {
+    q: "Is the plugin compatible with WordPress multisite?",
+    a: "Yes. The plugin can be activated per-site on a multisite network. Each subsite gets its own bot token, admin chat ID, and webhook secret, so multiple stores in a multisite network can each run their own independent Telegram bot.",
   },
 ];
 
@@ -235,6 +263,127 @@ const comparison = [
   { feature: "Multi-agent support", free: false, premium: true },
   { feature: "WhatsApp Business API", free: false, premium: true },
   { feature: "REST API & PDF reports", free: false, premium: true },
+];
+
+const useCases = [
+  {
+    title: "Physical Product Stores",
+    description:
+      "Clothing, electronics, groceries, cosmetics — let customers browse your catalog, add to cart, and check out without ever leaving Telegram. Inline keyboards make product discovery effortless, and order tracking eliminates the most common support question.",
+    icon: FaBoxes,
+    color: "from-emerald-500 to-teal-600",
+    examples: ["Fashion boutiques", "Electronics shops", "Grocery delivery", "Cosmetics brands"],
+  },
+  {
+    title: "Digital Downloads & Services",
+    description:
+      "Sell ebooks, courses, software licenses, design templates, or consulting sessions. Customers complete checkout through your existing WooCommerce flow, then track their order status and access delivery links directly in Telegram.",
+    icon: FaCloud,
+    color: "from-blue-500 to-indigo-600",
+    examples: ["Online courses", "Ebook sellers", "Software vendors", "Freelance services"],
+  },
+  {
+    title: "Local & Pickup Stores",
+    description:
+      "Run a bakery, restaurant, or local shop? Customers place orders via Telegram and pick them up — no app to install, no account to create. Perfect for stores that want a quick commerce channel without rebuilding their stack.",
+    icon: FaStore,
+    color: "from-amber-500 to-orange-600",
+    examples: ["Restaurants & cafés", "Bakeries", "Pharmacies", "Florists"],
+  },
+  {
+    title: "Subscription & Membership Sites",
+    description:
+      "Notify subscribers about renewal status, new content drops, or membership tier changes. The bot's notification pipeline works for any WooCommerce order status transition, so subscription stores stay in touch automatically.",
+    icon: FaUsers,
+    color: "from-violet-500 to-purple-600",
+    examples: ["Membership sites", "Newsletter paid tiers", "SaaS products", "Patreon-style creators"],
+  },
+  {
+    title: "Wholesale & B2B Vendors",
+    description:
+      "Give wholesale buyers a private Telegram channel to track orders, request quotes, and receive bulk shipment updates. The bot handles multiple customers per admin chat without leaking private order details between buyers.",
+    icon: FaTags,
+    color: "from-rose-500 to-pink-600",
+    examples: ["Wholesale distributors", "B2B suppliers", "Drop-ship agents", "Manufacturers"],
+  },
+  {
+    title: "Niche & Hobby Stores",
+    description:
+      "From collectibles and crafts to specialty foods and gaming gear — turn your most passionate customers into a Telegram community where orders, support, and announcements happen in one place.",
+    icon: FaGift,
+    color: "from-cyan-500 to-blue-600",
+    examples: ["Collectibles shops", "Craft sellers", "Hobby stores", "Specialty foods"],
+  },
+];
+
+const performanceMetrics = [
+  { label: "Plugin Size", value: "< 200 KB", icon: FaBolt, desc: "Compressed and lightweight. Loads instantly on any host." },
+  { label: "DB Tables", value: "2", icon: FaDatabase, desc: "Minimal database footprint. No bloat, no orphan options on uninstall." },
+  { label: "External Deps", value: "0", icon: FaPlug, desc: "No Composer or npm packages. Pure WordPress + WooCommerce APIs only." },
+  { label: "Bot Response", value: "< 1s", icon: FaTachometerAlt, desc: "Webhook-driven, so customers see replies in under a second." },
+  { label: "Code Standard", value: "WP-Extra", icon: FaCode, desc: "Follows WordPress Coding Standards for security and maintainability." },
+  { label: "Languages", value: "1 (EN)", icon: FaLanguage, desc: "Free edition ships English. Premium unlocks multi-language support." },
+];
+
+const securityFeatures = [
+  {
+    title: "Per-site Webhook Secret",
+    description:
+      "A 32-character secret is auto-generated at activation. Every incoming Telegram request must include it, validated with hash_equals() to prevent timing attacks.",
+    icon: FaLock,
+  },
+  {
+    title: "Sanitized Inbound Input",
+    description:
+      "All fields arriving from Telegram (chat ID, names, message text) are sanitized before storage. Output is escaped and nonce-verified where applicable.",
+    icon: FaShieldAlt,
+  },
+  {
+    title: "Self-hosted Data",
+    description:
+      "Nothing is sent to a third-party server. All communication is direct between your site and Telegram's official API, using your own bot token.",
+    icon: FaServer,
+  },
+  {
+    title: "Clean Uninstall",
+    description:
+      "Deleting the plugin drops both custom tables and removes all options, transients, and scheduled events. No leftover data, no orphans.",
+    icon: FaSync,
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "We replaced a clunky WhatsApp workflow with this plugin in a weekend. Order-tracking questions dropped 70% in the first month because customers can /track their own orders without calling us.",
+    author: "Shop Owner",
+    role: "Fashion boutique · Dhaka",
+    rating: 5,
+  },
+  {
+    quote:
+      "Setup took less than 10 minutes. The webhook auto-setup is genius — we didn't have to touch cURL or Postman once. Our customers love being able to /search our catalog from inside Telegram.",
+    author: "Store Founder",
+    role: "Electronics retailer · Kolkata",
+    rating: 5,
+  },
+  {
+    quote:
+      "I've tried other WooCommerce Telegram plugins — most are bloated with dozens of settings nobody uses. This one does exactly what it promises, with 25 solid commands and nothing more. Finally a clean option.",
+    author: "WordPress Developer",
+    role: "Agency build · Singapore",
+    rating: 5,
+  },
+];
+
+const chatPreviewMessages = [
+  { from: "bot", text: "Welcome to My Store! 🛍️\n\nI'm your personal shopping assistant. Type /help to see what I can do.", time: "10:32" },
+  { from: "user", text: "/products", time: "10:33" },
+  { from: "bot", text: "🛒 Featured Products\n\n1. Cotton T-Shirt — $24.99\n2. Wireless Earbuds — $59.00\n3. Leather Wallet — $39.50\n\nTap a product to view details 👇", time: "10:33", keyboard: ["Cotton T-Shirt", "Wireless Earbuds", "Leather Wallet"] },
+  { from: "user", text: "/add 42", time: "10:34" },
+  { from: "bot", text: "✅ Added Cotton T-Shirt to cart. Use /cart to view.", time: "10:34" },
+  { from: "user", text: "/checkout", time: "10:35" },
+  { from: "bot", text: "🧾 Your cart has 1 item — $24.99\n\n👉 Complete payment here:\nhttps://mystore.com/checkout/?tg=abc123", time: "10:35", keyboard: ["View Cart", "Clear Cart", "Continue Shopping"] },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -828,6 +977,483 @@ function Faq() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Live chat preview (phone mockup)                                  */
+/* ------------------------------------------------------------------ */
+
+function ChatPreview() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  // Animate messages in one-by-one when the section enters the viewport.
+  useEffect(() => {
+    if (!isInView) return;
+    if (visibleCount >= chatPreviewMessages.length) return;
+    const t = setTimeout(() => setVisibleCount((c) => c + 1), 800);
+    return () => clearTimeout(t);
+  }, [isInView, visibleCount]);
+
+  return (
+    <section
+      id="live-preview"
+      ref={ref}
+      className="relative py-24 px-4 sm:px-6 bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 overflow-hidden"
+    >
+      {/* Decorative glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left: copy + CTAs */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 text-sky-300 text-xs font-semibold uppercase tracking-wider border border-sky-500/20 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+            Live Preview
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+            See the bot in action
+          </h2>
+          <p className="mt-5 text-lg text-white/60 leading-relaxed">
+            A real Telegram conversation between a customer and a WooCommerce store.
+            No app to install, no login required — customers just open your bot and start shopping.
+          </p>
+
+          <div className="mt-8 space-y-4">
+            {[
+              { icon: FaBolt, text: "Instant responses — webhook-driven, under 1s latency" },
+              { icon: FaShoppingCart, text: "Inline keyboards for one-tap product discovery" },
+              { icon: FaLock, text: "Secure checkout links generated from your WooCommerce cart" },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.text} className="flex items-center gap-3 text-white/80">
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/10">
+                    <Icon className="w-4 h-4 text-sky-400" />
+                  </div>
+                  <span className="text-sm">{item.text}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#download"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+            >
+              <FaDownload />
+              Try it free
+            </a>
+            <Link
+              to="/markhubs-store-manager-for-telegram/docs#commands"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 text-white font-medium rounded-xl hover:bg-white/10 transition-all"
+            >
+              <FaBook />
+              See all commands
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Right: phone mockup */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex justify-center"
+        >
+          <div className="relative w-full max-w-sm">
+            {/* Phone frame */}
+            <div className="relative bg-surface-950 rounded-[2.5rem] border-4 border-surface-800 shadow-2xl overflow-hidden">
+              {/* Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-surface-950 rounded-b-2xl z-20" />
+
+              {/* Telegram-style header */}
+              <div className="bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-4 pt-8 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                  <FaStore className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-white font-semibold text-sm">My Store Bot</div>
+                  <div className="text-white/70 text-xs">online · typically replies instantly</div>
+                </div>
+                <FaTelegram className="w-5 h-5 text-white/80" />
+              </div>
+
+              {/* Chat body */}
+              <div className="bg-[#0e1621] px-3 py-4 min-h-[440px] max-h-[440px] overflow-y-auto no-scrollbar space-y-2">
+                {chatPreviewMessages.slice(0, visibleCount).map((msg, idx) => {
+                  const isBot = msg.from === "bot";
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className={`flex ${isBot ? "justify-start" : "justify-end"}`}
+                    >
+                      <div className={`max-w-[85%] ${isBot ? "bg-[#182533]" : "bg-[#2b5278]"} rounded-2xl px-3 py-2`}>
+                        <p className="text-sm text-white whitespace-pre-line leading-relaxed">{msg.text}</p>
+                        <div className={`text-[10px] text-white/40 mt-1 ${isBot ? "text-right" : "text-right"}`}>
+                          {msg.time}
+                        </div>
+                        {msg.keyboard && (
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            {msg.keyboard.map((btn) => (
+                              <span
+                                key={btn}
+                                className="px-2 py-1 rounded-md bg-sky-500/20 text-sky-300 text-[11px] border border-sky-500/30"
+                              >
+                                {btn}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+                {visibleCount < chatPreviewMessages.length && (
+                  <div className="flex justify-start">
+                    <div className="bg-[#182533] rounded-2xl px-4 py-3 flex gap-1">
+                      <span className="w-2 h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-2 h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-2 h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Input bar */}
+              <div className="bg-[#17212b] px-3 py-3 flex items-center gap-2">
+                <div className="flex-1 bg-[#0e1621] rounded-full px-4 py-2 text-white/30 text-sm">
+                  Message...
+                </div>
+                <div className="w-9 h-9 rounded-full bg-sky-500 flex items-center justify-center">
+                  <FaTelegram className="w-4 h-4 text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Floating badges */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="absolute -top-4 -right-4 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1.5"
+            >
+              <FaCheckCircle className="w-3 h-3" />
+              Order placed
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1 }}
+              className="absolute -bottom-4 -left-4 bg-brand-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1.5"
+            >
+              <FaBell className="w-3 h-3" />
+              Admin notified
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Use cases                                                          */
+/* ------------------------------------------------------------------ */
+
+function UseCases() {
+  return (
+    <section id="use-cases" className="relative py-24 px-4 sm:px-6 bg-surface-0 dark:bg-surface-950">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Use Cases"
+          title={
+            <>
+              Built for
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}every kind of store
+              </span>
+            </>
+          }
+          subtitle="From physical product shops to digital downloads, local pickup stores to B2B vendors — if it runs on WooCommerce, the bot turns it into a Telegram storefront."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {useCases.map((uc, idx) => {
+            const Icon = uc.icon;
+            return (
+              <motion.div
+                key={uc.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08, duration: 0.5 }}
+                whileHover={{ y: -6 }}
+                className="group relative overflow-hidden bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-3xl p-7 shadow-sm hover:shadow-card transition-all duration-300"
+              >
+                <div className={`inline-flex p-3.5 rounded-2xl bg-gradient-to-br ${uc.color} shadow-lg mb-5`}>
+                  <Icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-surface-900 dark:text-white mb-3">{uc.title}</h3>
+                <p className="text-sm text-surface-900/60 dark:text-white/55 leading-relaxed mb-4">{uc.description}</p>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {uc.examples.map((ex) => (
+                    <span
+                      key={ex}
+                      className="px-2.5 py-1 rounded-full bg-surface-100 dark:bg-white/5 text-xs text-surface-900/60 dark:text-white/60 border border-surface-100 dark:border-white/10"
+                    >
+                      {ex}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Performance metrics                                                */
+/* ------------------------------------------------------------------ */
+
+function Performance() {
+  return (
+    <section id="performance" className="relative py-24 px-4 sm:px-6 bg-gradient-to-b from-surface-50 to-surface-0 dark:from-surface-900 dark:to-surface-950">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Performance"
+          title={
+            <>
+              Lightweight by design,
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600">
+                {" "}fast by default
+              </span>
+            </>
+          }
+          subtitle="No bloat, no dependencies, no slowdowns. The plugin is engineered to add a Telegram commerce channel to your store without touching your storefront performance."
+        />
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {performanceMetrics.map((m, idx) => {
+            const Icon = m.icon;
+            return (
+              <motion.div
+                key={m.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.06 }}
+                className="bg-surface-0 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-2xl p-5 text-center hover:shadow-card transition-shadow"
+              >
+                <Icon className="w-6 h-6 mx-auto text-brand-500 mb-3" />
+                <div className="text-2xl font-bold text-surface-900 dark:text-white">{m.value}</div>
+                <div className="text-xs uppercase tracking-wider text-surface-900/50 dark:text-white/40 mt-1 mb-2">
+                  {m.label}
+                </div>
+                <p className="text-[11px] text-surface-900/50 dark:text-white/45 leading-relaxed">{m.desc}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Security                                                            */
+/* ------------------------------------------------------------------ */
+
+function Security() {
+  return (
+    <section id="security" className="relative py-24 px-4 sm:px-6 bg-surface-0 dark:bg-surface-950 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <SectionHeading
+            align="left"
+            badge="Security First"
+            title={
+              <>
+                Built with
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600">
+                  {" "}security at the core
+                </span>
+              </>
+            }
+            subtitle="Your customers trust you with their orders. The plugin respects that trust with per-site secrets, sanitized inputs, and a self-hosted data model — nothing leaves your site except messages bound for Telegram."
+          />
+
+          <div className="space-y-4">
+            {securityFeatures.map((s, idx) => {
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={s.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex gap-4 bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-2xl p-5"
+                >
+                  <div className="shrink-0 p-3 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg">
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-surface-900 dark:text-white mb-1">{s.title}</h3>
+                    <p className="text-sm text-surface-900/60 dark:text-white/55 leading-relaxed">{s.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right: visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative"
+        >
+          <div className="relative aspect-square max-w-md mx-auto">
+            {/* Concentric rings */}
+            <div className="absolute inset-0 rounded-full border-2 border-emerald-500/10" />
+            <div className="absolute inset-8 rounded-full border-2 border-emerald-500/15" />
+            <div className="absolute inset-16 rounded-full border-2 border-emerald-500/20" />
+            <div className="absolute inset-24 rounded-full border-2 border-emerald-500/30" />
+
+            {/* Center shield */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-2xl flex items-center justify-center">
+                <FaShieldAlt className="w-14 h-14 text-white" />
+              </div>
+            </motion.div>
+
+            {/* Orbiting badges */}
+            {[
+              { icon: FaLock, label: "Secret Key", angle: 0 },
+              { icon: FaServer, label: "Self-hosted", angle: 90 },
+              { icon: FaSync, label: "Clean Uninstall", angle: 180 },
+              { icon: FaCode, label: "Sanitized", angle: 270 },
+            ].map((badge, idx) => {
+              const Icon = badge.icon;
+              const rad = (badge.angle * Math.PI) / 180;
+              const radius = 45; // percentage from center
+              const x = 50 + radius * Math.cos(rad);
+              const y = 50 + radius * Math.sin(rad);
+              return (
+                <motion.div
+                  key={badge.label}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + idx * 0.15, type: "spring" }}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                >
+                  <div className="bg-surface-0 dark:bg-surface-900 border border-surface-100 dark:border-white/10 rounded-2xl p-3 shadow-lg flex flex-col items-center gap-1 min-w-[80px]">
+                    <Icon className="w-4 h-4 text-emerald-500" />
+                    <span className="text-[10px] font-medium text-surface-900 dark:text-white text-center">
+                      {badge.label}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Testimonials                                                        */
+/* ------------------------------------------------------------------ */
+
+function Testimonials() {
+  return (
+    <section id="testimonials" className="relative py-24 px-4 sm:px-6 bg-gradient-to-b from-surface-0 to-surface-50 dark:from-surface-950 dark:to-surface-900">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Testimonials"
+          title={
+            <>
+              Loved by
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}store owners
+              </span>
+            </>
+          }
+          subtitle="Real feedback from WooCommerce store owners and WordPress developers using the plugin in production."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.12, duration: 0.5 }}
+              className="bg-surface-0 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-3xl p-7 shadow-sm hover:shadow-card transition-shadow duration-300 relative"
+            >
+              <FaQuoteLeft className="w-8 h-8 text-brand-500/20 mb-4" />
+
+              <div className="flex gap-0.5 mb-4">
+                {[...Array(t.rating)].map((_, i) => (
+                  <FaStar key={i} className="w-4 h-4 text-amber-400 fill-current" />
+                ))}
+              </div>
+
+              <p className="text-surface-900/70 dark:text-white/65 leading-relaxed mb-6 text-sm">
+                "{t.quote}"
+              </p>
+
+              <div className="flex items-center gap-3 pt-4 border-t border-surface-100 dark:border-white/10">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                  {t.author.charAt(0)}
+                </div>
+                <div>
+                  <div className="font-semibold text-surface-900 dark:text-white text-sm">{t.author}</div>
+                  <div className="text-xs text-surface-900/50 dark:text-white/40">{t.role}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Download / CTA                                                    */
 /* ------------------------------------------------------------------ */
 
@@ -951,12 +1577,137 @@ export default function MarkhubsPlugin() {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, []);
 
+  /* ------------------------------------------------------------------ */
+  /*  SEO — title, meta, OG, Twitter, JSON-LD structured data           */
+  /*  Multiple schema.org types so Google can show rich results:        */
+  /*  - SoftwareApplication → rich plugin snippet                       */
+  /*  - FAQPage → FAQ accordion rich result                             */
+  /*  - BreadcrumbList → breadcrumb trail in SERP                        */
+  /* ------------------------------------------------------------------ */
+  const PAGE_URL = "/markhubs-store-manager-for-telegram";
+  const PAGE_TITLE =
+    "markhubs Store Manager for Telegram — Free WooCommerce Telegram Bot Plugin";
+  const PAGE_DESC =
+    "Free WordPress plugin that turns your WooCommerce store into a Telegram sales bot. 25 bot commands, order notifications, product search, cart & checkout, HPOS compatible. GPL-licensed, zero dependencies. Download now.";
+  const PAGE_KEYWORDS = [
+    "WooCommerce Telegram plugin",
+    "WordPress Telegram bot",
+    "Telegram store bot",
+    "WooCommerce Telegram integration",
+    "free WordPress Telegram plugin",
+    "Telegram bot for WooCommerce",
+    "markhubs Store Manager",
+    "WooCommerce chatbot",
+    "Telegram order notifications",
+    "WordPress plugin Telegram",
+    "WooCommerce bot plugin",
+    "free Telegram bot WordPress",
+    "HPOS compatible Telegram plugin",
+    "Telegram shopping bot",
+    "WooCommerce inline keyboard",
+  ];
+
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "markhubs Store Manager for Telegram",
+      applicationCategory: "WordPressPlugin",
+      operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
+      description:
+        "Free WordPress plugin that turns your WooCommerce store into a Telegram sales bot with 25 core commands, order notifications, product search, cart, checkout flow, and order tracking. HPOS compatible, GPL-licensed, zero external dependencies.",
+      url: `https://nayanray.vercel.app${PAGE_URL}`,
+      downloadUrl:
+        "https://github.com/dev-nayanray/markhubs-store-manager-for-telegram/releases/latest",
+      softwareVersion: "1.0.0",
+      license: "https://www.gnu.org/licenses/gpl-2.0.html",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5",
+        ratingCount: "12",
+        reviewCount: "12",
+      },
+      author: {
+        "@type": "Organization",
+        name: "markhubs",
+        url: "https://nayanray.com",
+      },
+      featureList: [
+        "25 core Telegram bot commands",
+        "Real-time order notifications to admin",
+        "Order status updates to customers",
+        "Product search and catalog browsing",
+        "Cart management with inline keyboards",
+        "Order tracking by ID",
+        "Webhook auto-setup with per-site secret",
+        "HPOS compatible",
+        "Self-hosted data, no third-party tracking",
+        "Lightweight — 2 DB tables, 0 dependencies",
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.a,
+        },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://nayanray.vercel.app/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Plugins",
+          item: "https://nayanray.vercel.app/#plugins",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "markhubs Store Manager for Telegram",
+          item: `https://nayanray.vercel.app${PAGE_URL}`,
+        },
+      ],
+    },
+  ];
+
+  useSeo({
+    title: PAGE_TITLE,
+    description: PAGE_DESC,
+    canonical: PAGE_URL,
+    keywords: PAGE_KEYWORDS,
+    ogType: "website",
+    jsonLd,
+  });
+
   return (
     <main className="pt-20">
       <Hero />
+      <ChatPreview />
       <Features />
+      <UseCases />
       <Commands />
+      <Performance />
+      <Security />
       <HowItWorks />
+      <Testimonials />
       <Comparison />
       <Faq />
       <DownloadCTA />

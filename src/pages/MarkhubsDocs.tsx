@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { SiTelegram } from "react-icons/si";
 import { Link } from "react-router-dom";
+import { useSeo } from "../hooks/useSeo";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1114,6 +1115,50 @@ export default function MarkhubsDocs() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, []);
+
+  // SEO for the docs page — TechArticle schema gives Google a structured
+  // signal that this is technical documentation, which helps ranking for
+  // long-tail queries like "how to install markhubs telegram plugin".
+  useSeo({
+    title:
+      "markhubs Store Manager for Telegram — Documentation & Setup Guide",
+    description:
+      "Complete documentation for markhubs Store Manager for Telegram WordPress plugin. Install guide, BotFather setup, configuration reference, all 25 bot commands, webhook security, database schema, troubleshooting, and free vs premium comparison.",
+    canonical: "/markhubs-store-manager-for-telegram/docs",
+    keywords: [
+      "markhubs Store Manager documentation",
+      "WooCommerce Telegram plugin setup",
+      "Telegram bot WordPress install guide",
+      "BotFather WordPress setup",
+      "WooCommerce Telegram webhook configuration",
+      "Telegram bot commands reference",
+      "WordPress plugin documentation",
+    ],
+    ogType: "article",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      headline: "markhubs Store Manager for Telegram — Documentation",
+      description:
+        "Complete documentation for the markhubs Store Manager for Telegram WordPress plugin.",
+      author: {
+        "@type": "Organization",
+        name: "markhubs",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Nayan Ray",
+      },
+      about: {
+        "@type": "SoftwareApplication",
+        name: "markhubs Store Manager for Telegram",
+        applicationCategory: "WordPressPlugin",
+        operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
+      },
+      mainEntityOfPage:
+        "https://nayanray.vercel.app/markhubs-store-manager-for-telegram/docs",
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(

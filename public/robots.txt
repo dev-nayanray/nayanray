@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api
+
+# Allow crawling of all public content, plugin, and documentation pages
+# Updated 2026-09-08 — includes markhubs Telegram plugin landing + docs
 
 Sitemap: https://nayanray.vercel.app/sitemap.xml
