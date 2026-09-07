@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   FaTelegram, FaWordpress, FaDownload, FaGithub, FaRocket,
@@ -9,10 +9,9 @@ import {
   FaBoxes, FaTags, FaLanguage, FaServer, FaCloud,
   FaTachometerAlt, FaUsers, FaGift,
   FaQuoteLeft,
+  FaPhp, FaLayerGroup, FaTrophy,
 } from "react-icons/fa";
-import {
-  SiTelegram,
-} from "react-icons/si";
+import { SiTelegram } from "react-icons/si";
 import { useSeo } from "../hooks/useSeo";
 
 /* ------------------------------------------------------------------ */
@@ -437,13 +436,29 @@ function SectionHeading({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Hero                                                               */
+/*  Hero — premium mesh gradient + parallax + glassmorphism           */
 /* ------------------------------------------------------------------ */
 
 function Hero() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
+
+  // Parallax mouse-tracking for the glow orbs
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+  const springX = useSpring(mouseX, { damping: 30, stiffness: 200 });
+  const springY = useSpring(mouseY, { damping: 30, stiffness: 200 });
+  const orb1X = useTransform(springX, [0, 1], [-30, 30]);
+  const orb1Y = useTransform(springY, [0, 1], [-30, 30]);
+  const orb2X = useTransform(springX, [0, 1], [30, -30]);
+  const orb2Y = useTransform(springY, [0, 1], [30, -30]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
+  };
 
   useEffect(() => {
     const update = () => setViewport({ width: window.innerWidth, height: window.innerHeight });
@@ -455,17 +470,26 @@ function Hero() {
   return (
     <section
       ref={ref}
+      onMouseMove={handleMouseMove}
       className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-24 pt-32 overflow-hidden bg-gradient-to-br from-surface-50 via-brand-50/40 to-surface-100 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950"
     >
-      {/* Animated background */}
+      {/* Premium mesh gradient background */}
       <div className="pointer-events-none absolute inset-0">
+        {/* Parallax orbs */}
         <motion.div
-          className="absolute inset-0 opacity-25"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 30%, rgba(0, 136, 204, 0.18) 0%, transparent 45%), radial-gradient(circle at 75% 65%, rgba(124, 92, 255, 0.20) 0%, transparent 50%)",
-          }}
-        />
+          style={{ x: orb1X, y: orb1Y }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[120px] opacity-40"
+        >
+          <div className="w-full h-full bg-gradient-to-br from-sky-400 via-blue-500 to-brand-500" />
+        </motion.div>
+        <motion.div
+          style={{ x: orb2X, y: orb2Y }}
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[120px] opacity-40"
+        >
+          <div className="w-full h-full bg-gradient-to-br from-brand-500 via-purple-500 to-pink-500" />
+        </motion.div>
+
+        {/* Animated SVG rings */}
         <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
           <defs>
             <linearGradient id="tg-line" x1="0" y1="0" x2="1" y2="1">
@@ -490,24 +514,47 @@ function Hero() {
             />
           ))}
         </svg>
+
+        {/* Subtle grid */}
         <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:48px_48px]" />
+
+        {/* Animated noise shimmer (premium touch) */}
+        <motion.div
+          className="absolute inset-0 opacity-20"
+          animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          style={{
+            background:
+              "linear-gradient(135deg, transparent 0%, rgba(124, 92, 255, 0.05) 25%, transparent 50%, rgba(0, 136, 204, 0.05) 75%, transparent 100%)",
+            backgroundSize: "400% 400%",
+          }}
+        />
       </div>
 
       <div className="relative z-10 max-w-6xl w-full">
-        {/* Badge */}
+        {/* Premium badge with shimmer */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ delay: 0.2 }}
           className="flex justify-center mb-8"
         >
-          <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 shadow-glow">
-            <span className="flex items-center gap-2 text-sm font-semibold text-surface-900 dark:text-white">
-              <FaWordpress className="w-4 h-4 text-brand-500" />
+          <span className="relative group inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 shadow-glow overflow-hidden">
+            {/* Shimmer sweep */}
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-500/10 to-transparent"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            />
+            <span className="relative flex items-center gap-2 text-sm font-semibold text-surface-900 dark:text-white">
+              <span className="relative flex">
+                <FaWordpress className="w-4 h-4 text-brand-500" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full ring-2 ring-surface-0 dark:ring-surface-900 animate-pulse" />
+              </span>
               Free WordPress Plugin
             </span>
-            <span className="w-px h-4 bg-surface-100 dark:bg-white/10" />
-            <span className="text-sm font-medium text-surface-900/60 dark:text-white/50">v1.0.0</span>
+            <span className="relative w-px h-4 bg-surface-100 dark:bg-white/10" />
+            <span className="relative text-sm font-medium text-surface-900/60 dark:text-white/50">v1.0.0 · GPL</span>
           </span>
         </motion.div>
 
@@ -522,9 +569,14 @@ function Hero() {
             Turn WooCommerce into a
             <br className="hidden sm:block" />
             <span className="relative inline-block mt-2">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-brand-500 to-purple-600">
+              {/* Animated gradient text */}
+              <motion.span
+                className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-brand-500 to-purple-600 bg-[length:200%_auto]"
+                animate={{ backgroundPosition: ["0% 50%", "200% 50%"] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              >
                 Telegram sales machine
-              </span>
+              </motion.span>
               <motion.svg
                 className="absolute -bottom-2 left-0 w-full"
                 height="12"
@@ -555,18 +607,23 @@ function Hero() {
         >
           <motion.a
             href="#download"
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300 overflow-hidden"
           >
-            <FaDownload />
-            <span>Download Plugin</span>
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+            />
+            <FaDownload className="relative" />
+            <span className="relative">Download Plugin</span>
           </motion.a>
           <motion.a
             href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-3 px-8 py-4 bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 text-surface-900 dark:text-white font-bold rounded-2xl hover:bg-surface-0 dark:hover:bg-surface-900 transition-all duration-300 shadow-lg"
           >
@@ -577,7 +634,7 @@ function Hero() {
             href="https://t.me/BotFather"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
@@ -595,28 +652,51 @@ function Hero() {
           </Link>
         </motion.div>
 
-        {/* Stats */}
+        {/* Premium glassmorphism stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto"
         >
-          {pluginStats.map((stat) => {
+          {pluginStats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
-              <div
+              <motion.div
                 key={stat.label}
-                className="bg-surface-0/60 dark:bg-surface-900/50 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 rounded-2xl p-5 text-center shadow-lg shadow-brand-500/5 hover:shadow-glow transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.9 + idx * 0.1 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="group relative bg-surface-0/60 dark:bg-surface-900/50 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 rounded-2xl p-5 text-center shadow-lg shadow-brand-500/5 hover:shadow-glow transition-all duration-300 overflow-hidden"
               >
-                <Icon className="w-6 h-6 mx-auto text-brand-500 mb-2" />
-                <div className="text-3xl font-bold text-surface-900 dark:text-white">{stat.value}</div>
-                <div className="text-xs uppercase tracking-wider text-surface-900/40 dark:text-white/40 mt-1">
+                {/* Hover gradient sheen */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-brand-500/5 to-purple-500/5" />
+                <Icon className="relative w-6 h-6 mx-auto text-brand-500 mb-2 group-hover:scale-110 transition-transform duration-300" />
+                <div className="relative text-3xl font-bold text-surface-900 dark:text-white">{stat.value}</div>
+                <div className="relative text-xs uppercase tracking-wider text-surface-900/40 dark:text-white/40 mt-1">
                   {stat.label}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* Scroll cue */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 1.5 }}
+          className="flex justify-center mt-16"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2 text-surface-900/40 dark:text-white/40"
+          >
+            <span className="text-xs uppercase tracking-wider">Scroll to explore</span>
+            <FaChevronDown className="w-4 h-4" />
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -1567,6 +1647,641 @@ function DownloadCTA() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Trust bar — logo marquee                                           */
+/* ------------------------------------------------------------------ */
+
+function TrustBar() {
+  const logos = [
+    { name: "WordPress", icon: FaWordpress, color: "#21759b" },
+    { name: "WooCommerce", icon: FaShoppingCart, color: "#96588a" },
+    { name: "Telegram", icon: FaTelegram, color: "#0088cc" },
+    { name: "PHP", icon: FaPhp, color: "#777bb4" },
+    { name: "HPOS", icon: FaLayerGroup, color: "#7c5cff" },
+    { name: "GPLv2", icon: FaShieldAlt, color: "#16a34a" },
+    { name: "SSL", icon: FaLock, color: "#0ea5a4" },
+    { name: "BotFather", icon: FaRobot, color: "#0088cc" },
+  ];
+
+  return (
+    <section className="relative py-12 px-4 sm:px-6 border-y border-surface-100 dark:border-white/10 bg-surface-0 dark:bg-surface-950 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-xs uppercase tracking-[0.2em] text-surface-900/40 dark:text-white/40 mb-8"
+        >
+          Built on the technologies your store already trusts
+        </motion.p>
+
+        <div className="relative overflow-hidden">
+          {/* Edge fades */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-surface-0 dark:from-surface-950 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-surface-0 dark:from-surface-950 to-transparent z-10 pointer-events-none" />
+
+          {/* Marquee */}
+          <motion.div
+            className="flex gap-12 items-center"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          >
+            {[...logos, ...logos, ...logos].map((logo, idx) => {
+              const Icon = logo.icon;
+              return (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 shrink-0 opacity-60 hover:opacity-100 transition-opacity duration-300"
+                >
+                  <Icon className="w-7 h-7" style={{ color: logo.color }} />
+                  <span className="font-bold text-lg text-surface-900 dark:text-white whitespace-nowrap">
+                    {logo.name}
+                  </span>
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Counter stats — big numbers that count up on scroll                */
+/* ------------------------------------------------------------------ */
+
+function CounterStats() {
+  const stats = [
+    { value: 25, suffix: "", label: "Bot Commands", icon: FaRobot, color: "from-violet-500 to-purple-600" },
+    { value: 2, suffix: "", label: "DB Tables Only", icon: FaDatabase, color: "from-blue-500 to-cyan-600" },
+    { value: 0, suffix: "", label: "External Deps", icon: FaPlug, color: "from-emerald-500 to-teal-600" },
+    { value: 100, suffix: "%", label: "Free & Open Source", icon: FaShieldAlt, color: "from-amber-500 to-orange-600" },
+    { value: 1, suffix: "s", label: "Bot Response Time", icon: FaBolt, color: "from-rose-500 to-pink-600" },
+    { value: 30, suffix: "d", label: "Auto-prune Chat Logs", icon: FaSync, color: "from-indigo-500 to-blue-600" },
+  ];
+
+  return (
+    <section className="relative py-24 px-4 sm:px-6 bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 overflow-hidden">
+      {/* Premium backdrop */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 text-white/60 text-xs font-semibold uppercase tracking-wider border border-white/10 mb-5">
+            <FaTrophy className="w-3 h-3 text-amber-400" />
+            By the Numbers
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            Performance you can
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400"> measure</span>
+          </h2>
+          <p className="mt-4 text-lg text-white/50 max-w-2xl mx-auto">
+            Hard numbers that prove the plugin is engineered for speed, security, and zero bloat.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {stats.map((stat, idx) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08, type: "spring", stiffness: 200 }}
+                whileHover={{ y: -6, scale: 1.05 }}
+                className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all duration-300 overflow-hidden"
+              >
+                {/* Hover glow */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br ${stat.color}`} />
+
+                <div className={`relative inline-flex p-3 rounded-xl bg-gradient-to-br ${stat.color} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+
+                <div className="relative text-4xl font-bold text-white mb-1">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </div>
+                <div className="relative text-xs text-white/50 leading-tight">{stat.label}</div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Count-up animation hook — animates from 0 to value when in view */
+function CountUp({ value, suffix }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const duration = 1500;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(eased * value));
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, value]);
+
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Architecture — visual data flow diagram                            */
+/* ------------------------------------------------------------------ */
+
+function Architecture() {
+  const nodes = [
+    {
+      label: "WooCommerce",
+      sublabel: "Your store",
+      icon: FaShoppingCart,
+      color: "from-purple-500 to-pink-600",
+      desc: "Products, orders, customers — everything stays in your existing WooCommerce database.",
+    },
+    {
+      label: "markhubs Plugin",
+      sublabel: "Telegram bridge",
+      icon: FaWordpress,
+      color: "from-brand-500 to-brand-700",
+      desc: "Receives Telegram webhooks, dispatches commands, sends notifications. Pure WordPress APIs.",
+    },
+    {
+      label: "Telegram Bot API",
+      sublabel: "Customer channel",
+      icon: FaTelegram,
+      color: "from-sky-500 to-blue-600",
+      desc: "Customers chat with your bot. Messages flow both ways in real time, end-to-end encrypted by Telegram.",
+    },
+  ];
+
+  return (
+    <section className="relative py-24 px-4 sm:px-6 bg-surface-0 dark:bg-surface-950 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="How it Works"
+          title={
+            <>
+              A three-node
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}commerce pipeline
+              </span>
+            </>
+          }
+          subtitle="No middlemen, no third-party servers. Your WordPress site talks directly to Telegram using your own bot token."
+        />
+
+        <div className="relative grid md:grid-cols-3 gap-6 items-stretch">
+          {/* Connecting line (desktop) */}
+          <div className="hidden md:block absolute top-1/2 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-purple-500 via-brand-500 to-sky-500 -translate-y-1/2 z-0">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+
+          {nodes.map((node, idx) => {
+            const Icon = node.icon;
+            return (
+              <motion.div
+                key={node.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.2, duration: 0.5 }}
+                className="relative z-10 bg-surface-0 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-3xl p-6 shadow-card hover:shadow-glow transition-shadow duration-300"
+              >
+                <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${node.color} shadow-lg mb-4`}>
+                  <Icon className="w-7 h-7 text-white" />
+                </div>
+                <div className="text-xs uppercase tracking-wider text-surface-900/40 dark:text-white/40 mb-1">
+                  {node.sublabel}
+                </div>
+                <h3 className="text-xl font-bold text-surface-900 dark:text-white mb-3">{node.label}</h3>
+                <p className="text-sm text-surface-900/60 dark:text-white/55 leading-relaxed">{node.desc}</p>
+
+                {/* Step number */}
+                <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-surface-100 dark:bg-white/5 flex items-center justify-center text-xs font-bold text-surface-900/40 dark:text-white/40">
+                  {idx + 1}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Data flow legend */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 grid md:grid-cols-2 gap-4 max-w-4xl mx-auto"
+        >
+          <div className="bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-2xl p-5 flex items-start gap-3">
+            <FaArrowRight className="w-5 h-5 text-brand-500 shrink-0 mt-0.5" />
+            <div>
+              <div className="font-semibold text-surface-900 dark:text-white text-sm">Inbound: Customer → Store</div>
+              <div className="text-xs text-surface-900/60 dark:text-white/55 mt-1">
+                Customer sends a command → Telegram forwards to your webhook → plugin sanitizes, dispatches, replies.
+              </div>
+            </div>
+          </div>
+          <div className="bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-2xl p-5 flex items-start gap-3">
+            <FaBell className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+            <div>
+              <div className="font-semibold text-surface-900 dark:text-white text-sm">Outbound: Store → Customer</div>
+              <div className="text-xs text-surface-900/60 dark:text-white/55 mt-1">
+                Order placed or status changed → plugin fires Telegram sendMessage → customer gets instant notification.
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Interactive command explorer                                       */
+/* ------------------------------------------------------------------ */
+
+function CommandExplorer() {
+  const [active, setActive] = useState(0);
+
+  const explorers = [
+    {
+      cmd: "/products",
+      title: "Browse Featured Products",
+      icon: FaShoppingCart,
+      color: "from-emerald-500 to-green-600",
+      userMessage: "/products",
+      botReply: "🛒 Featured Products\n\n1. Cotton T-Shirt — $24.99\n2. Wireless Earbuds — $59.00\n3. Leather Wallet — $39.50\n\nTap a product to view details 👇",
+      keyboard: ["Cotton T-Shirt", "Wireless Earbuds", "Leather Wallet"],
+    },
+    {
+      cmd: "/search",
+      title: "Search the Catalog",
+      icon: FaSearch,
+      color: "from-blue-500 to-cyan-600",
+      userMessage: "/search headphones",
+      botReply: "🔍 Found 3 products for 'headphones'\n\n1. Wireless Earbuds Pro — $59.00\n2. Studio Headphones — $129.00\n3. Bluetooth Headset — $45.00\n\nUse /product <id> for details.",
+      keyboard: ["View Product 1", "View Product 2", "View Product 3"],
+    },
+    {
+      cmd: "/track",
+      title: "Track an Order",
+      icon: FaTruck,
+      color: "from-rose-500 to-pink-600",
+      userMessage: "/track 1042",
+      botReply: "📦 Order #1042 — Shipped\n\n• 2× Cotton T-Shirt\n• 1× Wireless Earbuds\n\nTotal: $108.98\nCarrier: FedEx\nETA: Tomorrow, 3-5 PM\n\nNeed help? /support",
+      keyboard: ["View Invoice", "Contact Support"],
+    },
+    {
+      cmd: "/cart",
+      title: "Manage Your Cart",
+      icon: FaShoppingCart,
+      color: "from-amber-500 to-orange-600",
+      userMessage: "/cart",
+      botReply: "🛒 Your Cart (2 items)\n\n• Cotton T-Shirt × 2 — $49.98\n• Wireless Earbuds × 1 — $59.00\n\nSubtotal: $108.98\n\nReady to checkout?",
+      keyboard: ["Checkout", "Clear Cart", "Continue Shopping"],
+    },
+  ];
+
+  return (
+    <section className="relative py-24 px-4 sm:px-6 bg-gradient-to-b from-surface-50 to-surface-0 dark:from-surface-900 dark:to-surface-950">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Interactive Demo"
+          title={
+            <>
+              Try the bot,
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}right here
+              </span>
+            </>
+          }
+          subtitle="Click through real bot conversations. Each tab shows a different command in action — this is exactly what your customers will see inside Telegram."
+        />
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: command selector */}
+          <div className="space-y-3">
+            {explorers.map((exp, idx) => {
+              const Icon = exp.icon;
+              const isActive = active === idx;
+              return (
+                <motion.button
+                  key={exp.cmd}
+                  onClick={() => setActive(idx)}
+                  whileHover={{ x: 6 }}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl border text-left transition-all duration-300 ${
+                    isActive
+                      ? "bg-surface-0 dark:bg-surface-900/60 border-brand-500/40 shadow-glow"
+                      : "bg-surface-50 dark:bg-surface-900/30 border-surface-100 dark:border-white/10 hover:border-brand-500/20"
+                  }`}
+                >
+                  <div
+                    className={`shrink-0 p-3 rounded-xl bg-gradient-to-br ${exp.color} shadow-lg transition-transform duration-300 ${
+                      isActive ? "scale-110" : "scale-100 opacity-70"
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <code className={`font-mono text-sm font-bold ${isActive ? "text-brand-600 dark:text-brand-300" : "text-surface-900/70 dark:text-white/60"}`}>
+                        {exp.cmd}
+                      </code>
+                      {isActive && (
+                        <motion.span
+                          layoutId="active-cmd-dot"
+                          className="w-2 h-2 rounded-full bg-emerald-400"
+                        />
+                      )}
+                    </div>
+                    <div className={`text-sm mt-1 ${isActive ? "text-surface-900 dark:text-white" : "text-surface-900/60 dark:text-white/50"}`}>
+                      {exp.title}
+                    </div>
+                  </div>
+                  <FaArrowRight
+                    className={`w-4 h-4 transition-all duration-300 ${
+                      isActive ? "text-brand-500 translate-x-0" : "text-surface-900/30 dark:text-white/20 -translate-x-2 opacity-0"
+                    }`}
+                  />
+                </motion.button>
+              );
+            })}
+          </div>
+
+          {/* Right: chat mockup */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, scale: 0.95, rotateY: -10 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              exit={{ opacity: 0, scale: 0.95, rotateY: 10 }}
+              transition={{ duration: 0.4 }}
+              className="relative"
+            >
+              <div className="relative bg-surface-950 rounded-[2rem] border-4 border-surface-800 shadow-2xl overflow-hidden">
+                {/* Telegram header */}
+                <div className="bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-4 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                    <FaStore className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-white font-semibold text-sm">My Store Bot</div>
+                    <div className="text-white/70 text-xs">online · bot</div>
+                  </div>
+                  <FaTelegram className="w-5 h-5 text-white/80" />
+                </div>
+
+                {/* Chat body */}
+                <div className="bg-[#0e1621] px-4 py-6 min-h-[360px] space-y-3">
+                  {/* User message */}
+                  <div className="flex justify-end">
+                    <div className="max-w-[80%] bg-[#2b5278] rounded-2xl px-4 py-2">
+                      <p className="text-sm text-white font-mono">{explorers[active].userMessage}</p>
+                      <div className="text-[10px] text-white/40 mt-1 text-right">10:35</div>
+                    </div>
+                  </div>
+                  {/* Bot reply */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="flex justify-start"
+                  >
+                    <div className="max-w-[85%] bg-[#182533] rounded-2xl px-4 py-3">
+                      <p className="text-sm text-white whitespace-pre-line leading-relaxed">
+                        {explorers[active].botReply}
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {explorers[active].keyboard.map((btn) => (
+                          <span
+                            key={btn}
+                            className="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 text-xs border border-sky-500/30"
+                          >
+                            {btn}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="text-[10px] text-white/40 mt-1 text-right">10:35</div>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Input bar */}
+                <div className="bg-[#17212b] px-3 py-3 flex items-center gap-2">
+                  <div className="flex-1 bg-[#0e1621] rounded-full px-4 py-2 text-white/30 text-sm">
+                    Message...
+                  </div>
+                  <div className="w-9 h-9 rounded-full bg-sky-500 flex items-center justify-center">
+                    <FaTelegram className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Roadmap — what's coming next                                       */
+/* ------------------------------------------------------------------ */
+
+function Roadmap() {
+  const phases = [
+    {
+      phase: "v1.0.0",
+      status: "Shipped",
+      title: "Core Plugin",
+      desc: "25 bot commands, order notifications, product search, cart, webhook auto-setup, HPOS compatibility. The complete free edition.",
+      icon: FaCheckCircle,
+      color: "from-emerald-500 to-teal-600",
+      items: ["25 bot commands", "Order notifications", "Product search & cart", "Webhook auto-setup", "HPOS compatible"],
+    },
+    {
+      phase: "v1.1.0",
+      status: "In Progress",
+      title: "Refinements",
+      desc: "Performance tuning, additional language packs, and a settings UI refresh based on user feedback from the first 100 stores.",
+      icon: FaBolt,
+      color: "from-amber-500 to-orange-600",
+      items: ["Performance tuning", "Additional languages", "Settings UI refresh", "Bug fixes from feedback"],
+    },
+    {
+      phase: "v1.2.0",
+      status: "Planned",
+      title: "Pro Hooks",
+      desc: "Developer hooks and filters so agencies can extend the bot with custom commands. Custom inline keyboard builder.",
+      icon: FaCode,
+      color: "from-blue-500 to-indigo-600",
+      items: ["Developer hooks & filters", "Custom command API", "Inline keyboard builder", "Webhook event log"],
+    },
+    {
+      phase: "Premium",
+      status: "Separate Edition",
+      title: "AI + CRM Suite",
+      desc: "AI customer support, full CRM with Kanban pipeline, automation rules, multi-agent, WhatsApp Business API, REST API, PDF reports, 116+ commands.",
+      icon: FaRocket,
+      color: "from-brand-500 to-purple-600",
+      items: ["AI customer support", "CRM + Kanban pipeline", "Automation rules", "Multi-agent support", "WhatsApp API", "116+ commands"],
+    },
+  ];
+
+  return (
+    <section className="relative py-24 px-4 sm:px-6 bg-surface-0 dark:bg-surface-950">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Roadmap"
+          title={
+            <>
+              Where the plugin is
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}heading next
+              </span>
+            </>
+          }
+          subtitle="The free edition is just the start. Here's the roadmap — both for the free plugin and the separately hosted Premium edition."
+        />
+
+        <div className="relative">
+          {/* Vertical line (mobile) / horizontal line (desktop) */}
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 via-amber-500 via-brand-500 to-purple-600 -translate-y-1/2 opacity-20" />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {phases.map((p, idx) => {
+              const Icon = p.icon;
+              return (
+                <motion.div
+                  key={p.phase}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.12, duration: 0.5 }}
+                  className="relative bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-3xl p-6 hover:shadow-card transition-shadow duration-300"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`p-3 rounded-2xl bg-gradient-to-br ${p.color} shadow-lg`}>
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <span
+                      className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                        p.status === "Shipped"
+                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                          : p.status === "In Progress"
+                          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                          : p.status === "Planned"
+                          ? "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                          : "bg-brand-500/10 text-brand-600 dark:text-brand-300"
+                      }`}
+                    >
+                      {p.status}
+                    </span>
+                  </div>
+
+                  <div className="text-xs font-mono text-surface-900/40 dark:text-white/40 mb-1">{p.phase}</div>
+                  <h3 className="text-lg font-bold text-surface-900 dark:text-white mb-2">{p.title}</h3>
+                  <p className="text-sm text-surface-900/60 dark:text-white/55 leading-relaxed mb-4">{p.desc}</p>
+
+                  <ul className="space-y-1.5">
+                    {p.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2 text-xs text-surface-900/60 dark:text-white/55">
+                        <FaCheckCircle className="w-3 h-3 text-emerald-500 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Floating Telegram CTA — sticky button                             */
+/* ------------------------------------------------------------------ */
+
+function FloatingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 800);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.a
+          href="https://t.me/BotFather"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, scale: 0, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0, y: 20 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-6 right-6 z-40 group"
+          aria-label="Create a Telegram bot"
+        >
+          {/* Pulsing ring */}
+          <span className="absolute inset-0 rounded-full bg-sky-500 animate-ping opacity-30" />
+
+          <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 shadow-2xl flex items-center justify-center border-2 border-white/20">
+            <FaTelegram className="w-6 h-6 text-white" />
+          </div>
+
+          {/* Tooltip on hover */}
+          <motion.span
+            initial={{ opacity: 0, x: 10 }}
+            whileHover={{ opacity: 1, x: 0 }}
+            className="absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap bg-surface-950 text-white text-xs font-medium px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            Create your free bot
+          </motion.span>
+        </motion.a>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Page wrapper                                                      */
 /* ------------------------------------------------------------------ */
 
@@ -1700,17 +2415,23 @@ export default function MarkhubsPlugin() {
   return (
     <main className="pt-20">
       <Hero />
+      <TrustBar />
       <ChatPreview />
+      <CounterStats />
       <Features />
+      <CommandExplorer />
       <UseCases />
+      <Architecture />
       <Commands />
       <Performance />
       <Security />
       <HowItWorks />
       <Testimonials />
+      <Roadmap />
       <Comparison />
       <Faq />
       <DownloadCTA />
+      <FloatingCTA />
     </main>
   );
 }
