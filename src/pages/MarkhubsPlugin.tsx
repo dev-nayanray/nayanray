@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   FaTelegram, FaWordpress, FaDownload, FaGithub, FaRocket,
   FaShieldAlt, FaBolt, FaShoppingCart, FaSearch, FaTruck, FaBell,
   FaRobot, FaDatabase, FaPlug, FaLock, FaCheckCircle, FaArrowRight,
-  FaChevronDown, FaStar, FaCode, FaMobileAlt, FaStore, FaSync,
+  FaChevronDown, FaStar, FaCode, FaMobileAlt, FaStore, FaSync, FaBook,
 } from "react-icons/fa";
 import {
   SiTelegram,
@@ -434,6 +435,15 @@ function Hero() {
             <FaTelegram />
             <span>Create a Bot</span>
           </motion.a>
+
+          <Link
+            to="/markhubs-store-manager-for-telegram/docs"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-brand-500/30 text-brand-600 dark:text-brand-300 font-bold rounded-2xl hover:bg-brand-50 dark:hover:bg-brand-500/10 transition-all duration-300 shadow-lg"
+          >
+            <FaBook />
+            <span>Documentation</span>
+            <FaArrowRight className="w-3 h-3" />
+          </Link>
         </motion.div>
 
         {/* Stats */}
@@ -894,6 +904,13 @@ function DownloadCTA() {
             <FaGithub />
             <span>View Source</span>
           </motion.a>
+          <Link
+            to="/markhubs-store-manager-for-telegram/docs"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur border border-white/30 text-white font-bold rounded-2xl hover:bg-white/20 transition-all duration-300"
+          >
+            <FaBook />
+            <span>Read the Docs</span>
+          </Link>
         </motion.div>
 
         <motion.div
