@@ -237,7 +237,8 @@ function App() {
     try {
       let savedProject: Project;
       // Strip 'id' from the payload — the backend rejects it on update
-      const { id: _id, ...projectData } = project;
+      const projectData = { ...project };
+      delete (projectData as Record<string, unknown>).id;
       if (editingProject) {
         savedProject = await projectsAPI.update(editingProject.id!, projectData);
         setProjects(projects.map(p => p.id === editingProject.id ? savedProject : p));
@@ -275,7 +276,8 @@ function App() {
     try {
       let savedBlogPost: BlogPost;
       // Strip 'id' from the payload — the backend rejects it on update
-      const { id: _id, ...blogData } = blogPost;
+      const blogData = { ...blogPost };
+      delete (blogData as Record<string, unknown>).id;
       if (editingBlogPost) {
         savedBlogPost = await blogAPI.update(editingBlogPost.id!, blogData);
         setBlogPosts(blogPosts.map(b => b.id === editingBlogPost.id ? savedBlogPost : b));
@@ -313,7 +315,8 @@ function App() {
     try {
       let savedService: Service;
       // Strip 'id' from the payload — the backend rejects it on update
-      const { id: _id, ...serviceData } = service;
+      const serviceData = { ...service };
+      delete (serviceData as Record<string, unknown>).id;
       if (editingService) {
         savedService = await servicesAPI.update(editingService.id!, serviceData);
         setServices(services.map(s => s.id === editingService.id ? savedService : s));
@@ -389,7 +392,8 @@ function App() {
     setError('');
     try {
       // Strip 'id' from the payload — the backend rejects it on update
-      const { id: _id, ...userData } = user;
+      const userData = { ...user };
+      delete (userData as Record<string, unknown>).id;
       if (editingUser) {
         await usersAPI.update(editingUser.id!, userData);
       } else {

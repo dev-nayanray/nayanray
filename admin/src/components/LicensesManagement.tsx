@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
-  FaKey, FaPlus, FaCopy, FaCheck, FaTimes, FaSearch, FaSync,
+  FaKey, FaPlus, FaCopy, FaCheck, FaSearch, FaSync,
   FaCalendarAlt, FaRocket, FaEnvelope, FaExternalLinkAlt,
 } from 'react-icons/fa';
 import { licensesAPI, getErrorMessage } from '../services/api';
