@@ -159,43 +159,6 @@ const Brand = () => {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Collaboration CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <div className="bg-gradient-to-r from-brand-50 to-brand-100 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
-            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
-              Have a Project in Mind?
-            </h3>
-            <p className="text-surface-900/60 dark:text-white/50 text-lg mb-8 max-w-2xl mx-auto">
-              Whether it's a custom WordPress plugin, a React dashboard, or a full-stack
-              e-commerce build — let's talk about what you need and how I can help.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300"
-              >
-                Start a Project
-              </motion.a>
-              <motion.a
-                href="#projects"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 font-semibold rounded-2xl border-2 border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/50 transition-all duration-300"
-              >
-                View My Work
-              </motion.a>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

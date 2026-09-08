@@ -318,41 +318,6 @@ const Pricing = () => {
             ))}
           </div>
         </motion.div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Start Your Project?
-            </h3>
-            <p className="text-brand-100 text-lg mb-8 max-w-2xl mx-auto">
-              Let's discuss your project requirements and find the perfect solution for your business.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-surface-900 font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                Get Free Quote
-              </motion.a>
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-transparent text-white font-semibold rounded-2xl border-2 border-white/50 shadow-lg hover:bg-white/10 transition-all duration-300"
-              >
-                Schedule Call
-              </motion.a>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

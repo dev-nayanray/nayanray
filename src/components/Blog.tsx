@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FaCalendar, FaUser, FaArrowRight, FaClock, FaTags } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
+import { SkeletonGrid } from "./ui/SkeletonCard";
 
 interface BlogPost {
   id: number;
@@ -66,9 +67,7 @@ const Blog = () => {
         {/* Blog Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {loading && (
-            <div className="col-span-full flex justify-center py-12">
-              <div className="w-10 h-10 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
-            </div>
+            <SkeletonGrid count={3} />
           )}
           {error && (
             <div className="col-span-full text-center py-12 text-rose-500">
