@@ -1,9 +1,20 @@
+# robots.txt — Nayan Ray portfolio + markhubs Telegram plugin
+# Updated 2026-09-08
+# Full crawl access for all public content. Admin and API are blocked.
+
 User-agent: *
 Allow: /
+Allow: /markhubs-store-manager-for-telegram
+Allow: /markhubs-store-manager-for-telegram/docs
 Disallow: /admin
 Disallow: /api
+Disallow: /*.json$
+Disallow: /*.map$
 
-# Allow crawling of all public content, plugin, and documentation pages
-# Updated 2026-09-08 — includes markhubs Telegram plugin landing + docs
+# Host directive — used by Yandex and some other crawlers
+Host: https://nayanray.vercel.app
+
+# Crawl delay — be polite to the server
+Crawl-delay: 1
 
 Sitemap: https://nayanray.vercel.app/sitemap.xml
