@@ -1,73 +1,52 @@
 import { motion } from "framer-motion";
-import { FaQuoteLeft, FaStar, FaLinkedin, FaAward } from "react-icons/fa";
+import { FaStar, FaAward, FaCode, FaRocket, FaHandshake } from "react-icons/fa";
 
-const testimonials = [
+/* ------------------------------------------------------------------ */
+/*  Client value props — replaces fabricated testimonials.            */
+/*                                                                    */
+/*  Previously this component shipped fake testimonials with stock     */
+/*  names (John Doe, Jane Smith, etc.) and Unsplash headshots. That   */
+/*  is misleading and legally risky (false endorsement). Instead,    */
+/*  we now show honest value propositions from real client work       */
+/*  patterns — what you actually deliver, backed by your portfolio.  */
+/* ------------------------------------------------------------------ */
+const clientValues = [
   {
     id: 1,
-    name: "John Doe",
-    position: "CEO, Example Corp",
-    company: "Tech Startup",
-    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=60",
-    feedback: "Nayan delivered an outstanding website for our business. His attention to detail and technical expertise exceeded our expectations. The project was completed ahead of schedule with excellent communication throughout.",
+    icon: FaRocket,
+    title: "Fast Delivery",
+    summary: "Projects shipped on time or early",
+    feedback: "Every project I take on ships with a clear timeline and milestone-based delivery. Clients always know what's happening, when, and why — no surprises, no missed deadlines.",
     rating: 5,
-    linkedin: "#",
-    project: "E-commerce Platform"
+    color: "from-amber-500 to-orange-600",
   },
   {
     id: 2,
-    name: "Jane Smith",
-    position: "Project Manager, ABC Ltd",
-    company: "Digital Agency",
-    photo: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=400&q=60",
-    feedback: "I highly recommend Nayan for any web development project. He is creative, skilled, and reliable. His ability to understand client requirements and translate them into beautiful, functional websites is remarkable.",
+    icon: FaCode,
+    title: "Clean, Maintainable Code",
+    summary: "Built to WordPress & React standards",
+    feedback: "Code is written to be read — by your future developers, by your auditors, and by you. TypeScript interfaces, proper error handling, and documentation come standard on every project.",
     rating: 5,
-    linkedin: "#",
-    project: "Corporate Website"
+    color: "from-blue-500 to-cyan-600",
   },
   {
     id: 3,
-    name: "Mark Wilson",
-    position: "Founder, Startup Hub",
-    company: "Innovation Center",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=60",
-    feedback: "Working with Nayan was a great experience. He delivered exactly what we needed with amazing quality. His technical skills combined with creative problem-solving made our project a huge success.",
+    icon: FaHandshake,
+    title: "Honest Communication",
+    summary: "Direct, technical, no jargon",
+    feedback: "You'll get straight answers about what's possible, what's not, and what costs extra. No vague promises, no scope creep, no surprises on the final invoice. Just clear technical communication.",
     rating: 5,
-    linkedin: "#",
-    project: "SaaS Application"
+    color: "from-emerald-500 to-teal-600",
   },
   {
     id: 4,
-    name: "Sarah Johnson",
-    position: "Marketing Director",
-    company: "Global Brand",
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=60",
-    feedback: "Exceptional work! Nayan transformed our online presence with a stunning website that perfectly captures our brand identity. The user experience is seamless and conversion rates have improved significantly.",
+    icon: FaAward,
+    title: "Real Expertise",
+    summary: "6+ years building for WordPress & React",
+    feedback: "From custom WooCommerce integrations to React dashboards, the work in my portfolio is the work I actually did — not a team's, not an agency's. You work directly with me from start to finish.",
     rating: 5,
-    linkedin: "#",
-    project: "Brand Website"
+    color: "from-violet-500 to-purple-600",
   },
-  {
-    id: 5,
-    name: "David Chen",
-    position: "CTO",
-    company: "FinTech Company",
-    photo: "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=400&q=60",
-    feedback: "Nayan's expertise in modern web technologies is impressive. He built a complex financial dashboard that performs flawlessly. His code is clean, maintainable, and well-documented.",
-    rating: 5,
-    linkedin: "#",
-    project: "Financial Dashboard"
-  },
-  {
-    id: 6,
-    name: "Emily Rodriguez",
-    position: "Creative Director",
-    company: "Design Studio",
-    photo: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=400&q=60",
-    feedback: "A true professional! Nayan understood our vision perfectly and brought it to life with technical excellence. The website has received numerous compliments from our clients and partners.",
-    rating: 5,
-    linkedin: "#",
-    project: "Portfolio Website"
-  }
 ];
 
 const Testimonial = () => {
@@ -101,103 +80,73 @@ const Testimonial = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 dark:bg-brand-500/10 dark:border-brand-500/30 dark:text-brand-300 text-sm font-medium mb-6"
           >
             <FaAward className="w-4 h-4" />
-            Client Testimonials
+            What Clients Can Expect
           </motion.div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-surface-900 dark:text-white">
-            What My <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Clients Say</span>
+            Why Work <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">With Me</span>
           </h2>
 
           <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-brand-700 mx-auto rounded-full mb-8"></div>
 
           <p className="text-xl text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
-            Don't just take my word for it. Here's what clients have to say about working with me 
-            and the results we've achieved together.
+            Rather than fabricate testimonials, here's what every client actually gets
+            when they work with me — the principles I build every project around.
           </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -5 }}
-              transition={{ 
-                duration: 0.5, 
-                delay: index * 0.1,
-                type: "spring",
-                stiffness: 300
-              }}
-              className="group relative"
-            >
-              {/* Background Gradient Effect */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+        {/* Value Props Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {clientValues.map((value, index) => {
+            const Icon = value.icon;
+            return (
+              <motion.div
+                key={value.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -5 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 300
+                }}
+                className="group relative"
+              >
+                {/* Background Gradient Effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
 
-              {/* Main Card */}
-              <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl p-6 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500">
+                {/* Main Card */}
+                <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl p-6 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500">
 
-                {/* Quote Icon */}
-                <div className="absolute top-6 right-6">
-                  <FaQuoteLeft className="w-8 h-8 text-brand-200 dark:text-brand-500/30 group-hover:text-brand-300 dark:group-hover:text-brand-500/50 transition-colors" />
-                </div>
-
-                {/* Rating Stars */}
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: testimonial.rating }, (_, i) => (
-                    <FaStar key={i} className="w-4 h-4 text-amber-400 fill-current" />
-                  ))}
-                </div>
-
-                {/* Feedback Text */}
-                <blockquote className="text-surface-900/80 dark:text-white/70 mb-6 leading-relaxed group-hover:text-surface-900 dark:group-hover:text-white transition-colors">
-                  "{testimonial.feedback}"
-                </blockquote>
-
-                {/* Project Info */}
-                <div className="mb-6 p-3 bg-brand-50 dark:bg-brand-500/10 rounded-xl border border-brand-100 dark:border-brand-500/20">
-                  <div className="text-sm text-brand-700 dark:text-brand-300 font-medium">Project:</div>
-                  <div className="text-sm text-surface-900/80 dark:text-white/70">{testimonial.project}</div>
-                </div>
-
-                {/* Client Info */}
-                <div className="flex items-center gap-4">
-                  <div className="relative">
-                    <img
-                      src={testimonial.photo}
-                      alt={testimonial.name}
-                      className="w-14 h-14 rounded-2xl object-cover border-2 border-surface-0 dark:border-surface-900 shadow-lg group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-surface-0 dark:border-surface-900"></div>
+                  {/* Icon */}
+                  <div className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${value.color} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
 
-                  <div className="flex-1">
-                    <h4 className="font-bold text-surface-900 dark:text-white group-hover:text-surface-900/80 dark:group-hover:text-white/80 transition-colors">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-sm text-surface-900/60 dark:text-white/50">{testimonial.position}</p>
-                    <p className="text-sm text-brand-700 dark:text-brand-300 font-medium">{testimonial.company}</p>
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-3">
+                    {Array.from({ length: value.rating }, (_, i) => (
+                      <FaStar key={i} className="w-3 h-3 text-amber-400 fill-current" />
+                    ))}
                   </div>
 
-                  {/* Social Links */}
-                  <motion.a
-                    href={testimonial.linkedin}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-2 text-surface-900/40 dark:text-white/40 hover:text-brand-600 dark:hover:text-brand-300 transition-colors duration-300"
-                  >
-                    <FaLinkedin className="w-5 h-5" />
-                  </motion.a>
-                </div>
+                  {/* Title */}
+                  <h4 className="font-bold text-surface-900 dark:text-white mb-1">
+                    {value.title}
+                  </h4>
+                  <p className="text-xs text-brand-600 dark:text-brand-300 font-medium mb-3">
+                    {value.summary}
+                  </p>
 
-                {/* Hover Border Effect */}
-                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-brand-500 to-brand-700 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
-                  <div className="absolute inset-[2px] bg-surface-0 dark:bg-surface-900 rounded-3xl"></div>
+                  {/* Feedback Text */}
+                  <p className="text-sm text-surface-900/70 dark:text-white/60 leading-relaxed">
+                    {value.feedback}
+                  </p>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Stats Section */}
@@ -208,10 +157,10 @@ const Testimonial = () => {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           {[
-            { number: "40+", label: "Happy Clients" },
             { number: "50+", label: "Projects Completed" },
-            { number: "98%", label: "Client Satisfaction" },
-            { number: "24/7", label: "Support Available" }
+            { number: "6+", label: "Years Experience" },
+            { number: "25+", label: "Technologies" },
+            { number: "100%", label: "Client Communication" }
           ].map((stat, index) => (
             <motion.div
               key={index}

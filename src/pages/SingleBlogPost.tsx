@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { FaCalendar, FaUser, FaClock, FaTags, FaArrowLeft, FaExternalLinkAlt, FaShare, FaFacebook, FaTwitter, FaLinkedin, FaBookmark, FaEye } from "react-icons/fa";
+import { FaCalendar, FaUser, FaClock, FaTags, FaArrowLeft, FaExternalLinkAlt, FaShare, FaFacebook, FaTwitter, FaLinkedin, FaBookmark } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import api from "../services/api";
@@ -322,10 +322,9 @@ const SingleBlogPost = () => {
                       <FaTags className="text-brand-600 dark:text-brand-300" />
                       <span className="font-medium">{post.category}</span>
                     </span>
-                    <span className="flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1.5 rounded-full">
-                      <FaEye className="text-green-600" />
-                      <span className="font-medium">1.2K views</span>
-                    </span>
+                    {/* View count removed — was hardcoded "1.2K views" on
+                        every post. Implement real view counting in the
+                        backend before re-enabling this badge. */}
                   </motion.div>
 
                   {/* Social Share & Actions */}
@@ -422,31 +421,39 @@ const SingleBlogPost = () => {
                   </motion.div>
                 )}
 
-                {/* Article Content Placeholder */}
+                {/* Article Content — renders post.content from the API.
+                    If the backend doesn't provide content (older seed data),
+                    falls back to the excerpt expanded into a readable intro
+                    instead of shipping Lorem ipsum placeholders. */}
                 <motion.div
                   className="prose prose-lg max-w-none mb-12"
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.9 }}
                 >
-                  <h2 className="text-2xl font-bold text-surface-900 dark:text-white mb-4">Introduction</h2>
-                  <p className="text-surface-900/70 dark:text-white/60 leading-relaxed mb-6">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-
-                  <h2 className="text-2xl font-bold text-surface-900 dark:text-white mb-4">Main Content</h2>
-                  <p className="text-surface-900/70 dark:text-white/60 leading-relaxed mb-6">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
-
-                  <blockquote className="border-l-4 border-brand-500 pl-6 italic text-surface-900/60 dark:text-white/50 my-8 bg-brand-50 dark:bg-brand-500/10 py-4 px-6 rounded-r-lg">
-                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
-                  </blockquote>
-
-                  <h2 className="text-2xl font-bold text-surface-900 dark:text-white mb-4">Conclusion</h2>
-                  <p className="text-surface-900/70 dark:text-white/60 leading-relaxed">
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                  </p>
+                  {post.content ? (
+                    <div
+                      className="text-surface-900/70 dark:text-white/60 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
+                  ) : (
+                    <>
+                      <h2 className="text-2xl font-bold text-surface-900 dark:text-white mb-4">
+                        Overview
+                      </h2>
+                      <p className="text-surface-900/70 dark:text-white/60 leading-relaxed mb-6">
+                        {post.excerpt}
+                      </p>
+                      <p className="text-surface-900/70 dark:text-white/60 leading-relaxed">
+                        This article is part of the {post.category} series. The full
+                        body content will be available once it's published in the
+                        admin panel. The excerpt above gives you a preview of what's
+                        covered — check back soon for the complete write-up, or
+                        reach out via the contact form if you'd like to discuss
+                        this topic in more detail.
+                      </p>
+                    </>
+                  )}
                 </motion.div>
 
                 {/* Related Projects Section */}

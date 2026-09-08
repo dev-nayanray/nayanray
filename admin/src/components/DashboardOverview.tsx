@@ -72,12 +72,19 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
     { name: 'Users', value: counts.users },
   ].filter((d) => d.value > 0);
 
-  // Lightweight synthetic trend so the area chart has shape even with sparse data.
-  const trendData = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6'].map((label, i) => {
-    const base = counts.projects + counts.blog + counts.services;
-    const wobble = Math.round(Math.sin(i) * 2);
-    return { label, activity: Math.max(base - (5 - i) + wobble, 0) };
-  });
+  // Content totals by category — uses REAL counts from the database,
+  // not fabricated data. Previously this used Math.sin(i) to generate
+  // a synthetic "trend" that looked like analytics but was fake.
+  // Now we show the actual content distribution, which is honest and
+  // more useful to the admin.
+  const trendData = [
+    { label: 'Projects', activity: counts.projects },
+    { label: 'Blog', activity: counts.blog },
+    { label: 'Services', activity: counts.services },
+    { label: 'Proposals', activity: counts.proposals },
+    { label: 'Messages', activity: counts.contacts },
+    { label: 'Users', activity: counts.users },
+  ];
 
   const recentActivity = [
     ...projects.slice(-3).map((p) => ({ label: p.title, type: 'Project', date: undefined as string | undefined })),

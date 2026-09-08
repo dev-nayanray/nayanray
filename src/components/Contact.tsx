@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaPaperPlane, FaWhatsapp, FaTelegram } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaPaperPlane, FaWhatsapp, FaTelegram, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { submitContactMessage } from "../services/api";
+
+interface SubmitStatus {
+  type: "success" | "error";
+  message: string;
+}
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +17,7 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -21,29 +27,36 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null); // clear any previous status
 
-  try {
-    // Send data to backend API
-    const response = await submitContactMessage(formData);
-    console.log("Form submitted:", response);
-    setFormData({ name: "", email: "", subject: "", message: "" });
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Failed to submit contact message:", error.message);
-    } else if (typeof error === "object" && error !== null && "response" in error) {
-      console.error(
-        "Failed to submit contact message:",
-        (error as any).response?.data || "Unknown error"
-      );
-    } else {
-      console.error("Unknown error:", error);
+    try {
+      await submitContactMessage(formData);
+      setSubmitStatus({
+        type: "success",
+        message: "Thank you! Your message has been sent. I'll get back to you within 24 hours.",
+      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      let errorMessage = "Something went wrong. Please try again or email me directly.";
+      // Safely extract the server error message without `as any`
+      if (error && typeof error === "object" && "response" in error) {
+        const resp = error as { response?: { data?: { error?: string } } };
+        if (resp.response?.data?.error) {
+          errorMessage = resp.response.data.error;
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      setSubmitStatus({
+        type: "error",
+        message: errorMessage,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
 
   const contactInfo = [
@@ -81,7 +94,7 @@ const Contact = () => {
     {
       icon: <FaLinkedin className="w-5 h-5" />,
       label: "LinkedIn",
-      url: "https://www.linkedin.com/in/yourprofile",
+      url: "https://www.linkedin.com/in/dev-nayanray",
       color: "hover:bg-blue-600 hover:text-white"
     },
     {
@@ -93,7 +106,7 @@ const Contact = () => {
     {
       icon: <FaTelegram className="w-5 h-5" />,
       label: "Telegram",
-      url: "https://t.me/yourusername",
+      url: "https://t.me/nayanray",
       color: "hover:bg-blue-500 hover:text-white"
     },
     {
@@ -247,6 +260,28 @@ const Contact = () => {
             {/* Form Container */}
             <div className="relative bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl p-8 border border-surface-100 dark:border-white/10 shadow-xl">
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Success / Error banner */}
+                <AnimatePresence>
+                  {submitStatus && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, height: 0 }}
+                      animate={{ opacity: 1, y: 0, height: "auto" }}
+                      exit={{ opacity: 0, y: -10, height: 0 }}
+                      className={`flex items-start gap-3 p-4 rounded-xl border ${
+                        submitStatus.type === "success"
+                          ? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300"
+                          : "bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30 text-rose-800 dark:text-rose-300"
+                      }`}
+                    >
+                      {submitStatus.type === "success" ? (
+                        <FaCheckCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                      ) : (
+                        <FaExclamationTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+                      )}
+                      <p className="text-sm leading-relaxed">{submitStatus.message}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 {/* Name & Email Row */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
