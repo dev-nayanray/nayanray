@@ -2810,6 +2810,41 @@ function FloatingCTA() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Back to top button — floating, appears after scrolling              */
+/* ------------------------------------------------------------------ */
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 1200);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          onClick={scrollToTop}
+          initial={{ opacity: 0, scale: 0, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0, y: 20 }}
+          whileHover={{ scale: 1.1, y: -2 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full bg-surface-0 dark:bg-surface-900 border border-surface-100 dark:border-white/10 shadow-2xl flex items-center justify-center group"
+          aria-label="Back to top"
+        >
+          <FaArrowRight className="w-4 h-4 text-surface-900 dark:text-white -rotate-90 group-hover:-translate-y-1 transition-transform" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Page wrapper                                                      */
 /* ------------------------------------------------------------------ */
 
@@ -3057,6 +3092,7 @@ export default function MarkhubsPlugin() {
       <DownloadCTA />
       <FloatingCTA />
       <MobileCTABar />
+      <BackToTop />
     </main>
   );
 }

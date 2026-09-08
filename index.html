@@ -22,8 +22,25 @@
     <meta name="author" content="Nayan Ray" />
     <meta name="keywords" content="Nayan Ray, Web Developer, React Developer, WordPress Developer, Full Stack Developer, Frontend, Backend, Node.js, PHP, Bangladesh, Portfolio, Freelance Developer, WooCommerce Telegram plugin, markhubs Store Manager, WordPress Telegram bot, Free WordPress Plugins" />
     <meta name="robots" content="index, follow, max-image-preview: large, max-snippet: -1, max-video-preview: -1" />
-    <meta name="theme-color" content="#0ea5a4" />
+    <!-- Theme-color: matches manifest so browser address bar / mobile UI
+         uses the brand violet consistently. Was teal (#0ea5a4) before,
+         which conflicted with the manifest's #7c5cff. -->
+    <meta name="theme-color" content="#7c5cff" />
+    <meta name="msapplication-TileColor" content="#7c5cff" />
     <meta name="google-site-verification" content="Wg8v0_zN3-oR4wpj0Z-q4GoYwz0HWE0y7_3ZSUBsRog" />
+
+    <!-- hreflang — declares the page language and region for Google.
+         Even for a single-language site, this tells Google the page is
+         English and targeted globally. Helps with international ranking. -->
+    <link rel="alternate" hreflang="en" href="https://nayanray.vercel.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://nayanray.vercel.app/" />
+
+    <!-- Resource hints — speed up DNS resolution + TLS handshake for
+         external resources the page will request. -->
+    <link rel="dns-prefetch" href="https://api.telegram.org" />
+    <link rel="dns-prefetch" href="https://t.me" />
+    <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+    <link rel="preconnect" href="https://va.vercel-scripts.com" crossorigin />
 
     <!-- ✅ Canonical URL -->
     <link rel="canonical" href="https://nayanray.vercel.app/" />
