@@ -1121,9 +1121,9 @@ export default function MarkhubsDocs() {
   // long-tail queries like "how to install markhubs telegram plugin".
   useSeo({
     title:
-      "markhubs Store Manager for Telegram — Documentation & Setup Guide",
+      "markhubs Telegram Plugin — Docs & Setup Guide",
     description:
-      "Complete documentation for markhubs Store Manager for Telegram WordPress plugin. Install guide, BotFather setup, configuration reference, all 25 bot commands, webhook security, database schema, troubleshooting, and free vs premium comparison.",
+      "Complete docs: install guide, BotFather setup, 25 bot commands, webhook security, database schema, troubleshooting, free vs premium.",
     canonical: "/markhubs-store-manager-for-telegram/docs",
     keywords: [
       "markhubs Store Manager documentation",

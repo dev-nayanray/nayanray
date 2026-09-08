@@ -2864,9 +2864,9 @@ export default function MarkhubsPlugin() {
   /* ------------------------------------------------------------------ */
   const PAGE_URL = "/markhubs-store-manager-for-telegram";
   const PAGE_TITLE =
-    "markhubs Store Manager for Telegram — Free WooCommerce Telegram Bot Plugin";
+    "markhubs Telegram Plugin — Free WooCommerce Bot";
   const PAGE_DESC =
-    "Free WordPress plugin that turns your WooCommerce store into a Telegram sales bot. 25 bot commands, order notifications, product search, cart & checkout, HPOS compatible. GPL-licensed, zero dependencies. Download now.";
+    "Free WordPress plugin turns WooCommerce into a Telegram sales bot. 25 commands, order notifications, cart, HPOS. GPL-licensed, zero deps.";
   const PAGE_KEYWORDS = [
     "WooCommerce Telegram plugin",
     "WordPress Telegram bot",
