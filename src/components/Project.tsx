@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, FaChartLine } from "react-icons/fa";
-import api from "../services/api";
+import { useApi } from "../hooks/useApi";
 import ProjectGallery from "./ui/ProjectGallery";
 
 interface Project {
@@ -22,20 +21,8 @@ interface Project {
 }
 
 const Project = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await api.get("/projects");
-        setProjects(response.data);
-      } catch (error) {
-        console.error("Failed to fetch projects:", error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
+  // Replaces 12 lines of duplicated fetch boilerplate with one hook call.
+  const { data: projects, loading, error } = useApi<Project[]>("/projects");
 
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
@@ -95,7 +82,17 @@ const Project = () => {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {loading && (
+            <div className="col-span-full flex justify-center py-12">
+              <div className="w-10 h-10 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
+            </div>
+          )}
+          {error && (
+            <div className="col-span-full text-center py-12 text-rose-500">
+              Failed to load projects: {error}
+            </div>
+          )}
+          {projects && projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}

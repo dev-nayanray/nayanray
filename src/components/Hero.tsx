@@ -1,19 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import { FaDownload, FaEnvelope, FaStar, FaCode, FaWordpress, FaBolt, FaUniversalAccess, FaMobileAlt, FaRocket, FaPaintBrush } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
 
-// Enhanced roles with more specific specialties
-const getRoles = (t: any) => [
-  { text: t("hero.roles.reactArchitect"), icon: FaCode, color: "from-cyan-500 to-blue-500" },
-  { text: t("hero.roles.wordpressEngineer"), icon: FaWordpress, color: "from-blue-500 to-indigo-500" },
-  { text: t("hero.roles.uiArtisan"), icon: FaPaintBrush, color: "from-purple-500 to-pink-500" },
-  { text: t("hero.roles.performanceExpert"), icon: FaRocket, color: "from-amber-500 to-orange-500" }
+// Roles — previously fetched from i18n translation files, but i18n
+// was only wired to the Hero component (the LanguageToggle in the
+// header only translated the hero, not the rest of the page). Now
+// hardcoded as English strings — re-add i18n when the full site is
+// translated, not before.
+const roles = [
+  { text: "React Architect", icon: FaCode, color: "from-cyan-500 to-blue-500" },
+  { text: "WordPress Engineer", icon: FaWordpress, color: "from-blue-500 to-indigo-500" },
+  { text: "UI Artisan", icon: FaPaintBrush, color: "from-purple-500 to-pink-500" },
+  { text: "Performance Expert", icon: FaRocket, color: "from-amber-500 to-orange-500" }
 ];
 
 export default function Hero() {
-  const { t } = useTranslation();
-  const roles = getRoles(t);
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [blink, setBlink] = useState(true);
@@ -262,14 +263,14 @@ export default function Hero() {
                 id="hero-heading"
                 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-surface-900 dark:text-white leading-tight"
               >
-                {t("hero.greeting")}{" "}
+                {"Hi, I'm"}{" "}
                 <motion.span
                   className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700"
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  {t("hero.name")}
+                  {"Nayan Ray"}
                 </motion.span>
               </h1>
 
@@ -302,7 +303,7 @@ export default function Hero() {
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.6 }}
             >
-              {t("hero.description")}
+              {"I craft premium, high-performance web experiences with modern front-end tooling, robust WordPress architecture and pixel-perfect UI. Focused on performance, accessibility and delightful micro-interactions."}
             </motion.p>
 
             {/* CTA buttons */}
@@ -319,7 +320,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
               >
                 <FaDownload />
-                <span>{t("hero.viewWork")}</span>
+                <span>{"View My Work"}</span>
               </motion.a>
 
               <motion.a
@@ -329,7 +330,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
               >
                 <FaEnvelope />
-                <span>{t("hero.contactMe")}</span>
+                <span>{"Contact Me"}</span>
               </motion.a>
             </motion.div>
           </motion.div>

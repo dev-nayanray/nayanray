@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaCode, FaWordpress, FaMobileAlt, FaPaintBrush, FaRocket, FaShieldAlt, FaChartLine } from "react-icons/fa";
-import api from "../services/api";
+import { useApi } from "../hooks/useApi";
 
 interface Service {
   id: number;
@@ -15,20 +14,10 @@ interface Service {
 }
 
 const Service = () => {
-  const [services, setServices] = useState<Service[]>([]);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await api.get("/services");
-        setServices(response.data);
-      } catch (error) {
-        console.error("Failed to fetch services:", error);
-      }
-    };
-
-    fetchServices();
-  }, []);
+  // Replaces 12 lines of useEffect + useState + try/catch boilerplate
+  // with a single hook call. Loading and error states are handled
+  // automatically — no more silent failures.
+  const { data: services, loading, error } = useApi<Service[]>("/services");
 
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
@@ -102,7 +91,22 @@ const Service = () => {
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
+          {loading && (
+            <div className="col-span-full flex justify-center py-12">
+              <div className="w-10 h-10 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
+            </div>
+          )}
+          {error && (
+            <div className="col-span-full text-center py-12 text-rose-500">
+              Failed to load services: {error}
+            </div>
+          )}
+          {services && services.length === 0 && !loading && (
+            <div className="col-span-full text-center py-12 text-surface-900/40 dark:text-white/40">
+              No services yet.
+            </div>
+          )}
+          {services && services.map((service, index) => {
             const gradient = getGradient(index);
             return (
               <motion.div

@@ -3,6 +3,14 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  // Strip console.log from production builds. Vite's esbuild minifier
+  // supports `pure` functions — any call to these functions is treated
+  // as side-effect-free and removed in production builds. In dev they
+  // remain for debugging. Removes ~17 console.* calls left in source.
+  esbuild: {
+    pure: ["console.log", "console.debug"],
+    drop: ["debugger"],
+  },
   server: {
     host: "localhost", // Ensures it binds properly
     port: 5173,        // You can change this if needed (e.g. 5174)
@@ -36,8 +44,6 @@ export default defineConfig({
           "framer-motion": ["framer-motion"],
           // Icon libraries — tree-shaken but still sizable
           "icons": ["react-icons", "lucide-react"],
-          // i18n stack — only loaded when language toggle is used
-          "i18n": ["i18next", "react-i18next"],
           // HTTP client — used by api service
           "http": ["axios"],
         },

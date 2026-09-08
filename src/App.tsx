@@ -2,30 +2,38 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/golobal/Header";
 import Footer from "./components/golobal/Footer";
-import Home from "./pages/Home";
-import AboutPage from "./pages/About";
-import ProjectsPage from "./pages/Projects";
-import ServicesPage from "./pages/Services";
-import BlogPage from "./pages/Blog";
-import ContactPage from "./pages/Contact";
-import SingleProject from "./pages/SingleProject";
-import SingleService from "./pages/SingleService";
-import SingleBlogPost from "./pages/SingleBlogPost";
-import StartProject from "./pages/StartProject";
-import NotFound from "./pages/NotFound";
 import Preloader from "./components/ui/Preloader";
 import ReadingProgress from "./components/ui/ReadingProgress";
 
 /* ------------------------------------------------------------------ */
-/*  Code-splitting: the markhubs plugin pages are large (2400+ lines  */
-/*  each). Lazy-load them so the home page bundle stays small and     */
-/*  LCP/Core Web Vitals stay fast — a direct Google ranking factor.   */
+/*  Code-splitting — ALL routes are lazy-loaded so the initial         */
+/*  bundle only contains the shell (Header, Footer, Home page).       */
+/*  Each page becomes its own chunk that loads on demand when the     */
+/*  user navigates to it. This keeps the home page LCP fast — a      */
+/*  direct Google ranking factor via Core Web Vitals.                */
+/*                                                                    */
+/*  Previously only the 2 Markhubs pages were lazy-loaded, while      */
+/*  10 other pages (About, Projects, Services, Blog, Contact, etc.)   */
+/*  were statically imported — visitors to "/" downloaded all of     */
+/*  them even if they never visited those pages. Now every route     */
+/*  is a separate chunk.                                              */
 /* ------------------------------------------------------------------ */
+const Home = lazy(() => import("./pages/Home"));
+const AboutPage = lazy(() => import("./pages/About"));
+const ProjectsPage = lazy(() => import("./pages/Projects"));
+const SingleProject = lazy(() => import("./pages/SingleProject"));
+const ServicesPage = lazy(() => import("./pages/Services"));
+const SingleService = lazy(() => import("./pages/SingleService"));
+const BlogPage = lazy(() => import("./pages/Blog"));
+const SingleBlogPost = lazy(() => import("./pages/SingleBlogPost"));
+const ContactPage = lazy(() => import("./pages/Contact"));
+const StartProject = lazy(() => import("./pages/StartProject"));
 const MarkhubsPlugin = lazy(() => import("./pages/MarkhubsPlugin"));
 const MarkhubsDocs = lazy(() => import("./pages/MarkhubsDocs"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-/* Lightweight fallback shown while the chunk downloads. Keeps the    */
-/* header visible so users don't think the page crashed.              */
+/* Lightweight fallback shown while a chunk downloads. Keeps the      */
+/* header visible so users don't think the page crashed.               */
 function PageFallback() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center pt-20">
@@ -37,6 +45,8 @@ function PageFallback() {
   );
 }
 
+/* Wrap all routes with Suspense + PageFallback so each page chunk    */
+/* shows a spinner while downloading, rather than a white screen.     */
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -74,35 +84,29 @@ function App() {
         <ReadingProgress />
         <Header />
         <main id="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:id" element={<SingleProject />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/:id" element={<SingleService />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:id" element={<SingleBlogPost />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/start-a-project" element={<StartProject />} />
-            <Route
-              path="/markhubs-store-manager-for-telegram"
-              element={
-                <Suspense fallback={<PageFallback />}>
-                  <MarkhubsPlugin />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/markhubs-store-manager-for-telegram/docs"
-              element={
-                <Suspense fallback={<PageFallback />}>
-                  <MarkhubsDocs />
-                </Suspense>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageFallback />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:id" element={<SingleProject />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services/:id" element={<SingleService />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:id" element={<SingleBlogPost />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/start-a-project" element={<StartProject />} />
+              <Route
+                path="/markhubs-store-manager-for-telegram"
+                element={<MarkhubsPlugin />}
+              />
+              <Route
+                path="/markhubs-store-manager-for-telegram/docs"
+                element={<MarkhubsDocs />}
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </main>
         <Footer />
       </div>

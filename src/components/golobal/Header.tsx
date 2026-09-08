@@ -6,7 +6,6 @@ import {
   FaEnvelope, FaPhone, FaBars, FaTimes
 } from "react-icons/fa";
 import ThemeToggle from "../ui/ThemeToggle";
-import LanguageToggle from "../ui/LanguageToggle";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -92,7 +91,6 @@ const Header = () => {
 
           {/* Desktop Controls */}
           <div className="hidden lg:flex items-center gap-3">
-            <LanguageToggle />
             <ThemeToggle />
             <motion.button
               onClick={() => setIsOpen(!isOpen)}

@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { ThemeProvider } from './contexts/ThemeContext.tsx'
-import './i18n/index'
 // Vercel Analytics — page views + Core Web Vitals tracking
 import { Analytics } from '@vercel/analytics/react'
 // Vercel Speed Insights — real-user Core Web Vitals (LCP, INP, CLS)

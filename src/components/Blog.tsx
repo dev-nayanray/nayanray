@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaCalendar, FaUser, FaArrowRight, FaClock, FaTags, FaShare } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import api from "../services/api";
+import { useApi } from "../hooks/useApi";
 
 interface BlogPost {
   id: number;
@@ -19,20 +18,8 @@ interface BlogPost {
 }
 
 const Blog = () => {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-
-  useEffect(() => {
-    const fetchBlogPosts = async () => {
-      try {
-        const response = await api.get("/blog");
-        setBlogPosts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch blog posts:", error);
-      }
-    };
-
-    fetchBlogPosts();
-  }, []);
+  // Replaces 12 lines of duplicated fetch boilerplate with one hook call.
+  const { data: blogPosts, loading, error } = useApi<BlogPost[]>("/blog");
 
   return (
     <section id="blog" className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden">
@@ -78,7 +65,17 @@ const Blog = () => {
 
         {/* Blog Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post, index) => (
+          {loading && (
+            <div className="col-span-full flex justify-center py-12">
+              <div className="w-10 h-10 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
+            </div>
+          )}
+          {error && (
+            <div className="col-span-full text-center py-12 text-rose-500">
+              Failed to load blog posts: {error}
+            </div>
+          )}
+          {blogPosts && blogPosts.map((post, index) => (
             <motion.article
               key={post.id}
               initial={{ opacity: 0, y: 30 }}
