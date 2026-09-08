@@ -40,10 +40,24 @@ const registerSchema = Joi.object({
 /* ------------------------------------------------------------------ */
 const isProd = process.env.NODE_ENV === "production";
 
+/* ------------------------------------------------------------------ */
+/*  Cookie configuration                                               */
+/*                                                                    */
+/*  sameSite: 'lax' (not 'strict') allows the cookie to be sent on     */
+/*  top-level navigations from external sites, which is needed when    */
+/*  the admin frontend and backend are on different domains/ports.     */
+/*  'strict' would block the cookie entirely in cross-origin setups.   */
+/*  'lax' still provides CSRF protection for POST/PUT/DELETE (only    */
+/*  allows GET from cross-site, which is safe for read-only ops).     */
+/*                                                                    */
+/*  If admin and backend are on the same domain (e.g. nayanray.com    */
+/*  with /api/*), 'strict' would work. But for separate domains      */
+/*  (admin.nayanray.com → api.nayanray.com), 'lax' is required.       */
+/* ------------------------------------------------------------------ */
 const cookieOptions = {
   httpOnly: true, // JS can't read it → XSS can't steal it
   secure: isProd, // HTTPS only in production
-  sameSite: "strict", // CSRF protection — no cross-site cookie
+  sameSite: "lax", // CSRF protection (allows cross-origin top-level nav)
   maxAge: 24 * 60 * 60 * 1000, // 24 hours (matches JWT expiry)
   path: "/",
 };
