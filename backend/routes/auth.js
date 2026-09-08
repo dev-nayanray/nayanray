@@ -43,7 +43,7 @@ const isProd = process.env.NODE_ENV === "production";
 const cookieOptions = {
   httpOnly: true, // JS can't read it → XSS can't steal it
   secure: isProd, // HTTPS only in production
-  sameSite: "strict" as const, // CSRF protection — no cross-site cookie
+  sameSite: "strict", // CSRF protection — no cross-site cookie
   maxAge: 24 * 60 * 60 * 1000, // 24 hours (matches JWT expiry)
   path: "/",
 };
@@ -106,8 +106,16 @@ router.get("/me", async (req, res) => {
       return res.status(401).json({ error: "Not authenticated" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET) as { id: number };
-    const user = await User.findByPk(decoded.id, {
+    // jwt.verify returns a string | JwtPayload — cast to extract the id.
+    // In plain JS we can't use `as`, so we access the property directly.
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = typeof decoded === "object" && decoded !== null ? decoded.id : null;
+    if (!userId) {
+      res.clearCookie("adminToken", { path: "/" });
+      return res.status(401).json({ error: "Invalid token payload" });
+    }
+
+    const user = await User.findByPk(userId, {
       attributes: ["id", "username", "email", "role"],
     });
 
