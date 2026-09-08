@@ -71,7 +71,7 @@ const personalInfo = [
   },
   {
     label: "Experience",
-    value: "4+ Years",
+    value: "6+ Years",
     icon: FaCalendarAlt,
     color: "text-green-400"
   },

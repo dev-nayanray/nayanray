@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { FaCalendar, FaUser, FaClock, FaTags, FaArrowLeft, FaExternalLinkAlt, FaShare, FaFacebook, FaTwitter, FaLinkedin, FaBookmark } from "react-icons/fa";
+import { FaCalendar, FaUser, FaClock, FaTags, FaArrowLeft, FaExternalLinkAlt, FaShare } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import api from "../services/api";
@@ -327,7 +327,7 @@ const SingleBlogPost = () => {
                         backend before re-enabling this badge. */}
                   </motion.div>
 
-                  {/* Social Share & Actions */}
+                  {/* Social Share — Web Share API + copy link */}
                   <motion.div
                     className="flex flex-wrap items-center justify-between gap-4 mb-8 p-4 bg-surface-50 dark:bg-white/5 rounded-2xl"
                     initial={{ y: 10, opacity: 0 }}
@@ -335,46 +335,21 @@ const SingleBlogPost = () => {
                     transition={{ delay: 0.5 }}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium text-surface-900/70 dark:text-white/60">Share this post:</span>
-                      <div className="flex gap-2">
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                        >
-                          <FaFacebook className="w-3 h-3" />
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors"
-                        >
-                          <FaTwitter className="w-3 h-3" />
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="w-8 h-8 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors"
-                        >
-                          <FaLinkedin className="w-3 h-3" />
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
-                        >
-                          <FaShare className="w-3 h-3" />
-                        </motion.button>
-                      </div>
+                      <span className="text-sm font-medium text-surface-900/70 dark:text-white/60">Share:</span>
+                      <button
+                        onClick={() => {
+                          if (navigator.share) {
+                            navigator.share({ title: post.title, url: window.location.href });
+                          } else {
+                            navigator.clipboard.writeText(window.location.href);
+                          }
+                        }}
+                        className="px-3 py-2 bg-brand-500/10 text-brand-600 dark:text-brand-300 rounded-lg text-sm font-medium hover:bg-brand-500/20 transition-colors"
+                      >
+                        <FaShare className="w-3.5 h-3.5 inline mr-1.5" />
+                        {typeof navigator !== 'undefined' && typeof navigator.share === 'function' ? 'Share' : 'Copy Link'}
+                      </button>
                     </div>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 bg-surface-50 dark:bg-white/5 text-surface-900/70 dark:text-white/60 rounded-full hover:bg-surface-100 dark:hover:bg-white/10 transition-colors text-sm font-medium"
-                    >
-                      <FaBookmark className="w-4 h-4" />
-                      Save
-                    </motion.button>
                   </motion.div>
                 </header>
 

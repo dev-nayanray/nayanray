@@ -295,7 +295,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-surface-50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
                       placeholder="Enter your name"
                     />
                   </div>
@@ -310,7 +310,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-surface-50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -328,7 +328,7 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-surface-50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none"
                     placeholder="What's this about?"
                   />
                 </div>
@@ -345,7 +345,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-white/50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none resize-none"
+                    className="w-full px-4 py-3 rounded-xl border border-surface-100 dark:border-white/10 bg-surface-50 dark:bg-white/5 text-surface-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-300 outline-none resize-none"
                     placeholder="Tell me about your project..."
                   />
                 </div>

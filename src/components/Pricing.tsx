@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FaCheck, FaStar, FaRocket, FaCrown, FaGem, FaLightbulb, FaSync, FaGlobe, FaMobile, FaPalette } from "react-icons/fa";
 
 const Pricing = () => {
@@ -232,17 +233,16 @@ const Pricing = () => {
                 </ul>
 
                 {/* CTA Button */}
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`w-full py-4 px-6 rounded-2xl font-semibold transition-all duration-300 ${
+                <Link
+                  to="/start-a-project"
+                  className={`block text-center w-full py-4 px-6 rounded-2xl font-semibold transition-all duration-300 ${
                     plan.buttonVariant === 'primary'
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl'
-                      : 'bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 border-2 border-surface-100 dark:border-white/10 hover:border-brand-300 dark:hover:border-brand-500/50 shadow-sm hover:shadow-lg'
+                      ? 'bg-gradient-to-r from-brand-500 to-brand-700 text-white shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-0.5'
+                      : 'bg-surface-0 dark:bg-surface-900 text-surface-900 dark:text-white border-2 border-surface-100 dark:border-white/10 hover:border-brand-500/40 shadow-sm hover:shadow-lg'
                   }`}
                 >
                   {plan.buttonText}
-                </motion.button>
+                </Link>
               </div>
             </motion.div>
           ))}
