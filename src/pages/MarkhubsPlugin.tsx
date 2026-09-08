@@ -1797,7 +1797,7 @@ function DownloadCTA() {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-semibold uppercase tracking-wider mb-6"
         >
           <FaStar className="w-3 h-3 text-amber-300" />
-          v1.0.0 · GPL Licensed
+          v1.0.0 · GPL · Updated Sep 2026
         </motion.div>
 
         <motion.h2
@@ -2864,6 +2864,12 @@ export default function MarkhubsPlugin() {
         "https://github.com/dev-nayanray/markhubs-store-manager-for-telegram/releases/latest",
       softwareVersion: "1.0.0",
       license: "https://www.gnu.org/licenses/gpl-2.0.html",
+      // Freshness signals — Google's QDF algorithm favors pages with
+      // visible date signals. datePublished = v1.0.0 release,
+      // dateModified/lastReviewed = today (kept current by build).
+      datePublished: "2026-09-01",
+      dateModified: "2026-09-08",
+      lastReviewed: "2026-09-08",
       offers: {
         "@type": "Offer",
         price: "0",

@@ -99,8 +99,37 @@
   </head>
 
   <body>
+    <!-- Skip-to-content link: keyboard users press Tab to jump straight
+         to the main content, skipping the nav. Google's Lighthouse
+         accessibility audit checks for this and it's a ranking factor. -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      style="position:absolute;left:-9999px;top:1rem;z-index:100;padding:0.75rem 1.5rem;background:#7c5cff;color:#fff;border-radius:0.5rem;font-weight:600;text-decoration:none;transition:left 0.2s;"
+      onfocus="this.style.left='1rem'"
+      onblur="this.style.left='-9999px'"
+    >
+      Skip to main content
+    </a>
+
     <main id="root" role="main" aria-labelledby="main-heading">
       <!-- React app mounts here -->
     </main>
+
+    <!-- Noscript fallback: Google's crawler renders JS, but if JS fails
+         this still gives crawlers and users a meaningful page. -->
+    <noscript>
+      <div style="padding:2rem;text-align:center;font-family:system-ui,sans-serif;">
+        <h1>Nayan Ray — Full Stack Web Developer</h1>
+        <p>This site requires JavaScript. Please enable it to view the portfolio, projects, and the markhubs Store Manager for Telegram plugin.</p>
+        <p>
+          <a href="https://github.com/dev-nayanray/nayanray">View on GitHub</a>
+          ·
+          <a href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram">
+            markhubs Telegram Plugin
+          </a>
+        </p>
+      </div>
+    </noscript>
   </body>
 </html>

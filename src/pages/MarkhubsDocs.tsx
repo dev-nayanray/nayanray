@@ -260,7 +260,7 @@ function DocsHero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-300 text-xs font-semibold uppercase tracking-wider border border-brand-500/20 mb-5"
         >
           <FaBook className="w-3 h-3" />
-          Documentation · v1.0.0
+          Documentation · v1.0.0 · Updated Sep 2026
         </motion.span>
 
         <motion.h1
@@ -1143,6 +1143,9 @@ export default function MarkhubsDocs() {
         headline: "markhubs Store Manager for Telegram — Documentation",
         description:
           "Complete documentation for the markhubs Store Manager for Telegram WordPress plugin.",
+        // Freshness signals for Google's QDF algorithm
+        datePublished: "2026-09-01",
+        dateModified: "2026-09-08",
         author: {
           "@type": "Organization",
           name: "markhubs",

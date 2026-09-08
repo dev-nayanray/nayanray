@@ -68,7 +68,7 @@ function App() {
       {/* Site Content */}
       <div className={`${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}>
         <Header />
-        <main>
+        <main id="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
