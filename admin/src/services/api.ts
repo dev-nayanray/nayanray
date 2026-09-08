@@ -244,7 +244,7 @@ export const projectsAPI = {
     const response = await api.post('/admin/projects', data);
     return response.data;
   },
-  update: async (id: number, data: Project): Promise<Project> => {
+  update: async (id: number, data: Partial<Project>): Promise<Project> => {
     const response = await api.put(`/admin/projects/${id}`, data);
     return response.data;
   },
@@ -263,7 +263,7 @@ export const blogAPI = {
     const response = await api.post('/admin/blog', data);
     return response.data;
   },
-  update: async (id: number, data: BlogPost): Promise<BlogPost> => {
+  update: async (id: number, data: Partial<BlogPost>): Promise<BlogPost> => {
     const response = await api.put(`/admin/blog/${id}`, data);
     return response.data;
   },
@@ -282,7 +282,7 @@ export const servicesAPI = {
     const response = await api.post('/admin/services', data);
     return response.data;
   },
-  update: async (id: number, data: Service): Promise<Service> => {
+  update: async (id: number, data: Partial<Service>): Promise<Service> => {
     const response = await api.put(`/admin/services/${id}`, data);
     return response.data;
   },
