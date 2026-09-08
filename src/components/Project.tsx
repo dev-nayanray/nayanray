@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, FaChartLine } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, FaChartLine, FaArrowRight } from "react-icons/fa";
 import { useApi } from "../hooks/useApi";
 import ProjectGallery from "./ui/ProjectGallery";
 
@@ -95,164 +95,130 @@ const Project = () => {
           {projects && projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -5 }}
               transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                type: "spring",
-                stiffness: 300
+                duration: 0.4,
+                delay: Math.min(index * 0.05, 0.3),
+                ease: [0.16, 1, 0.3, 1],
               }}
+              viewport={{ once: true }}
               className="group relative"
             >
-              {/* Background Gradient Effect */}
-              <div className={`absolute -inset-0.5 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300`}></div>
-
-              {/* Main Card */}
-              <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500">
-
-                {/* Image Container */}
-                <div className="relative overflow-hidden">
+              {/* Premium Card — no gradient halo, clean shadow + lift */}
+              <Link
+                to={`/projects/${project.id}`}
+                className="block relative h-full bg-surface-0 dark:bg-surface-900/60 rounded-2xl overflow-hidden border border-surface-100 dark:border-white/10 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-1 transition-all duration-300"
+              >
+                {/* Image — fixed aspect ratio prevents layout shift */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-surface-100 dark:bg-surface-800">
                   <ProjectGallery
                     images={project.images}
                     alt={project.title}
                     variant="card"
-                    className="group-hover:[&_img]:scale-110 [&_img]:transition-transform [&_img]:duration-700"
+                    className="[&_img]:scale-100 group-hover:[&_img]:scale-105 [&_img]:transition-transform [&_img]:duration-500"
                   />
 
-                  {/* Overlay */}
-                  <div className="absolute inset-0 z-10 flex items-center justify-center gap-4 bg-black/60 opacity-0 pointer-events-none transition-all duration-500 group-hover:opacity-100 group-hover:pointer-events-auto">
-                    <motion.a
-                      href={`/projects/${project.id}`}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all duration-300"
-                    >
-                      <FaExternalLinkAlt className="w-5 h-5" />
-                    </motion.a>
-                    <motion.a
-                      href={project.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all duration-300"
-                    >
-                      <FaGithub className="w-5 h-5" />
-                    </motion.a>
-                  </div>
+                  {/* Subtle gradient scrim for badge readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
 
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${project.gradient} text-white text-sm font-medium shadow-lg`}>
+                  {/* Category Badge — glassmorphism, brand-cohesive */}
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-medium">
                       {getIconComponent(project.icon)}
                       {project.category}
-                    </div>
+                    </span>
                   </div>
 
                   {/* Featured Badge */}
                   {project.featured && (
-                    <div className="absolute top-4 right-4">
-                      <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-500 text-white text-sm font-medium shadow-lg">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                    <div className="absolute top-3 right-3">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-brand-500 text-white text-xs font-semibold shadow-lg">
                         Featured
-                      </div>
+                      </span>
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-surface-900 dark:text-white mb-3 group-hover:text-surface-900/80 dark:group-hover:text-white/90 transition-colors">
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-2 tracking-tight group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-surface-900/60 dark:text-white/50 mb-4 leading-relaxed group-hover:text-surface-900/70 dark:group-hover:text-white/60 transition-colors">
+                  <p className="text-sm text-surface-900/60 dark:text-white/50 mb-4 leading-relaxed line-clamp-2">
                     {project.description}
                   </p>
 
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {(Array.isArray(project.technologies) ? project.technologies : []).map((tech: string, techIndex: number) => (
+                  {/* Technologies — subtle pills */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {(Array.isArray(project.technologies) ? project.technologies : []).slice(0, 3).map((tech: string, techIndex: number) => (
                       <span
                         key={techIndex}
-                        className="px-3 py-1 bg-surface-50 dark:bg-white/5 text-surface-900/70 dark:text-white/60 text-sm rounded-full border border-surface-100 dark:border-white/10 group-hover:border-surface-100/80 dark:group-hover:border-white/20 transition-colors"
+                        className="px-2 py-0.5 bg-surface-50 dark:bg-white/5 text-surface-900/60 dark:text-white/50 text-xs rounded-md border border-surface-100 dark:border-white/10"
                       >
                         {tech}
                       </span>
                     ))}
+                    {project.technologies && project.technologies.length > 3 && (
+                      <span className="px-2 py-0.5 text-surface-900/40 dark:text-white/40 text-xs">
+                        +{project.technologies.length - 3} more
+                      </span>
+                    )}
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <motion.a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl shadow-glow hover:shadow-xl transition-all duration-300 group/btn overflow-hidden relative"
-                    >
-                      <span className="relative z-10">Live Demo</span>
-                      <FaExternalLinkAlt className="w-4 h-4 relative z-10" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
-                    </motion.a>
-
-                    <motion.a
-                      href={project.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center justify-center gap-2 py-3 px-4 bg-surface-50 dark:bg-white/5 text-surface-900/70 dark:text-white/60 font-semibold rounded-xl border border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300 group/code"
-                    >
-                      <FaGithub className="w-4 h-4 group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors" />
-                    </motion.a>
+                  {/* CTA row */}
+                  <div className="flex items-center justify-between pt-3 border-t border-surface-100 dark:border-white/5">
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 dark:text-brand-300 group-hover:gap-2.5 transition-all">
+                      View Details
+                      <FaArrowRight className="w-3 h-3" />
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {project.liveLink && project.liveLink !== "#" && (
+                        <span className="p-1.5 rounded-lg bg-surface-50 dark:bg-white/5 text-surface-900/50 dark:text-white/40 hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                          <FaExternalLinkAlt className="w-3.5 h-3.5" />
+                        </span>
+                      )}
+                      {project.githubLink && project.githubLink !== "#" && (
+                        <span className="p-1.5 rounded-lg bg-surface-50 dark:bg-white/5 text-surface-900/50 dark:text-white/40 hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                          <FaGithub className="w-3.5 h-3.5" />
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-
-                {/* Hover Border Effect */}
-                <div className={`absolute inset-0 border-2 border-transparent bg-gradient-to-r ${project.gradient} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}>
-                  <div className="absolute inset-[2px] bg-surface-0 dark:bg-surface-900 rounded-3xl"></div>
-                </div>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>
 
         {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-brand-50 to-brand-100/60 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
-            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
+          <div className="bg-gradient-to-r from-brand-50 to-brand-100/60 dark:from-brand-500/10 dark:to-brand-500/5 rounded-2xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20">
+            <h3 className="text-2xl md:text-3xl font-bold text-surface-900 dark:text-white mb-3 tracking-tight">
               Interested in Working Together?
             </h3>
-            <p className="text-surface-900/60 dark:text-white/50 text-lg mb-8 max-w-2xl mx-auto">
-              Have a project in mind? Let's discuss how we can bring your ideas to life with cutting-edge technology and creative solutions.
+            <p className="text-surface-900/60 dark:text-white/50 text-base mb-6 max-w-2xl mx-auto">
+              Have a project in mind? Let's discuss how we can bring your ideas to life.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/start-a-project">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300 cursor-pointer"
-                >
-                  Start a Project
-                </motion.div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/start-a-project"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-0.5 transition-all duration-300"
+              >
+                Start a Project
               </Link>
-              <Link to="/projects">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-surface-0 dark:bg-surface-900 text-surface-900 dark:text-white font-semibold rounded-2xl border-2 border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300 cursor-pointer"
-                >
-                  View All Projects
-                </motion.div>
+              <Link
+                to="/projects"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-surface-0 dark:bg-surface-900 text-surface-900 dark:text-white font-semibold rounded-xl border border-surface-100 dark:border-white/10 hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300"
+              >
+                View All Projects
               </Link>
             </div>
           </div>

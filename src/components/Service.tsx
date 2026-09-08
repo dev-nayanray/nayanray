@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaCode, FaWordpress, FaMobileAlt, FaPaintBrush, FaRocket, FaShieldAlt, FaChartLine } from "react-icons/fa";
+import { FaCode, FaWordpress, FaMobileAlt, FaPaintBrush, FaRocket, FaShieldAlt, FaChartLine, FaArrowRight } from "react-icons/fa";
 import { useApi } from "../hooks/useApi";
 
 interface Service {
@@ -30,18 +30,6 @@ const Service = () => {
       case 'FaChartLine': return <FaChartLine className="w-8 h-8" />;
       default: return <FaCode className="w-8 h-8" />;
     }
-  };
-
-  const getGradient = (index: number) => {
-    const gradients = [
-      "from-blue-500 to-cyan-500",
-      "from-purple-500 to-pink-500",
-      "from-green-500 to-emerald-500",
-      "from-amber-500 to-orange-500",
-      "from-red-500 to-rose-500",
-      "from-indigo-500 to-blue-500"
-    ];
-    return gradients[index % gradients.length];
   };
 
   return (
@@ -107,81 +95,57 @@ const Service = () => {
             </div>
           )}
           {services && services.map((service, index) => {
-            const gradient = getGradient(index);
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8, scale: 1.02 }}
                 transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 300
+                  duration: 0.4,
+                  delay: Math.min(index * 0.05, 0.3),
+                  ease: [0.16, 1, 0.3, 1],
                 }}
+                viewport={{ once: true }}
                 className="group relative"
               >
-                {/* Background Gradient Effect */}
-                <div className={`absolute -inset-0.5 bg-gradient-to-r ${gradient} rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-300`}></div>
-
-                {/* Main Card */}
-                <div className="relative h-full bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-8 border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden">
-
-                  {/* Hover Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-
-                  {/* Icon Container */}
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${gradient} text-white shadow-lg mb-6 relative z-10`}
-                  >
+                {/* Premium Card — no gradient halo, brand-cohesive */}
+                <Link
+                  to={`/services/${service.id}`}
+                  className="block relative h-full bg-surface-0 dark:bg-surface-900/60 rounded-2xl p-6 border border-surface-100 dark:border-white/10 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  {/* Icon — brand gradient only, not rainbow */}
+                  <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-lg mb-5 group-hover:scale-110 transition-transform duration-300">
                     {getIconComponent(service.icon)}
-                  </motion.div>
-
-                  {/* Content */}
-                  <div className="relative z-10">
-                    <h3 className="text-2xl font-bold text-surface-900 dark:text-white mb-4 group-hover:text-surface-900/80 dark:group-hover:text-white/90 transition-colors">
-                      {service.title}
-                    </h3>
-
-                    <p className="text-surface-900/60 dark:text-white/50 mb-6 leading-relaxed group-hover:text-surface-900/70 dark:group-hover:text-white/60 transition-colors">
-                      {service.description}
-                    </p>
-
-                    {/* Features List */}
-                    <ul className="space-y-3 mb-6">
-                      {(Array.isArray(service.features) ? service.features : []).map((feature: string, featureIndex: number) => (
-                        <motion.li
-                          key={featureIndex}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 + featureIndex * 0.1 }}
-                          className="flex items-center gap-3 text-sm text-surface-900/60 dark:text-white/50"
-                        >
-                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${gradient}`}></div>
-                          {feature}
-                        </motion.li>
-                      ))}
-                    </ul>
-
-                    {/* CTA Button */}
-                    <Link to={`/services/${service.id}`}>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`w-full py-3 px-6 bg-gradient-to-r ${gradient} text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group/btn overflow-hidden relative text-center cursor-pointer`}
-                      >
-                        <span className="relative z-10">Learn More</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
-                      </motion.div>
-                    </Link>
                   </div>
 
-                  {/* Decorative Elements */}
-                  <div className="absolute top-4 right-4 w-16 h-16 bg-current opacity-5 rounded-full"></div>
-                  <div className="absolute bottom-4 left-4 w-8 h-8 bg-current opacity-5 rounded-full"></div>
-                </div>
+                  {/* Content */}
+                  <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-2 tracking-tight group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors">
+                    {service.title}
+                  </h3>
+
+                  <p className="text-sm text-surface-900/60 dark:text-white/50 mb-4 leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  {/* Features — max 3, subtle list */}
+                  <ul className="space-y-2 mb-5">
+                    {(Array.isArray(service.features) ? service.features : []).slice(0, 3).map((feature: string, featureIndex: number) => (
+                      <li
+                        key={featureIndex}
+                        className="flex items-center gap-2 text-sm text-surface-900/60 dark:text-white/50"
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-brand-500"></div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <div className="flex items-center gap-1.5 text-sm font-medium text-brand-600 dark:text-brand-300 group-hover:gap-2.5 transition-all">
+                    Learn More
+                    <FaArrowRight className="w-3 h-3" />
+                  </div>
+                </Link>
               </motion.div>
             );
           })}

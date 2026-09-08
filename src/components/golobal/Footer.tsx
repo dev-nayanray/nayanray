@@ -3,8 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   FaArrowUp, FaGithub, FaLinkedin, FaEnvelope, FaHeart, FaCode,
-  FaMapMarkerAlt, FaPhone, FaTwitter, FaDribbble, FaYoutube,
-  FaRocket, FaShieldAlt, FaAward, FaUsers, FaWordpress, FaArrowRight,
+  FaMapMarkerAlt, FaPhone, FaRocket, FaShieldAlt, FaAward, FaUsers, FaWordpress, FaArrowRight,
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -23,7 +22,7 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Enhanced social links with more platforms
+  // Social links — only real profiles, no dead links
   const socialLinks = [
     {
       icon: <FaGithub className="w-4 h-4" />,
@@ -34,26 +33,14 @@ const Footer = () => {
     {
       icon: <FaLinkedin className="w-4 h-4" />,
       name: "LinkedIn",
-      url: "https://linkedin.com/in/yourusername",
+      url: "https://www.linkedin.com/in/dev-nayanray",
       color: "hover:bg-blue-600 border-blue-600"
     },
     {
-      icon: <FaDribbble className="w-4 h-4" />,
-      name: "Dribbble",
-      url: "#",
-      color: "hover:bg-pink-500 border-pink-500"
-    },
-    {
-      icon: <FaTwitter className="w-4 h-4" />,
-      name: "Twitter",
-      url: "#",
-      color: "hover:bg-sky-500 border-sky-500"
-    },
-    {
-      icon: <FaYoutube className="w-4 h-4" />,
-      name: "YouTube",
-      url: "#",
-      color: "hover:bg-red-600 border-red-600"
+      icon: <FaEnvelope className="w-4 h-4" />,
+      name: "Email",
+      url: "mailto:wpnayanray@gmail.com",
+      color: "hover:bg-red-500 border-red-500"
     }
   ];
 
@@ -156,17 +143,20 @@ const Footer = () => {
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Navigation</h4>
             <div className="grid grid-cols-2 gap-4">
               {[
-                "About", "Services", "Projects", "Blog",
-                "Testimonials", "Contact", "Process", "Learning"
+                { label: "About", to: "/about" },
+                { label: "Services", to: "/services" },
+                { label: "Projects", to: "/projects" },
+                { label: "Blog", to: "/blog" },
+                { label: "Contact", to: "/contact" },
+                { label: "Plugin", to: "/markhubs-store-manager-for-telegram" },
               ].map((item, index) => (
-                <motion.a
+                <motion.div
                   key={index}
-                  href={`#${item.toLowerCase()}`}
                   whileHover={{ x: 4, color: "#ffffff" }}
                   className="text-white/60 hover:text-white transition-colors duration-300 text-sm p-2 rounded-lg hover:bg-white/5"
                 >
-                  {item}
-                </motion.a>
+                  <Link to={item.to}>{item.label}</Link>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -297,23 +287,23 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Legal Links */}
+            {/* Legal Links — removed dead anchor links. Re-add as real
+                pages when /privacy, /terms etc. are created. */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex items-center gap-6 text-sm text-white/40"
             >
-              {["Privacy Policy", "Terms of Service", "Cookies", "Sitemap"].map((item, index) => (
-                <motion.a
-                  key={index}
-                  href={`#${item.toLowerCase().replace(' ', '')}`}
-                  whileHover={{ color: "#ffffff", y: -1 }}
-                  className="hover:text-white transition-colors duration-300"
-                >
-                  {item}
-                </motion.a>
-              ))}
+              <Link to="/contact" className="hover:text-white transition-colors duration-300">
+                Privacy Policy
+              </Link>
+              <Link to="/contact" className="hover:text-white transition-colors duration-300">
+                Terms of Service
+              </Link>
+              <Link to="/contact" className="hover:text-white transition-colors duration-300">
+                Contact
+              </Link>
             </motion.div>
 
             {/* Stats */}
