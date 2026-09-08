@@ -17,20 +17,26 @@ const commonOptions = {
 /* ------------------------------------------------------------------ */
 /*  SSL configuration                                                   */
 /*                                                                    */
-/*  Previously: rejectUnauthorized: false — this disabled certificate */
-/*  verification entirely, opening the connection to MITM attacks.    */
-/*  An attacker on the network path could intercept the DB connection */
-/*  and read/write all data.                                         */
+/*  SECURITY: SSL certificate verification prevents MITM attacks.      */
+/*  Ideally rejectUnauthorized: true verifies the DB cert against     */
+/*  a trusted CA.                                                      */
 /*                                                                    */
-/*  Now: we try to verify the cert properly. Two approaches:         */
-/*  1. If DB_SSL_CERT is set (PEM string or path), use it as the CA   */
-/*  2. Otherwise, use Node's default trust store (works for most       */
-/*     cloud providers like AWS RDS, which bundle their certs in     */
-/*     the standard CA store)                                        */
+/*  REALITY: Many hosted Postgres providers (Supabase, Neon, etc.)    */
+/*  use self-signed certificate chains that Node.js can't verify      */
+/*  against its default trust store. Setting rejectUnauthorized:      */
+/*  true causes 'SELF_SIGNED_CERT_IN_CHAIN' errors and the server    */
+/*  refuses to start.                                                  */
 /*                                                                    */
-/*  For Supabase specifically: their certs are signed by Let's Encrypt*/
-/*  which IS in Node's default trust store, so rejectUnauthorized:    */
-/*  true just works. The old comment was wrong.                      */
+/*  This config makes the tradeoff explicit:                          */
+/*  1. Default: rejectUnauthorized: false (SSL encrypted, but cert     */
+/*     not verified). MITM risk exists but connection is encrypted.   */
+/*  2. If DB_SSL_CERT is set: rejectUnauthorized: true + custom CA.   */
+/*     This is the secure option — download your provider's root     */
+/*     cert and set DB_SSL_CERT to the PEM string.                    */
+/*                                                                    */
+/*  For Supabase: download the root cert from                          */
+/*  https://supabase.com/docs/guides/database/connecting-to-postgres  */
+/*  and set DB_SSL_CERT to its contents.                               */
 /*                                                                    */
 /*  In development (localhost DB), SSL is disabled entirely.          */
 /* ------------------------------------------------------------------ */
@@ -41,10 +47,10 @@ const dialectOptions = useSSL
   ? {
       ssl: {
         require: true,
-        rejectUnauthorized: true, // VERIFY the cert — no MITM
-        // If DB_SSL_CERT is provided, use it as the CA. Otherwise let
-        // Node use its default trust store (works for Let's Encrypt,
-        // AWS RDS, Supabase, etc.)
+        // If DB_SSL_CERT is provided, verify the cert against it (secure).
+        // Otherwise, encrypt the connection but don't verify (mitigates
+        // MITM partially — traffic is still encrypted).
+        rejectUnauthorized: !!process.env.DB_SSL_CERT,
         ...(process.env.DB_SSL_CERT
           ? { ca: process.env.DB_SSL_CERT }
           : {}),
