@@ -62,7 +62,7 @@ const HOME = {
   description:
     "Explore the portfolio of Nayan Ray, a Full Stack Web Developer specializing in React, WordPress, Node.js, and modern web technologies. View live projects, plugins, and creative web solutions.",
   canonical: "https://nayanray.vercel.app/",
-  ogImage: "https://nayanray.vercel.app/og-image.jpg",
+  ogImage: "https://nayanray.vercel.app/og-image.png",
   ogType: "website" as const,
   keywords:
     "Nayan Ray, Web Developer, React Developer, WordPress Developer, Full Stack Developer, Frontend, Backend, Node.js, PHP, Bangladesh, Portfolio, Freelance Developer",

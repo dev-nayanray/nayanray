@@ -3062,7 +3062,7 @@ export default function MarkhubsPlugin() {
     canonical: PAGE_URL,
     keywords: PAGE_KEYWORDS,
     ogType: "website",
-    ogImage: "https://nayanray.vercel.app/og-markhubs-plugin.png",
+    ogImage: "https://nayanray.vercel.app/og-image.png",
     jsonLd,
   });
 

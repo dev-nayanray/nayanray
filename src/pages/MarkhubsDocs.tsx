@@ -1135,7 +1135,7 @@ export default function MarkhubsDocs() {
       "WordPress plugin documentation",
     ],
     ogType: "article",
-    ogImage: "https://nayanray.vercel.app/og-markhubs-plugin.png",
+    ogImage: "https://nayanray.vercel.app/og-image.png",
     jsonLd: [
       {
         "@context": "https://schema.org",
