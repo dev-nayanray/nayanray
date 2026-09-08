@@ -34,13 +34,13 @@ const TAB_LABELS: Record<string, string> = {
  * sending to the backend. These fields are auto-managed by the DB
  * and cause 'X is not allowed' errors when included in create/update
  * requests: id, createdAt, updatedAt, deletedAt */
-function stripManagedFields<T extends Record<string, unknown>>(data: T): Partial<T> {
-  const clean = { ...data };
+function stripManagedFields<T>(data: T): T {
+  const clean = { ...data } as Record<string, unknown>;
   delete clean.id;
   delete clean.createdAt;
   delete clean.updatedAt;
   delete clean.deletedAt;
-  return clean;
+  return clean as T;
 }
 const IDLE_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
 
