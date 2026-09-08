@@ -223,9 +223,9 @@ function SectionTitle({ id, icon: Icon, title, subtitle }: { id: string; icon: a
         <div className="p-2.5 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 shadow-lg">
           <Icon className="w-5 h-5 text-white" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-surface-900 dark:text-white">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-surface-900 dark:text-white tracking-tight">{title}</h2>
       </div>
-      {subtitle && <p className="text-surface-900/60 dark:text-white/55 leading-relaxed">{subtitle}</p>}
+      {subtitle && <p className="text-surface-900/60 dark:text-white/55 leading-relaxed text-base">{subtitle}</p>}
     </div>
   );
 }
@@ -236,82 +236,94 @@ function SectionTitle({ id, icon: Icon, title, subtitle }: { id: string; icon: a
 
 function DocsHero() {
   return (
-    <section className="relative pt-32 pb-16 px-4 sm:px-6 overflow-hidden bg-gradient-to-br from-surface-50 via-brand-50/40 to-surface-100 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950">
-      <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <section className="relative pt-28 pb-12 px-4 sm:px-6 overflow-hidden bg-surface-950">
+      {/* Mesh gradient background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/15 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:48px_48px]" />
+      </div>
 
       <div className="relative max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6"
+          className="mb-5"
         >
           <Link
             to="/markhubs-store-manager-for-telegram"
-            className="inline-flex items-center gap-2 text-sm font-medium text-brand-600 dark:text-brand-300 hover:gap-3 transition-all duration-300"
+            className="inline-flex items-center gap-2 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors"
           >
             <FaArrowLeft className="w-3 h-3" />
             Back to landing page
           </Link>
         </motion.div>
 
-        <motion.span
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-300 text-xs font-semibold uppercase tracking-wider border border-brand-500/20 mb-5"
-        >
-          <FaBook className="w-3 h-3" />
-          Documentation · v1.0.0 · Updated Sep 2026
-        </motion.span>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-surface-900 dark:text-white leading-tight"
+          className="flex flex-wrap items-center gap-3 mb-6"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-white/70 text-xs font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            v1.0.0
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-brand-500/15 border border-brand-500/20 text-brand-300 text-xs font-medium">
+            <FaBook className="w-3 h-3" />
+            Documentation
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight"
         >
           markhubs Store Manager
-          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-brand-500 to-purple-600 mt-2">
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-300 to-sky-400 mt-2">
             Documentation
           </span>
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-6 text-lg text-surface-900/60 dark:text-white/55 max-w-3xl leading-relaxed"
+          className="mt-5 text-base text-white/50 max-w-2xl leading-relaxed"
         >
-          Everything you need to install, configure, and operate your Telegram bot for WooCommerce — from bot creation
-          with @BotFather to webhook security, command reference, and database schema.
+          Everything you need to install, configure, and operate your Telegram bot for WooCommerce —
+          from bot creation with @BotFather to webhook security, command reference, and database schema.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="flex flex-wrap gap-3 mt-8"
+          transition={{ delay: 0.25 }}
+          className="flex flex-wrap gap-2.5 mt-7"
         >
           <a
             href="#installation"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-medium rounded-xl shadow-glow hover:shadow-xl transition-all duration-300"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-500 to-brand-700 text-white text-sm font-semibold rounded-xl shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-0.5 transition-all"
           >
-            <FaDownload className="w-4 h-4" />
+            <FaDownload className="w-3.5 h-3.5" />
             Install
           </a>
           <a
             href="#commands"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 text-surface-900 dark:text-white font-medium rounded-xl hover:bg-surface-0 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-white/80 text-sm font-medium rounded-xl hover:bg-white/10 transition-all"
           >
-            <FaRobot className="w-4 h-4" />
-            Command Reference
+            <FaRobot className="w-3.5 h-3.5" />
+            Commands
           </a>
           <a
             href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 text-surface-900 dark:text-white font-medium rounded-xl hover:bg-surface-0 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-white/80 text-sm font-medium rounded-xl hover:bg-white/10 transition-all"
           >
-            <FaGithub className="w-4 h-4" />
+            <FaGithub className="w-3.5 h-3.5" />
             GitHub
           </a>
         </motion.div>
@@ -322,11 +334,11 @@ function DocsHero() {
 
 function Sidebar({ active, onNavigate }: { active: string; onNavigate: (id: string) => void }) {
   return (
-    <aside className="hidden lg:block sticky top-32 self-start w-64 shrink-0 max-h-[calc(100vh-9rem)] overflow-y-auto no-scrollbar">
-      <div className="text-xs font-semibold uppercase tracking-wider text-surface-900/40 dark:text-white/40 mb-4 px-3">
-        On this page
+    <aside className="hidden lg:block sticky top-20 self-start w-56 shrink-0 max-h-[calc(100vh-6rem)] overflow-y-auto no-scrollbar">
+      <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-surface-900/30 dark:text-white/30 mb-3 px-3">
+        Contents
       </div>
-      <nav className="space-y-1">
+      <nav className="space-y-0.5 border-l border-surface-100 dark:border-white/10 pl-3">
         {docSections.map((section) => {
           const Icon = section.icon;
           const isActive = active === section.id;
@@ -335,34 +347,34 @@ function Sidebar({ active, onNavigate }: { active: string; onNavigate: (id: stri
               key={section.id}
               href={`#${section.id}`}
               onClick={() => onNavigate(section.id)}
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
+              className={`flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs transition-all duration-200 ${
                 isActive
                   ? "bg-brand-500/10 text-brand-600 dark:text-brand-300 font-semibold"
-                  : "text-surface-900/60 dark:text-white/50 hover:bg-surface-50 dark:hover:bg-white/5"
+                  : "text-surface-900/50 dark:text-white/40 hover:text-surface-900 dark:hover:text-white hover:bg-surface-50 dark:hover:bg-white/5"
               }`}
             >
-              <Icon className="w-3.5 h-3.5 shrink-0" />
+              <Icon className="w-3 h-3 shrink-0" />
               {section.label}
             </a>
           );
         })}
       </nav>
 
-      <div className="mt-8 p-4 rounded-2xl bg-gradient-to-br from-brand-500/10 to-purple-500/10 border border-brand-500/20">
-        <div className="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300 mb-2">
+      <div className="mt-6 p-3.5 rounded-xl bg-gradient-to-br from-brand-500/10 to-purple-500/10 border border-brand-500/15">
+        <div className="text-[10px] font-bold uppercase tracking-wider text-brand-600 dark:text-brand-300 mb-1.5">
           Need help?
         </div>
-        <p className="text-xs text-surface-900/60 dark:text-white/55 leading-relaxed mb-3">
-          Found a bug or have a feature request? Open an issue on GitHub.
+        <p className="text-[11px] text-surface-900/50 dark:text-white/40 leading-relaxed mb-2">
+          Found a bug or have a feature request?
         </p>
         <a
           href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram/issues"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-brand-600 dark:text-brand-300 hover:gap-3 transition-all"
+          className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-brand-600 dark:text-brand-300 hover:gap-2.5 transition-all"
         >
           Open Issue
-          <FaArrowRight className="w-3 h-3" />
+          <FaArrowRight className="w-2.5 h-2.5" />
         </a>
       </div>
     </aside>
