@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { FaMapMarkerAlt, FaEnvelope, FaCalendarAlt, FaDownload, FaCode, FaWordpress, FaDatabase, FaPalette, FaAward, FaLinkedin, FaGithub, FaNodeJs, FaPython, FaAws, FaDocker, FaGitAlt, FaLightbulb, FaClock, FaCheckCircle, FaStar, FaCertificate, FaBriefcase, FaTrophy, FaUsers, FaGem, FaCrown, FaFire } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
@@ -94,11 +94,6 @@ const About = () => {
   const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0));
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 25, stiffness: 300 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
 
   // Animated counters
   useEffect(() => {
@@ -123,95 +118,24 @@ const About = () => {
     }
   }, [isInView]);
 
-  const handleMouseMove = (event: React.MouseEvent) => {
-    const { clientX, clientY } = event;
-    const target = event.currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - target.left);
-    mouseY.set(clientY - target.top);
-  };
-
   return (
     <section
       id="about"
       ref={ref}
       className="relative py-24 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/20 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 text-surface-900/80 dark:text-white/70 overflow-hidden"
-      onMouseMove={handleMouseMove}
     >
-      {/* Premium Background Elements */}
+      {/* Premium Background — simplified.
+          Previously: 20 Math.random() particles (re-randomized every
+          render, causing hydration mismatch + CPU burn on low-end
+          devices). Replaced with 2 static gradient orbs + subtle grid.
+          Much cleaner, better performance. */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, Math.random() * 20 - 10, 0],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
+        {/* Single gradient orb — brand violet, low opacity */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-brand-700/5 rounded-full blur-3xl"></div>
 
-        {/* Enhanced Background Orbs */}
-        <motion.div
-          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-500/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-[32rem] h-[32rem] bg-gradient-to-r from-purple-400/20 to-pink-500/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
-
-        {/* Interactive Cursor Follower */}
-        <motion.div
-          className="absolute w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-2xl pointer-events-none"
-          style={{
-            x: cursorX,
-            y: cursorY,
-            translateX: "-50%",
-            translateY: "-50%",
-          }}
-        />
-
-        {/* Grid Pattern with Animation */}
-        <div className="absolute inset-0 opacity-5 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:60px_60px]" />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50/10 to-transparent"
-          animate={{
-            x: ["-100%", "100%"],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

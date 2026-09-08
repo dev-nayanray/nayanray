@@ -63,55 +63,17 @@ export default function Hero() {
     mouseY.set(clientY - target.top);
   };
 
-  // Viewport size for the background SVG's circle centers — tracked via a
-  // resize listener instead of reading window.innerWidth/Height directly at
-  // render time, so the rings re-center on rotate/resize instead of staying
-  // pinned to whatever size was current on first paint.
-  const [viewport, setViewport] = useState({ width: 0, height: 0 });
-  useEffect(() => {
-    const updateViewport = () => setViewport({ width: window.innerWidth, height: window.innerHeight });
-    updateViewport();
-    window.addEventListener("resize", updateViewport);
-    return () => window.removeEventListener("resize", updateViewport);
-  }, []);
-
   const currentRole = roles[index];
   const CurrentIcon = currentRole.icon;
 
-  // Bento grid items configuration
+  // Bento grid items configuration — brand-cohesive, no rainbow gradients.
+  // Previously used `border-gradient-to-r` which is NOT a real Tailwind
+  // class — it silently rendered nothing. Now using a single brand accent.
   const bentoItems = [
-    {
-      title: "Pixel-Perfect UI",
-      description: "Impeccable attention to detail in every component",
-      icon: FaPaintBrush,
-      color: "from-violet-500/15 to-purple-500/15",
-      borderColor: "border-gradient-to-r from-violet-400 to-purple-400",
-      delay: 0.1
-    },
-    {
-      title: "Lightning Fast",
-      description: "Optimized for maximum performance scores",
-      icon: FaBolt,
-      color: "from-amber-500/15 to-orange-500/15",
-      borderColor: "border-gradient-to-r from-amber-400 to-orange-400",
-      delay: 0.2
-    },
-    {
-      title: "Fully Responsive",
-      description: "Flawless experience on all devices",
-      icon: FaMobileAlt,
-      color: "from-blue-500/15 to-cyan-500/15",
-      borderColor: "border-gradient-to-r from-blue-400 to-cyan-400",
-      delay: 0.3
-    },
-    {
-      title: "Accessibility First",
-      description: "Inclusive design for all users",
-      icon: FaUniversalAccess,
-      color: "from-emerald-500/15 to-green-500/15",
-      borderColor: "border-gradient-to-r from-emerald-400 to-green-400",
-      delay: 0.4
-    }
+    { title: "Pixel-Perfect UI", description: "Impeccable attention to detail in every component", icon: FaPaintBrush, color: "from-violet-500/15 to-purple-500/15", delay: 0.1 },
+    { title: "Lightning Fast", description: "Optimized for maximum performance scores", icon: FaBolt, color: "from-amber-500/15 to-orange-500/15", delay: 0.2 },
+    { title: "Fully Responsive", description: "Flawless experience on all devices", icon: FaMobileAlt, color: "from-blue-500/15 to-cyan-500/15", delay: 0.3 },
+    { title: "Accessibility First", description: "Inclusive design for all users", icon: FaUniversalAccess, color: "from-emerald-500/15 to-green-500/15", delay: 0.4 },
   ];
 
   return (
@@ -132,81 +94,51 @@ export default function Hero() {
           }}
         />
 
-        {/* Unique Multi-Circle Tech Icon System with Path Light Animation */}
-        <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" aria-hidden="true">
+        {/* Concentric circles — centered on the SECTION (50% of SVG),
+            not the browser viewport. Previously used viewport.width/2
+            which placed rings off-center on wide screens. */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
           <defs>
             <linearGradient id="line-gradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#06b6d4" />
-              <stop offset="25%" stopColor="#3b82f6" />
-              <stop offset="50%" stopColor="#7c5cff" />
-              <stop offset="75%" stopColor="#ec4899" />
-              <stop offset="100%" stopColor="#f97316" />
+              <stop offset="0%" stopColor="#7c5cff" />
+              <stop offset="50%" stopColor="#5a2fd8" />
+              <stop offset="100%" stopColor="#3d2389" />
             </linearGradient>
-            <radialGradient id="icon-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(124, 92, 255, 0.4)" />
-              <stop offset="100%" stopColor="rgba(139, 92, 246, 0.1)" />
-            </radialGradient>
-            <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(124, 92, 255, 0.8)" />
-              <stop offset="50%" stopColor="rgba(139, 92, 246, 0.6)" />
-              <stop offset="100%" stopColor="rgba(236, 72, 153, 0.4)" />
-            </radialGradient>
           </defs>
 
           {/* Multiple concentric circles with path animations */}
           {[1, 2, 3].map((ring) => {
-            const radius = 80 + ring * 60; // Smaller, more professional sizing
-
+            const radius = 80 + ring * 60;
             return (
-              <g key={`ring-${ring}`}>
-                {/* Subtle animated path effect */}
-                <motion.circle
-                  cx={viewport.width / 2}
-                  cy={viewport.height / 2}
-                  r={radius}
-                  fill="none"
-                  stroke="url(#line-gradient)"
-                  strokeWidth="1"
-                  strokeDasharray="15 25"
-                  initial={{ strokeDashoffset: 0 }}
-                  animate={{
-                    strokeDashoffset: [-40, 0],
-                    strokeOpacity: [0.05, 0.15, 0.05]
-                  }}
-                  transition={{
-                    duration: 8 + ring * 3,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: ring * 1
-                  }}
-                />
-              </g>
+              <motion.circle
+                key={`ring-${ring}`}
+                cx="50%"
+                cy="50%"
+                r={radius}
+                fill="none"
+                stroke="url(#line-gradient)"
+                strokeWidth="1"
+                strokeDasharray="15 25"
+                initial={{ strokeDashoffset: 0 }}
+                animate={{
+                  strokeDashoffset: [-40, 0],
+                  strokeOpacity: [0.05, 0.15, 0.05]
+                }}
+                transition={{
+                  duration: 8 + ring * 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: ring * 1
+                }}
+              />
             );
           })}
 
-          {/* Central hub with pulsing effect */}
-          <motion.circle
-            cx={viewport.width / 2}
-            cy={viewport.height / 2}
-            r="60"
-            fill="url(#center-glow)"
-            initial={{ scale: 0.8, opacity: 0.5 }}
-            animate={{
-              scale: [0.8, 1.2, 0.8],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-
           {/* Outer ring with flowing light */}
           <motion.circle
-            cx={viewport.width / 2}
-            cy={viewport.height / 2}
-            r="800"
+            cx="50%"
+            cy="50%"
+            r="400"
             fill="none"
             stroke="url(#line-gradient)"
             strokeWidth="1"
@@ -214,20 +146,19 @@ export default function Hero() {
             initial={{ strokeDashoffset: 0 }}
             animate={{
               strokeDashoffset: [-40, 0],
-              strokeOpacity: [0.05, 0.2, 0.05]
+              strokeOpacity: [0.05, 0.15, 0.05]
             }}
             transition={{
               duration: 6,
               repeat: Infinity,
               ease: "linear"
             }}
-            filter="drop-shadow(0 0 15px rgba(124, 92, 255, 0.6))"
           />
         </svg>
 
-        {/* Enhanced grid pattern with code-like lines */}
-        <div className="absolute inset-0 opacity-5 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
-        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-transparent via-brand-500/5 to-transparent" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        {/* Removed opacity-3 (not a real Tailwind class) */}
       </div>
 
       <div className="relative z-10 max-w-7xl w-full">
@@ -352,11 +283,11 @@ export default function Hero() {
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, delay: item.delay }}
                     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    className={`bg-gradient-to-br ${item.color} dark:bg-surface-900/40 backdrop-blur-md ${item.borderColor} border dark:border-white/10 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 cursor-default`}
+                    className={`bg-gradient-to-br ${item.color} dark:bg-surface-900/40 backdrop-blur-md border border-surface-100 dark:border-white/10 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 cursor-default`}
                   >
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color.replace('/15', '/20')} ${item.borderColor}`}>
+                        <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color.replace('/15', '/20')}`}>
                           <IconComponent className="w-4 h-4 text-surface-900/80 dark:text-white/80" />
                         </div>
                         <h3 className="font-semibold text-surface-900 dark:text-white text-sm">{item.title}</h3>

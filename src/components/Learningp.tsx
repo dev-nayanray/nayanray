@@ -166,17 +166,17 @@ const Learningp = () => {
   return (
     <section
       id="learning-journey"
-      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden"
+      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/20 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden"
       ref={ref}
     >
-      {/* Animated Background */}
+      {/* Animated Background — uses brand tokens, not hardcoded slate/purple */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-32 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        
-        {/* Animated grid */}
-        <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
+        <div className="absolute top-1/4 -left-32 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-brand-700/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-surface-900/10 to-transparent dark:via-white/10" />
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
       </div>
 
       <motion.div
@@ -185,27 +185,27 @@ const Learningp = () => {
       >
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <motion.span
-            className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 font-medium text-sm mb-4"
+            className="inline-block px-4 py-2 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-300 font-medium text-sm mb-4"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
             transition={{ delay: 0.2 }}
           >
             CONTINUOUS GROWTH
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4 tracking-tight">
             My Learning{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">
               Journey
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Technology evolves rapidly, and so do I. Here's my journey of continuous learning, 
+          <p className="text-lg text-surface-900/60 dark:text-white/50 max-w-3xl mx-auto leading-relaxed">
+            Technology evolves rapidly, and so do I. Here's my journey of continuous learning,
             skill development, and adaptation to new technologies in the web development landscape.
           </p>
         </motion.div>
