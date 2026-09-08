@@ -167,7 +167,7 @@ const Workingp = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer group ${
+                    className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
                       isActive
                         ? "bg-surface-0 dark:bg-surface-900 border-brand-200 dark:border-brand-500/30 shadow-2xl shadow-brand-500/10 scale-105"
                         : isCompleted
@@ -178,6 +178,17 @@ const Workingp = () => {
                       setActiveStep(index);
                       setIsPlaying(false);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveStep(index);
+                        setIsPlaying(false);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isActive}
+                    aria-label={`View process step ${index + 1}: ${step.title}`}
                     whileHover={{ scale: isActive ? 1.05 : 1.02 }}
                   >
                 {/* Step Header */}

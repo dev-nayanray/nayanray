@@ -144,9 +144,14 @@
       Skip to main content
     </a>
 
-    <main id="root" role="main" aria-labelledby="main-heading">
+    <!-- React mount point — use a <div>, not <main>. The App component
+         renders its own <main id="main-content"> inside React. Using
+         <main> here too creates two <main> elements, which violates
+         the HTML spec (one <main> per document) and breaks the
+         skip-to-content link target. -->
+    <div id="root">
       <!-- React app mounts here -->
-    </main>
+    </div>
 
     <!-- Noscript fallback: Google's crawler renders JS, but if JS fails
          this still gives crawlers and users a meaningful page. -->

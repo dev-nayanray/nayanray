@@ -118,7 +118,7 @@ const Footer = () => {
               <h3 className="text-2xl font-bold text-white">
                 Nayan <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">Ray</span>
               </h3>
-              <p className="text-white/40 leading-relaxed text-sm">
+              <p className="text-white/60 leading-relaxed text-sm">
                 Full-Stack Developer & WordPress Specialist. Building performant,
                 accessible web experiences that drive business growth.
               </p>
@@ -163,7 +163,7 @@ const Footer = () => {
                   key={index}
                   href={`#${item.toLowerCase()}`}
                   whileHover={{ x: 4, color: "#ffffff" }}
-                  className="text-white/40 hover:text-white transition-colors duration-300 text-sm p-2 rounded-lg hover:bg-white/5"
+                  className="text-white/60 hover:text-white transition-colors duration-300 text-sm p-2 rounded-lg hover:bg-white/5"
                 >
                   {item}
                 </motion.a>
@@ -227,7 +227,7 @@ const Footer = () => {
               <motion.a
                 href="mailto:wpnayanray@gmail.com"
                 whileHover={{ x: 4, color: "#ffffff" }}
-                className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300 group text-sm"
+                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-300 group text-sm"
               >
                 <div className="p-2 rounded-lg bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors duration-300">
                   <FaEnvelope className="w-3 h-3" />
@@ -238,7 +238,7 @@ const Footer = () => {
               <motion.a
                 href="tel:+8801981308611"
                 whileHover={{ x: 4, color: "#ffffff" }}
-                className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300 group text-sm"
+                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-300 group text-sm"
               >
                 <div className="p-2 rounded-lg bg-green-500/10 text-green-400 group-hover:bg-green-500/20 transition-colors duration-300">
                   <FaPhone className="w-3 h-3" />
@@ -248,7 +248,7 @@ const Footer = () => {
 
               <motion.div
                 whileHover={{ x: 4, color: "#ffffff" }}
-                className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300 group text-sm"
+                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-300 group text-sm"
               >
                 <div className="p-2 rounded-lg bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors duration-300">
                   <FaMapMarkerAlt className="w-3 h-3" />
@@ -264,6 +264,7 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="Your email"
+                  aria-label="Email address for newsletter signup"
                   className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand-500"
                 />
                 <motion.button
@@ -286,7 +287,7 @@ const Footer = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col sm:flex-row items-center gap-3 text-white/40 text-sm"
+              className="flex flex-col sm:flex-row items-center gap-3 text-white/60 text-sm"
             >
               <span>© {currentYear} Nayan Ray. All rights reserved.</span>
               <div className="flex items-center gap-4">

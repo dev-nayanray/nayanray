@@ -69,10 +69,11 @@ const BlogSidebar = ({ currentPostId }: BlogSidebarProps) => {
       >
         <h3 className="text-lg font-semibold mb-4 text-surface-900 dark:text-white">Search Posts</h3>
         <div className="relative">
-          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-surface-900/40 dark:text-white/40 w-4 h-4" />
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-surface-900/40 dark:text-white/40 w-4 h-4" aria-hidden="true" />
           <input
             type="text"
             placeholder="Search articles..."
+            aria-label="Search blog articles"
             className="w-full pl-10 pr-4 py-3 border border-surface-100 dark:border-white/10 bg-transparent text-surface-900 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
           />
         </div>
@@ -169,6 +170,7 @@ const BlogSidebar = ({ currentPostId }: BlogSidebarProps) => {
           <input
             type="email"
             placeholder="Enter your email"
+            aria-label="Email address for newsletter signup"
             className="w-full px-4 py-2 border border-surface-100 dark:border-white/10 bg-surface-0 dark:bg-white/5 text-surface-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
           />
           <motion.button

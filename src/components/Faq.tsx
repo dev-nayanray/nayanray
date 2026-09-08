@@ -168,9 +168,12 @@ const Faq = () => {
               {/* FAQ Card */}
               <div className="relative bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl border border-surface-100 dark:border-white/10 shadow-sm hover:shadow-lg transition-all duration-500 overflow-hidden">
                 <motion.button
-                  className="w-full px-6 py-6 flex items-start gap-4 text-left group/button"
+                  className="w-full px-6 py-6 flex items-start gap-4 text-left group/button focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-inset rounded-2xl"
                   onClick={() => toggleFaq(faq.id)}
                   whileHover={{ backgroundColor: "rgba(59, 130, 246, 0.05)" }}
+                  aria-expanded={openIndex === faq.id}
+                  aria-controls={`faq-answer-${faq.id}`}
+                  aria-label={`${faq.question} — ${openIndex === faq.id ? "collapse" : "expand"}`}
                 >
                   {/* Icon */}
                   <div className="flex-shrink-0 p-2 rounded-xl bg-brand-100 dark:bg-brand-500/10 text-brand-600 dark:text-brand-300 group-hover/button:bg-brand-600 group-hover/button:text-white transition-colors duration-300">
@@ -180,7 +183,7 @@ const Faq = () => {
                   {/* Content */}
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-lg font-semibold text-surface-900 dark:text-white pr-8 group-hover/button:text-surface-900/80 dark:group-hover/button:text-white/80 transition-colors">
+                      <h3 id={`faq-question-${faq.id}`} className="text-lg font-semibold text-surface-900 dark:text-white pr-8 group-hover/button:text-surface-900/80 dark:group-hover/button:text-white/80 transition-colors">
                         {faq.question}
                       </h3>
                       <motion.div
@@ -195,6 +198,9 @@ const Faq = () => {
                     <AnimatePresence>
                       {openIndex === faq.id && (
                         <motion.div
+                          id={`faq-answer-${faq.id}`}
+                          role="region"
+                          aria-labelledby={`faq-question-${faq.id}`}
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}

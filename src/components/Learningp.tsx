@@ -227,12 +227,22 @@ const Learningp = () => {
                 return (
                   <motion.div
                     key={category.id}
-                    className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer group ${
+                    className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
                       isActive
                         ? "bg-white/10 border-cyan-400/50 shadow-2xl shadow-cyan-500/20 scale-105"
                         : "bg-white/5 border-white/10 shadow-lg hover:shadow-xl hover:border-white/20"
                     }`}
                     onClick={() => setActiveSkill(index)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveSkill(index);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isActive}
+                    aria-label={`Select skill category: ${category.title}`}
                     whileHover={{ scale: isActive ? 1.05 : 1.02 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
@@ -433,12 +443,22 @@ const Learningp = () => {
                 return (
                   <motion.div
                     key={period.year}
-                    className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer ${
+                    className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
                       isActive
                         ? "bg-white/10 border-purple-400/50 shadow-2xl shadow-purple-500/20"
                         : "bg-white/5 border-white/10 hover:border-white/20"
                     }`}
                     onClick={() => setActiveTimeline(index)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveTimeline(index);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isActive}
+                    aria-label={`View timeline for ${period.year}: ${period.title}`}
                     whileHover={{ scale: 1.02 }}
                   >
                     {/* Timeline connector */}

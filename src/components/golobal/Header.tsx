@@ -155,6 +155,7 @@ const Header = () => {
                   <input
                     type="text"
                     placeholder="Search menu..."
+                    aria-label="Search navigation menu"
                     className="w-full px-4 py-2 rounded-full bg-surface-50 border border-surface-100 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-white/5 dark:border-white/10 dark:text-white dark:placeholder-white/30"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
