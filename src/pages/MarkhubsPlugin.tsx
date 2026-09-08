@@ -9,7 +9,7 @@ import {
   FaBoxes, FaTags, FaLanguage, FaServer, FaCloud,
   FaTachometerAlt, FaUsers, FaGift,
   FaQuoteLeft,
-  FaPhp, FaLayerGroup, FaTrophy, FaBroom, FaRegClock,
+  FaPhp, FaLayerGroup, FaTrophy, FaBroom, FaRegClock, FaCopy,
 } from "react-icons/fa";
 import { SiTelegram } from "react-icons/si";
 import { useSeo } from "../hooks/useSeo";
@@ -1070,6 +1070,165 @@ function Comparison() {
         <p className="text-center text-sm text-surface-900/50 dark:text-white/40 mt-6">
           Premium is separate, optional software hosted on the developer's own site. Nothing in the free plugin is
           time-limited or locked.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Quick Start — copy-paste commands for developers                  */
+/* ------------------------------------------------------------------ */
+
+function QuickStart() {
+  const [activeTab, setActiveTab] = useState<"install" | "wpcli" | "botfather">("install");
+  const [copied, setCopied] = useState(false);
+
+  const snippets = {
+    install: {
+      label: "WP-CLI Install",
+      lang: "bash",
+      code: `# Download and install in one shot
+wp plugin install markhubs-store-manager-for-telegram \\
+  --activate
+
+# Or install from a local zip
+wp plugin install ./markhubs-store-manager-for-telegram.zip --activate
+
+# Verify it's active
+wp plugin list --status=active | grep telegram`,
+    },
+    wpcli: {
+      label: "Configure via WP-CLI",
+      lang: "bash",
+      code: `# Set your bot token (get it from @BotFather)
+wp option update wtm_free_settings \\
+  --format=json \\
+  '{"bot_token":"123:ABCdefGHI","admin_chat_id":"987654321"}'
+
+# Set the webhook — the plugin will call Telegram's API
+wp eval '\\WTM_Free_Telegram::set_webhook();'
+
+# Check the bot is connected
+wp eval 'var_dump(\\WTM_Free_Telegram::get_me());'`,
+    },
+    botfather: {
+      label: "BotFather Chat",
+      lang: "text",
+      code: `You: /newbot
+BotFather: Alright, a new bot. How are we going to call it?
+           Please choose a name for your bot.
+
+You: My Store Bot
+
+BotFather: Good. Now let's choose a username for your bot.
+           It must end in 'bot'. Like this, for example:
+           TetrisBot or tetris_bot.
+
+You: mystore_bot
+
+BotFather: Done! Congratulations on your new bot.
+           Use this token to access the HTTP API:
+           123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+
+           Keep your token secure and store it safely,
+           anyone can use it to control your bot.`,
+    },
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(snippets[activeTab].code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <section id="quick-start" className="relative py-24 px-4 sm:px-6 bg-gradient-to-b from-surface-950 to-surface-900 overflow-hidden">
+      {/* Decorative glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-5xl mx-auto">
+        <SectionHeading
+          badge="Quick Start"
+          title={
+            <>
+              For developers who'd rather
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400">
+                {" "}copy-paste than click
+              </span>
+            </>
+          }
+          subtitle="Set up the entire plugin from the terminal, or follow the BotFather chat transcript. No GUI required."
+        />
+
+        {/* Tabs */}
+        <div className="flex flex-wrap gap-2 justify-center mb-8">
+          {(Object.keys(snippets) as Array<keyof typeof snippets>).map((key) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                activeTab === key
+                  ? "bg-gradient-to-r from-brand-500 to-brand-700 text-white shadow-glow"
+                  : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10"
+              }`}
+            >
+              {snippets[key].label}
+            </button>
+          ))}
+        </div>
+
+        {/* Code block */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="relative bg-surface-950 rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+        >
+          {/* Window chrome */}
+          <div className="flex items-center justify-between px-5 py-3 bg-white/5 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-rose-500/80" />
+              <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+              <span className="ml-3 text-xs font-mono text-white/40">
+                {activeTab === "botfather" ? "telegram_chat.txt" : activeTab === "wpcli" ? "configure.sh" : "install.sh"}
+              </span>
+            </div>
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white text-xs font-medium transition-colors"
+            >
+              {copied ? (
+                <>
+                  <FaCheckCircle className="w-3 h-3 text-emerald-400" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <FaCopy className="w-3 h-3" />
+                  Copy
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Code */}
+          <pre className="px-5 py-5 overflow-x-auto no-scrollbar text-sm font-mono leading-relaxed">
+            <code className="text-emerald-300 whitespace-pre">{snippets[activeTab].code}</code>
+          </pre>
+        </motion.div>
+
+        {/* Hint */}
+        <p className="text-center text-sm text-white/40 mt-4">
+          Need the GUI version? See the{" "}
+          <Link to="/markhubs-store-manager-for-telegram/docs#setup" className="text-brand-400 hover:text-brand-300 underline">
+            setup guide in the docs
+          </Link>
+          .
         </p>
       </div>
     </section>
@@ -2862,6 +3021,7 @@ export default function MarkhubsPlugin() {
     canonical: PAGE_URL,
     keywords: PAGE_KEYWORDS,
     ogType: "website",
+    ogImage: "https://nayanray.vercel.app/og-markhubs-plugin.png",
     jsonLd,
   });
 
@@ -2882,6 +3042,7 @@ export default function MarkhubsPlugin() {
       <Performance />
       <Security />
       <HowItWorks />
+      <QuickStart />
       <Testimonials />
       <AuthorCredibility />
       <Roadmap />

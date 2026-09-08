@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  FaArrowUp, FaGithub, FaLinkedin, FaEnvelope, FaHeart, FaCode, 
+import { Link } from "react-router-dom";
+import {
+  FaArrowUp, FaGithub, FaLinkedin, FaEnvelope, FaHeart, FaCode,
   FaMapMarkerAlt, FaPhone, FaTwitter, FaDribbble, FaYoutube,
-  FaRocket, FaShieldAlt, FaAward, FaUsers
+  FaRocket, FaShieldAlt, FaAward, FaUsers, FaWordpress, FaArrowRight,
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -192,6 +193,26 @@ const Footer = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Featured plugin link — internal link from footer so Google
+                discovers the plugin page and the home page passes authority */}
+            <Link
+              to="/markhubs-store-manager-for-telegram"
+              className="block p-4 rounded-2xl bg-gradient-to-br from-brand-500/10 to-purple-500/10 border border-brand-500/20 hover:border-brand-500/40 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 shadow-lg">
+                  <FaWordpress className="w-4 h-4 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-semibold text-white group-hover:text-brand-300 transition-colors">
+                    markhubs Telegram Plugin
+                  </div>
+                  <div className="text-xs text-white/40">Free · GPL · v1.0.0</div>
+                </div>
+                <FaArrowRight className="w-3 h-3 text-white/40 group-hover:text-brand-300 group-hover:translate-x-1 transition-all" />
+              </div>
+            </Link>
           </motion.div>
 
           {/* Contact - Compact Bento */}
