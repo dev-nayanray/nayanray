@@ -14,6 +14,7 @@ import serviceRoutes from "./routes/services.js";
 import proposalRoutes from "./routes/proposals.js";
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
+import licenseRoutes from "./routes/license.js";
 import seedDatabase from "./seeders/seed.js";
 
 dotenv.config();
@@ -118,6 +119,9 @@ app.use("/api/blog", blogRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/proposals", proposalRoutes);
+// License API — called by the premium WooCommerce plugin (no auth on
+// activate/deactivate/verify; create/list are behind /api/admin)
+app.use("/api/license", licenseRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

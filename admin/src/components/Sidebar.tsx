@@ -7,6 +7,7 @@ import {
   FaEnvelope,
   FaFileInvoice,
   FaUsers,
+  FaKey,
   FaChevronLeft,
   FaTimes,
 } from 'react-icons/fa';
@@ -29,6 +30,7 @@ const menuItems = [
   { key: 'services', icon: FaServicestack, label: 'Services' },
   { key: 'proposals', icon: FaFileInvoice, label: 'Proposals' },
   { key: 'contacts', icon: FaEnvelope, label: 'Messages' },
+  { key: 'licenses', icon: FaKey, label: 'Licenses' },
   { key: 'users', icon: FaUsers, label: 'Users' },
 ];
 

@@ -74,3 +74,7 @@ const sequelize = process.env.DATABASE_URL
     );
 
 export { sequelize };
+
+// Register the License model so sync() creates the table
+import "./License.js";
+
