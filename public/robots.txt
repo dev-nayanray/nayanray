@@ -12,9 +12,9 @@ Disallow: /*.json$
 Disallow: /*.map$
 
 # Host directive — used by Yandex and some other crawlers
-Host: https://nayanray.vercel.app
+Host: https://nayanray.com
 
 # Crawl delay — be polite to the server
 Crawl-delay: 1
 
-Sitemap: https://nayanray.vercel.app/sitemap.xml
+Sitemap: https://nayanray.com/sitemap.xml

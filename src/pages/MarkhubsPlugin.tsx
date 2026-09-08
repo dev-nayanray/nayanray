@@ -2894,7 +2894,7 @@ export default function MarkhubsPlugin() {
       operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
       description:
         "Free WordPress plugin that turns your WooCommerce store into a Telegram sales bot with 25 core commands, order notifications, product search, cart, checkout flow, and order tracking. HPOS compatible, GPL-licensed, zero external dependencies.",
-      url: `https://nayanray.vercel.app${PAGE_URL}`,
+      url: `https://nayanray.com${PAGE_URL}`,
       downloadUrl:
         "https://github.com/dev-nayanray/markhubs-store-manager-for-telegram/releases/latest",
       softwareVersion: "1.0.0",
@@ -2954,19 +2954,19 @@ export default function MarkhubsPlugin() {
           "@type": "ListItem",
           position: 1,
           name: "Home",
-          item: "https://nayanray.vercel.app/",
+          item: "https://nayanray.com/",
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Plugins",
-          item: "https://nayanray.vercel.app/#plugins",
+          item: "https://nayanray.com/#plugins",
         },
         {
           "@type": "ListItem",
           position: 3,
           name: "markhubs Store Manager for Telegram",
-          item: `https://nayanray.vercel.app${PAGE_URL}`,
+          item: `https://nayanray.com${PAGE_URL}`,
         },
       ],
     },
@@ -3062,7 +3062,7 @@ export default function MarkhubsPlugin() {
     canonical: PAGE_URL,
     keywords: PAGE_KEYWORDS,
     ogType: "website",
-    ogImage: "https://nayanray.vercel.app/og-image.png",
+    ogImage: "https://nayanray.com/og-image.png",
     jsonLd,
   });
 

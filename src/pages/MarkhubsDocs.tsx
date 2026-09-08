@@ -1135,7 +1135,7 @@ export default function MarkhubsDocs() {
       "WordPress plugin documentation",
     ],
     ogType: "article",
-    ogImage: "https://nayanray.vercel.app/og-image.png",
+    ogImage: "https://nayanray.com/og-image.png",
     jsonLd: [
       {
         "@context": "https://schema.org",
@@ -1161,7 +1161,7 @@ export default function MarkhubsDocs() {
           operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
         },
         mainEntityOfPage:
-          "https://nayanray.vercel.app/markhubs-store-manager-for-telegram/docs",
+          "https://nayanray.com/markhubs-store-manager-for-telegram/docs",
       },
       {
         "@context": "https://schema.org",
@@ -1171,19 +1171,19 @@ export default function MarkhubsDocs() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://nayanray.vercel.app/",
+            item: "https://nayanray.com/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "markhubs Telegram Plugin",
-            item: "https://nayanray.vercel.app/markhubs-store-manager-for-telegram",
+            item: "https://nayanray.com/markhubs-store-manager-for-telegram",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Documentation",
-            item: "https://nayanray.vercel.app/markhubs-store-manager-for-telegram/docs",
+            item: "https://nayanray.com/markhubs-store-manager-for-telegram/docs",
           },
         ],
       },
