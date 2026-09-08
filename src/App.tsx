@@ -14,6 +14,7 @@ import SingleBlogPost from "./pages/SingleBlogPost";
 import StartProject from "./pages/StartProject";
 import NotFound from "./pages/NotFound";
 import Preloader from "./components/ui/Preloader";
+import ReadingProgress from "./components/ui/ReadingProgress";
 
 /* ------------------------------------------------------------------ */
 /*  Code-splitting: the markhubs plugin pages are large (2400+ lines  */
@@ -67,6 +68,10 @@ function App() {
 
       {/* Site Content */}
       <div className={`${loading ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}>
+        {/* Reading progress bar — appears on scroll, shows how far down
+            the page the user has scrolled. Boosts engagement on long
+            pages like the 23-section plugin landing page. */}
+        <ReadingProgress />
         <Header />
         <main id="main-content">
           <Routes>

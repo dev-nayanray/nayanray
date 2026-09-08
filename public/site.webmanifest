@@ -1,0 +1,65 @@
+{
+  "name": "Nayan Ray — Full Stack Web Developer",
+  "short_name": "Nayan Ray",
+  "description": "Portfolio of Nayan Ray, Full Stack Developer specializing in React, WordPress, and modern web technologies. Includes the markhubs Store Manager for Telegram WordPress plugin.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0e15",
+  "theme_color": "#7c5cff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["developer", "portfolio", "productivity"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "markhubs Telegram Plugin",
+      "short_name": "Telegram Plugin",
+      "description": "Free WordPress plugin that turns WooCommerce into a Telegram sales bot",
+      "url": "/markhubs-store-manager-for-telegram",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Plugin Documentation",
+      "short_name": "Docs",
+      "description": "Setup guide, command reference, and troubleshooting",
+      "url": "/markhubs-store-manager-for-telegram/docs",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch about projects and plugins",
+      "url": "/contact",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
