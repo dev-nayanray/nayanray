@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Login from './components/Login';
-import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage, authAPI } from './services/api';
+import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage, authAPI, setOnAuthError } from './services/api';
 import type { Project, BlogPost, Service, ContactMessage, Proposal, ProposalStatus, User, AuthUser } from './services/api';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -68,13 +68,35 @@ function App() {
 
   // Idle timeout refs
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Prevents double-logout race when idle timer fires + user clicks logout
+  const isLoggingOutRef = useRef(false);
 
-  const handleLogout = useCallback(async () => {
-    try {
-      await authAPI.logout();
-    } catch {
-      // Ignore errors — the cookie may already be expired
+  const clearIdleTimer = useCallback(() => {
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = null;
     }
+  }, []);
+
+  const handleLogout = useCallback(async (reason?: 'manual' | 'idle' | 'expired') => {
+    // Prevent double-logout — if already logging out, bail.
+    if (isLoggingOutRef.current) return;
+    isLoggingOutRef.current = true;
+
+    clearIdleTimer();
+
+    // Only call the backend logout if this is a manual logout.
+    // For 'idle' and 'expired', the cookie is already invalid/expired,
+    // so calling /auth/logout is unnecessary (and may fail if the
+    // network is down, which would hang the logout).
+    if (reason === 'manual') {
+      try {
+        await authAPI.logout();
+      } catch {
+        // Ignore errors — the cookie may already be expired
+      }
+    }
+
     setIsAuthenticated(false);
     setUser(null);
     setProjects([]);
@@ -83,15 +105,24 @@ function App() {
     setContacts([]);
     setProposals([]);
     setUsers([]);
-  }, []);
+    setError(reason === 'idle' ? 'You were logged out due to inactivity.' : reason === 'expired' ? 'Your session has expired. Please log in again.' : '');
+    isLoggingOutRef.current = false;
+  }, [clearIdleTimer]);
+
+  // Register the auth-error callback so the response interceptor can
+  // trigger logout without a full page reload (which loses React state).
+  useEffect(() => {
+    setOnAuthError(() => handleLogout('expired'));
+    return () => setOnAuthError(null);
+  }, [handleLogout]);
 
   // Reset the idle timer on any user activity
   const resetIdleTimer = useCallback(() => {
-    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    clearIdleTimer();
     idleTimerRef.current = setTimeout(() => {
-      handleLogout();
+      handleLogout('idle');
     }, IDLE_TIMEOUT_MS);
-  }, [handleLogout]);
+  }, [clearIdleTimer, handleLogout]);
 
   // Check auth on mount — calls /auth/me to validate the httpOnly cookie
   useEffect(() => {
@@ -386,7 +417,7 @@ function App() {
   }
 
   if (!isAuthenticated) {
-    return <Login onLogin={handleLogin} />;
+    return <Login onLogin={handleLogin} error={error} />;
   }
 
   return (
@@ -405,7 +436,7 @@ function App() {
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
           <Header
             user={user}
-            onLogout={handleLogout}
+            onLogout={() => handleLogout('manual')}
             onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
             activeLabel={TAB_LABELS[activeTab] || 'Dashboard'}
             notifications={contacts.length}

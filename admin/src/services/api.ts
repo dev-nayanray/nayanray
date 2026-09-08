@@ -17,21 +17,40 @@ const api = axios.create({
   withCredentials: true, // send httpOnly cookies cross-origin
 });
 
+/* ------------------------------------------------------------------ */
+/*  Auth state change callback                                         */
+/*                                                                    */
+/*  The response interceptor needs to clear auth state on 401 without */
+/*  causing an infinite reload loop. We use a mutable callback ref    */
+/*  instead of importing the App component directly (circular dep).   */
+/*  App.tsx registers its handleLogout via setOnAuthError.            */
+/* ------------------------------------------------------------------ */
+let onAuthError: (() => void) | null = null;
+export const setOnAuthError = (cb: (() => void) | null) => {
+  onAuthError = cb;
+};
+
 // Response interceptor to handle auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Only auto-logout on 401 from protected routes — NOT from /auth/me
-    // (which legitimately returns 401 when the user isn't logged in yet).
-    // Without this check, the app enters an infinite reload loop:
-    // mount → /auth/me returns 401 → reload → mount → /auth/me → 401 → ...
+    // Only trigger auth-error handling on 401 from protected routes —
+    // NOT from /auth/me (which legitimately returns 401 when the user
+    // isn't logged in yet) or /auth/login (which returns 401 on bad
+    // credentials and the Login component handles it inline).
     const url = error.config?.url || "";
     const isAuthCheck = url.includes("/auth/me") || url.includes("/auth/login");
 
     if (error.response?.status === 401 && !isAuthCheck) {
-      // Session is invalid/expired on a protected route. Clear any stale
-      // user state and reload to show the login screen.
-      window.location.reload();
+      // Session is invalid/expired on a protected route.
+      // Call the registered callback to clear state + show login screen.
+      // This avoids a full page reload (which loses React state and
+      // causes a flash). If no callback is registered, fall back to reload.
+      if (onAuthError) {
+        onAuthError();
+      } else {
+        window.location.reload();
+      }
     }
     return Promise.reject(error);
   }

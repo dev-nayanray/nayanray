@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { authAPI } from '../services/api';
 import type { LoginData, AuthUser } from '../services/api';
 
@@ -6,15 +6,22 @@ interface LoginProps {
   // onLogin no longer receives a token — the backend sets the httpOnly
   // cookie. Only the user object is needed.
   onLogin: (user: AuthUser) => void;
+  // Optional pre-set error message (e.g. 'Session expired' from idle logout)
+  error?: string;
 }
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login: React.FC<LoginProps> = ({ onLogin, error: initialError }) => {
   const [formData, setFormData] = useState<LoginData>({
     email: '',
     password: '',
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(initialError || '');
+
+  // If the parent passes a new error (e.g. session expired), show it
+  useEffect(() => {
+    if (initialError) setError(initialError);
+  }, [initialError]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
