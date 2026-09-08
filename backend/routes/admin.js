@@ -98,7 +98,7 @@ router.get("/projects", async (req, res) => {
 // POST /api/admin/projects
 router.post("/projects", async (req, res) => {
   try {
-    const { error, value } = projectSchema.validate(req.body);
+    const { error, value } = projectSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -113,7 +113,7 @@ router.post("/projects", async (req, res) => {
 // PUT /api/admin/projects/:id
 router.put("/projects/:id", async (req, res) => {
   try {
-    const { error, value } = projectSchema.validate(req.body);
+    const { error, value } = projectSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -169,7 +169,7 @@ router.get("/blog", async (req, res) => {
 // POST /api/admin/blog
 router.post("/blog", async (req, res) => {
   try {
-    const { error, value } = blogSchema.validate(req.body);
+    const { error, value } = blogSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -184,7 +184,7 @@ router.post("/blog", async (req, res) => {
 // PUT /api/admin/blog/:id
 router.put("/blog/:id", async (req, res) => {
   try {
-    const { error, value } = blogSchema.validate(req.body);
+    const { error, value } = blogSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -236,7 +236,7 @@ router.get("/services", async (req, res) => {
 // POST /api/admin/services
 router.post("/services", async (req, res) => {
   try {
-    const { error, value } = serviceSchema.validate(req.body);
+    const { error, value } = serviceSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -251,7 +251,7 @@ router.post("/services", async (req, res) => {
 // PUT /api/admin/services/:id
 router.put("/services/:id", async (req, res) => {
   try {
-    const { error, value } = serviceSchema.validate(req.body);
+    const { error, value } = serviceSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -328,7 +328,7 @@ const proposalStatusSchema = Joi.object({
 
 router.patch("/proposals/:id/status", async (req, res) => {
   try {
-    const { error, value } = proposalStatusSchema.validate(req.body);
+    const { error, value } = proposalStatusSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -383,7 +383,7 @@ router.get("/users", async (req, res) => {
 // POST /api/admin/users
 router.post("/users", async (req, res) => {
   try {
-    const { error, value } = userSchema.validate(req.body);
+    const { error, value } = userSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -410,7 +410,7 @@ router.post("/users", async (req, res) => {
 // PUT /api/admin/users/:id
 router.put("/users/:id", async (req, res) => {
   try {
-    const { error, value } = userSchema.validate(req.body, { context: { isUpdate: true } });
+    const { error, value } = userSchema.validate(req.body, { context: { isUpdate: true }, stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }

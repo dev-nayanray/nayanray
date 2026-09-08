@@ -236,11 +236,13 @@ function App() {
     setError('');
     try {
       let savedProject: Project;
+      // Strip 'id' from the payload — the backend rejects it on update
+      const { id: _id, ...projectData } = project;
       if (editingProject) {
-        savedProject = await projectsAPI.update(editingProject.id!, project);
+        savedProject = await projectsAPI.update(editingProject.id!, projectData);
         setProjects(projects.map(p => p.id === editingProject.id ? savedProject : p));
       } else {
-        savedProject = await projectsAPI.create(project);
+        savedProject = await projectsAPI.create(projectData);
         setProjects([...projects, savedProject]);
       }
       closeModal();
@@ -272,11 +274,13 @@ function App() {
     setError('');
     try {
       let savedBlogPost: BlogPost;
+      // Strip 'id' from the payload — the backend rejects it on update
+      const { id: _id, ...blogData } = blogPost;
       if (editingBlogPost) {
-        savedBlogPost = await blogAPI.update(editingBlogPost.id!, blogPost);
+        savedBlogPost = await blogAPI.update(editingBlogPost.id!, blogData);
         setBlogPosts(blogPosts.map(b => b.id === editingBlogPost.id ? savedBlogPost : b));
       } else {
-        savedBlogPost = await blogAPI.create(blogPost);
+        savedBlogPost = await blogAPI.create(blogData);
         setBlogPosts([...blogPosts, savedBlogPost]);
       }
       closeModal();
@@ -308,11 +312,13 @@ function App() {
     setError('');
     try {
       let savedService: Service;
+      // Strip 'id' from the payload — the backend rejects it on update
+      const { id: _id, ...serviceData } = service;
       if (editingService) {
-        savedService = await servicesAPI.update(editingService.id!, service);
+        savedService = await servicesAPI.update(editingService.id!, serviceData);
         setServices(services.map(s => s.id === editingService.id ? savedService : s));
       } else {
-        savedService = await servicesAPI.create(service);
+        savedService = await servicesAPI.create(serviceData);
         setServices([...services, savedService]);
       }
       closeModal();
@@ -382,10 +388,12 @@ function App() {
     setLoading(true);
     setError('');
     try {
+      // Strip 'id' from the payload — the backend rejects it on update
+      const { id: _id, ...userData } = user;
       if (editingUser) {
-        await usersAPI.update(editingUser.id!, user);
+        await usersAPI.update(editingUser.id!, userData);
       } else {
-        await usersAPI.create(user);
+        await usersAPI.create(userData);
       }
       await fetchAllData();
       closeModal();
