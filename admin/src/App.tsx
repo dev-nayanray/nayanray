@@ -29,6 +29,19 @@ const TAB_LABELS: Record<string, string> = {
  * to give an attacker 24h of access. This resets the timer on any
  * user activity (mouse, keyboard, scroll, touch) and logs out
  * when the timer expires. */
+
+/* Helper: strip Sequelize-managed fields from a payload before
+ * sending to the backend. These fields are auto-managed by the DB
+ * and cause 'X is not allowed' errors when included in create/update
+ * requests: id, createdAt, updatedAt, deletedAt */
+function stripManagedFields<T extends Record<string, unknown>>(data: T): Partial<T> {
+  const clean = { ...data };
+  delete clean.id;
+  delete clean.createdAt;
+  delete clean.updatedAt;
+  delete clean.deletedAt;
+  return clean;
+}
 const IDLE_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
 
 function App() {
@@ -236,9 +249,8 @@ function App() {
     setError('');
     try {
       let savedProject: Project;
-      // Strip 'id' from the payload — the backend rejects it on update
-      const projectData = { ...project };
-      delete (projectData as Record<string, unknown>).id;
+      // Strip Sequelize-managed fields (id, createdAt, updatedAt)
+      const projectData = stripManagedFields(project);
       if (editingProject) {
         savedProject = await projectsAPI.update(editingProject.id!, projectData);
         setProjects(projects.map(p => p.id === editingProject.id ? savedProject : p));
@@ -275,9 +287,7 @@ function App() {
     setError('');
     try {
       let savedBlogPost: BlogPost;
-      // Strip 'id' from the payload — the backend rejects it on update
-      const blogData = { ...blogPost };
-      delete (blogData as Record<string, unknown>).id;
+      const blogData = stripManagedFields(blogPost);
       if (editingBlogPost) {
         savedBlogPost = await blogAPI.update(editingBlogPost.id!, blogData);
         setBlogPosts(blogPosts.map(b => b.id === editingBlogPost.id ? savedBlogPost : b));
@@ -314,9 +324,7 @@ function App() {
     setError('');
     try {
       let savedService: Service;
-      // Strip 'id' from the payload — the backend rejects it on update
-      const serviceData = { ...service };
-      delete (serviceData as Record<string, unknown>).id;
+      const serviceData = stripManagedFields(service);
       if (editingService) {
         savedService = await servicesAPI.update(editingService.id!, serviceData);
         setServices(services.map(s => s.id === editingService.id ? savedService : s));
@@ -391,9 +399,7 @@ function App() {
     setLoading(true);
     setError('');
     try {
-      // Strip 'id' from the payload — the backend rejects it on update
-      const userData = { ...user };
-      delete (userData as Record<string, unknown>).id;
+      const userData = stripManagedFields(user);
       if (editingUser) {
         await usersAPI.update(editingUser.id!, userData);
       } else {
