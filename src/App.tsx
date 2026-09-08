@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/golobal/Header";
 import Footer from "./components/golobal/Footer";
@@ -12,10 +12,29 @@ import SingleProject from "./pages/SingleProject";
 import SingleService from "./pages/SingleService";
 import SingleBlogPost from "./pages/SingleBlogPost";
 import StartProject from "./pages/StartProject";
-import MarkhubsPlugin from "./pages/MarkhubsPlugin";
-import MarkhubsDocs from "./pages/MarkhubsDocs";
 import NotFound from "./pages/NotFound";
 import Preloader from "./components/ui/Preloader";
+
+/* ------------------------------------------------------------------ */
+/*  Code-splitting: the markhubs plugin pages are large (2400+ lines  */
+/*  each). Lazy-load them so the home page bundle stays small and     */
+/*  LCP/Core Web Vitals stay fast — a direct Google ranking factor.   */
+/* ------------------------------------------------------------------ */
+const MarkhubsPlugin = lazy(() => import("./pages/MarkhubsPlugin"));
+const MarkhubsDocs = lazy(() => import("./pages/MarkhubsDocs"));
+
+/* Lightweight fallback shown while the chunk downloads. Keeps the    */
+/* header visible so users don't think the page crashed.              */
+function PageFallback() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center pt-20">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
+        <p className="text-sm text-surface-900/50 dark:text-white/50">Loading…</p>
+      </div>
+    </div>
+  );
+}
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -61,8 +80,22 @@ function App() {
             <Route path="/blog/:id" element={<SingleBlogPost />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/start-a-project" element={<StartProject />} />
-            <Route path="/markhubs-store-manager-for-telegram" element={<MarkhubsPlugin />} />
-            <Route path="/markhubs-store-manager-for-telegram/docs" element={<MarkhubsDocs />} />
+            <Route
+              path="/markhubs-store-manager-for-telegram"
+              element={
+                <Suspense fallback={<PageFallback />}>
+                  <MarkhubsPlugin />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/markhubs-store-manager-for-telegram/docs"
+              element={
+                <Suspense fallback={<PageFallback />}>
+                  <MarkhubsDocs />
+                </Suspense>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

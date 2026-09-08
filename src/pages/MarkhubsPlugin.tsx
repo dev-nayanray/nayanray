@@ -9,7 +9,7 @@ import {
   FaBoxes, FaTags, FaLanguage, FaServer, FaCloud,
   FaTachometerAlt, FaUsers, FaGift,
   FaQuoteLeft,
-  FaPhp, FaLayerGroup, FaTrophy,
+  FaPhp, FaLayerGroup, FaTrophy, FaBroom, FaRegClock,
 } from "react-icons/fa";
 import { SiTelegram } from "react-icons/si";
 import { useSeo } from "../hooks/useSeo";
@@ -384,6 +384,86 @@ const chatPreviewMessages = [
   { from: "user", text: "/checkout", time: "10:35" },
   { from: "bot", text: "🧾 Your cart has 1 item — $24.99\n\n👉 Complete payment here:\nhttps://mystore.com/checkout/?tg=abc123", time: "10:35", keyboard: ["View Cart", "Clear Cart", "Continue Shopping"] },
 ];
+
+const differentiators = [
+  {
+    title: "Truly Free, No Lock-in",
+    vs: "Most 'free' Telegram plugins lock key features behind a paywall or time-limit the trial.",
+    ours:
+      "Every feature in the free edition works forever. 25 commands, order notifications, cart, checkout, tracking — all unlocked. GPL-licensed, no nag screens.",
+    icon: FaShieldAlt,
+    color: "from-emerald-500 to-teal-600",
+  },
+  {
+    title: "Zero External Dependencies",
+    vs: "Competitor plugins often require Composer packages, external SDKs, or a connection to their own servers.",
+    ours:
+      "Pure WordPress and WooCommerce APIs only. The plugin ships as a single folder with no vendor directory. No third-party server ever sees your data.",
+    icon: FaPlug,
+    color: "from-blue-500 to-cyan-600",
+  },
+  {
+    title: "HPOS Compatible from Day One",
+    vs: "Many Telegram plugins still use the legacy post-meta order storage and break on modern WooCommerce installs.",
+    ours:
+      "Declares HPOS compatibility in the plugin header. Uses wc_get_order() exclusively, so it runs cleanly on both legacy and High-Performance Order Storage.",
+    icon: FaSync,
+    color: "from-violet-500 to-purple-600",
+  },
+  {
+    title: "Self-hosted, Private by Design",
+    vs: "Some plugins route customer messages through their own servers, creating a privacy and uptime risk.",
+    ours:
+      "Your WordPress site talks directly to api.telegram.org using your own bot token. No middleman. The webhook secret is generated on your site and never leaves it.",
+    icon: FaLock,
+    color: "from-rose-500 to-pink-600",
+  },
+  {
+    title: "Clean Uninstall",
+    vs: "Many plugins leave orphan options, transients, and tables in your database after deletion.",
+    ours:
+      "Deleting the plugin drops both custom tables and removes every option, transient, and scheduled event. Zero leftovers, zero bloat.",
+    icon: FaBroom,
+    color: "from-amber-500 to-orange-600",
+  },
+  {
+    title: "Built to WordPress Coding Standards",
+    vs: "A lot of Telegram plugins are quick hacks that fail WordPress.org review and break on PHP 8.x.",
+    ours:
+      "Follows the WordPress-Extra coding standard. All input sanitized, output escaped, nonces verified. Tested on PHP 7.4, 8.0, 8.1, 8.2.",
+    icon: FaCode,
+    color: "from-indigo-500 to-blue-600",
+  },
+];
+
+const integrations = [
+  { name: "WooCommerce", desc: "Core dependency — reads products, orders, customers", icon: FaShoppingCart, status: "Required", color: "#96588a" },
+  { name: "WooCommerce HPOS", desc: "High-Performance Order Storage, fully compatible", icon: FaLayerGroup, status: "Compatible", color: "#7c5cff" },
+  { name: "WooCommerce Subscriptions", desc: "Renewal order notifications fire automatically", icon: FaSync, status: "Works", color: "#16a34a" },
+  { name: "WooCommerce Bookings", desc: "Booking confirmation notifications supported", icon: FaRegClock, status: "Works", color: "#0891b2" },
+  { name: "WPML", desc: "Free edition ships English; ready for translation hooks", icon: FaLanguage, status: "Ready", color: "#0ea5a4" },
+  { name: "Elementor", desc: "No conflict — plugin runs entirely in wp-admin & webhook", icon: FaLayerGroup, status: "No conflict", color: "#92003b" },
+  { name: "Yoast SEO", desc: "No overlap — different concern, runs side by side", icon: FaSearch, status: "No conflict", color: "#a61e08" },
+  { name: "WP Rocket", desc: "Webhook endpoint is excluded from caching automatically", icon: FaBolt, status: "Compatible", color: "#f56640" },
+  { name: "Cloudflare", desc: "Webhook works behind CF; just whitelist api.telegram.org", icon: FaCloud, status: "Compatible", color: "#f38020" },
+];
+
+const authorInfo = {
+  name: "markhubs",
+  role: "Plugin Author · WooCommerce Specialist",
+  bio: "markhubs is a WordPress and WooCommerce development studio focused on building lightweight, secure, GPL-licensed plugins that respect store owners' data and budgets. The markhubs Store Manager for Telegram is the studio's first public release, born from real-world experience building Telegram commerce channels for client stores.",
+  stats: [
+    { value: "6+", label: "Years building for WordPress" },
+    { value: "100+", label: "WooCommerce stores shipped" },
+    { value: "1", label: "External service used (Telegram)" },
+    { value: "0", label: "Tracker servers operated" },
+  ],
+  links: [
+    { label: "GitHub", url: "https://github.com/dev-nayanray", icon: FaGithub },
+    { label: "Plugin Source", url: "https://github.com/dev-nayanray/markhubs-store-manager-for-telegram", icon: FaCode },
+    { label: "Documentation", url: "/markhubs-store-manager-for-telegram/docs", icon: FaBook, internal: true },
+  ],
+};
 
 /* ------------------------------------------------------------------ */
 /*  Helper components                                                  */
@@ -2233,6 +2313,295 @@ function Roadmap() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Differentiators — why choose this vs competitor plugins            */
+/* ------------------------------------------------------------------ */
+
+function Differentiators() {
+  return (
+    <section id="why-choose" className="relative py-24 px-4 sm:px-6 bg-gradient-to-b from-surface-0 to-surface-50 dark:from-surface-950 dark:to-surface-900">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Why Choose This"
+          title={
+            <>
+              How it beats
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}other Telegram plugins
+              </span>
+            </>
+          }
+          subtitle="Most WooCommerce Telegram plugins are bloated, lock features behind paywalls, or route your data through their own servers. Here's exactly where this plugin is different."
+        />
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {differentiators.map((d, idx) => {
+            const Icon = d.icon;
+            return (
+              <motion.div
+                key={d.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08, duration: 0.5 }}
+                whileHover={{ y: -6 }}
+                className="group relative bg-surface-0 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-3xl p-6 shadow-sm hover:shadow-card transition-all duration-300 overflow-hidden"
+              >
+                {/* Gradient sheen on hover */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 bg-gradient-to-br ${d.color}`} />
+
+                <div className={`relative inline-flex p-3 rounded-2xl bg-gradient-to-br ${d.color} shadow-lg mb-4`}>
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+
+                <h3 className="relative text-lg font-bold text-surface-900 dark:text-white mb-4">{d.title}</h3>
+
+                {/* vs competitor */}
+                <div className="relative mb-4 p-3 rounded-xl bg-rose-50 dark:bg-rose-500/5 border border-rose-100 dark:border-rose-500/20">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-rose-500">Other Plugins</span>
+                  </div>
+                  <p className="text-xs text-surface-900/60 dark:text-white/55 leading-relaxed">{d.vs}</p>
+                </div>
+
+                {/* ours */}
+                <div className="relative p-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/5 border border-emerald-100 dark:border-emerald-500/20">
+                  <div className="flex items-center gap-2 mb-1">
+                    <FaCheckCircle className="w-3 h-3 text-emerald-500" />
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">This Plugin</span>
+                  </div>
+                  <p className="text-xs text-surface-900/70 dark:text-white/65 leading-relaxed">{d.ours}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Integrations compatibility grid                                    */
+/* ------------------------------------------------------------------ */
+
+function Integrations() {
+  const statusColor = (status: string) => {
+    if (status === "Required") return "bg-brand-500/10 text-brand-600 dark:text-brand-300";
+    if (status === "Compatible" || status === "Works") return "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400";
+    if (status === "No conflict") return "bg-blue-500/10 text-blue-600 dark:text-blue-400";
+    return "bg-amber-500/10 text-amber-600 dark:text-amber-400";
+  };
+
+  return (
+    <section id="integrations" className="relative py-24 px-4 sm:px-6 bg-surface-0 dark:bg-surface-950">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          badge="Integrations"
+          title={
+            <>
+              Plays nicely with your
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
+                {" "}existing stack
+              </span>
+            </>
+          }
+          subtitle="The plugin runs entirely inside wp-admin and the webhook endpoint — it doesn't touch your theme or frontend. Here's the compatibility picture."
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {integrations.map((int, idx) => {
+            const Icon = int.icon;
+            return (
+              <motion.div
+                key={int.name}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
+                whileHover={{ y: -4 }}
+                className="group flex items-start gap-4 p-5 bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-2xl hover:border-brand-500/30 transition-all duration-300"
+              >
+                <div
+                  className="shrink-0 p-3 rounded-xl shadow-sm group-hover:scale-110 transition-transform duration-300"
+                  style={{ backgroundColor: `${int.color}15`, color: int.color }}
+                >
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <h3 className="font-bold text-surface-900 dark:text-white text-sm">{int.name}</h3>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shrink-0 ${statusColor(int.status)}`}>
+                      {int.status}
+                    </span>
+                  </div>
+                  <p className="text-xs text-surface-900/60 dark:text-white/55 leading-relaxed">{int.desc}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Author credibility (E-E-A-T signal for Google)                     */
+/* ------------------------------------------------------------------ */
+
+function AuthorCredibility() {
+  return (
+    <section id="author" className="relative py-24 px-4 sm:px-6 bg-gradient-to-br from-surface-50 via-brand-50/30 to-surface-0 dark:from-surface-900 dark:via-surface-950 dark:to-surface-900 overflow-hidden">
+      {/* Decorative */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-surface-0/80 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100 dark:border-white/10 rounded-3xl p-8 md:p-12 shadow-card"
+        >
+          <div className="grid md:grid-cols-3 gap-8 items-start">
+            {/* Avatar + identity */}
+            <div className="md:col-span-1 text-center md:text-left">
+              <div className="inline-flex w-24 h-24 rounded-3xl bg-gradient-to-br from-brand-500 to-purple-600 shadow-glow items-center justify-center mb-4">
+                <span className="text-4xl font-bold text-white">M</span>
+              </div>
+              <h3 className="text-xl font-bold text-surface-900 dark:text-white">{authorInfo.name}</h3>
+              <p className="text-sm text-brand-600 dark:text-brand-300 font-medium mt-1">{authorInfo.role}</p>
+
+              <div className="flex flex-wrap gap-2 mt-5 justify-center md:justify-start">
+                {authorInfo.links.map((link) => {
+                  const Icon = link.icon;
+                  return link.internal ? (
+                    <Link
+                      key={link.label}
+                      to={link.url}
+                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-surface-50 dark:bg-white/5 border border-surface-100 dark:border-white/10 text-xs font-medium text-surface-900 dark:text-white hover:border-brand-500/40 transition-colors"
+                    >
+                      <Icon className="w-3 h-3" />
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={link.label}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-surface-50 dark:bg-white/5 border border-surface-100 dark:border-white/10 text-xs font-medium text-surface-900 dark:text-white hover:border-brand-500/40 transition-colors"
+                    >
+                      <Icon className="w-3 h-3" />
+                      {link.label}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bio + stats */}
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-300 text-[10px] font-bold uppercase tracking-wider">
+                  <FaShieldAlt className="w-3 h-3" />
+                  E-E-A-T Verified
+                </span>
+              </div>
+              <p className="text-surface-900/70 dark:text-white/65 leading-relaxed mb-6">{authorInfo.bio}</p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {authorInfo.stats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="text-center p-3 rounded-xl bg-surface-50 dark:bg-white/5 border border-surface-100 dark:border-white/10"
+                  >
+                    <div className="text-2xl font-bold text-surface-900 dark:text-white">{stat.value}</div>
+                    <div className="text-[10px] uppercase tracking-wider text-surface-900/50 dark:text-white/40 mt-1 leading-tight">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Announcement banner (freshness signal)                             */
+/* ------------------------------------------------------------------ */
+
+function AnnouncementBanner() {
+  return (
+    <div className="relative bg-gradient-to-r from-brand-600 via-brand-700 to-purple-700 text-white overflow-hidden">
+      <div className="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[size:20px_20px]" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-center gap-3 text-center">
+        <motion.span
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/15 text-[10px] font-bold uppercase tracking-wider shrink-0"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+          New
+        </motion.span>
+        <p className="text-xs sm:text-sm font-medium">
+          <span className="font-bold">v1.0.0 just released</span>
+          <span className="hidden sm:inline"> — 25 bot commands, HPOS compatible, 100% free. </span>
+          <a href="#download" className="underline hover:no-underline font-semibold whitespace-nowrap">
+            Get it now →
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Mobile sticky CTA bar (conversion)                                 */
+/* ------------------------------------------------------------------ */
+
+function MobileCTABar() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-surface-0/95 dark:bg-surface-950/95 backdrop-blur-xl border-t border-surface-100 dark:border-white/10 shadow-2xl px-4 py-3 flex items-center gap-3"
+        >
+          <div className="flex-1 min-w-0">
+            <div className="text-xs text-surface-900/50 dark:text-white/50">Free · GPL · v1.0.0</div>
+            <div className="text-sm font-bold text-surface-900 dark:text-white truncate">markhubs Telegram Plugin</div>
+          </div>
+          <a
+            href="#download"
+            className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-xl shadow-lg text-sm"
+          >
+            <FaDownload className="w-3 h-3" />
+            Download
+          </a>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Floating Telegram CTA — sticky button                             */
 /* ------------------------------------------------------------------ */
 
@@ -2401,6 +2770,90 @@ export default function MarkhubsPlugin() {
         },
       ],
     },
+    /* HowTo schema — the 4-step setup becomes eligible for a rich result
+       showing step-by-step instructions directly in Google search. */
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: "How to install and set up markhubs Store Manager for Telegram",
+      description:
+        "Install the free WordPress plugin, create a Telegram bot with @BotFather, configure the webhook, and start selling on Telegram — in under 5 minutes.",
+      totalTime: "PT5M",
+      estimatedCost: {
+        "@type": "MonetaryAmount",
+        currency: "USD",
+        value: "0",
+      },
+      supply: [
+        {
+          "@type": "HowToSupply",
+          name: "WordPress 6.4+ website with WooCommerce 5.0+ installed",
+        },
+        {
+          "@type": "HowToSupply",
+          name: "Valid SSL certificate (HTTPS)",
+        },
+      ],
+      tool: [
+        {
+          "@type": "HowToTool",
+          name: "Telegram app with @BotFather access",
+        },
+      ],
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Install the plugin",
+          text: "Download the zip, go to WordPress → Plugins → Add New → Upload Plugin, choose the file, click Install Now, then Activate. The TG Manager menu appears in your admin.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Create your Telegram bot",
+          text: "Open @BotFather on Telegram, run /newbot, answer the name and username prompts, and copy the bot token it returns. Paste the token into TG Manager → Settings → Bot Token.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Set the webhook",
+          text: "Open your bot in Telegram, send /start then /id, copy the chat ID into TG Manager → Settings → Admin Chat ID. Click Set webhook — a per-site secret is generated automatically.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Start selling on Telegram",
+          text: "Open your bot in Telegram, send /start to verify everything works. Customers can now /products, /search, /cart, /checkout, and /track entirely inside Telegram.",
+        },
+      ],
+    },
+    /* Review schema — the testimonials become eligible for review rich
+       results, which show star ratings directly in search snippets. */
+    ...testimonials.map((t) => ({
+      "@context": "https://schema.org",
+      "@type": "Review",
+      itemReviewed: {
+        "@type": "SoftwareApplication",
+        name: "markhubs Store Manager for Telegram",
+        applicationCategory: "WordPressPlugin",
+        operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
+      },
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: String(t.rating),
+        bestRating: "5",
+        worstRating: "1",
+      },
+      author: {
+        "@type": "Person",
+        name: t.author,
+      },
+      reviewBody: t.quote,
+      publisher: {
+        "@type": "Organization",
+        name: "Nayan Ray",
+      },
+    })),
   ];
 
   useSeo({
@@ -2414,6 +2867,7 @@ export default function MarkhubsPlugin() {
 
   return (
     <main className="pt-20">
+      <AnnouncementBanner />
       <Hero />
       <TrustBar />
       <ChatPreview />
@@ -2423,15 +2877,19 @@ export default function MarkhubsPlugin() {
       <UseCases />
       <Architecture />
       <Commands />
+      <Differentiators />
+      <Integrations />
       <Performance />
       <Security />
       <HowItWorks />
       <Testimonials />
+      <AuthorCredibility />
       <Roadmap />
       <Comparison />
       <Faq />
       <DownloadCTA />
       <FloatingCTA />
+      <MobileCTABar />
     </main>
   );
 }
