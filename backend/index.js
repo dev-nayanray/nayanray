@@ -125,8 +125,34 @@ app.get("/health", (req, res) => {
 });
 
 // Error handling middleware
+// Error handling middleware — preserves HTTP status codes from
+// Joi validation errors (400) and Sequelize errors, instead of
+// lumping everything into a 500. Logs the full stack server-side
+// for debugging, but returns only a generic message to the client
+// (no internal details leaked).
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
+  // Joi validation errors — return 400 with field-level detail
+  if (err.isJoi) {
+    return res.status(400).json({
+      error: err.details[0]?.message || "Validation error",
+    });
+  }
+
+  // Sequelize validation errors — return 400 with field details
+  if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {
+    return res.status(400).json({
+      error: err.errors?.map((e) => e.message).join(", ") || "Validation error",
+    });
+  }
+
+  // If the error already has a status (e.g. from http-errors), use it
+  if (err.status) {
+    return res.status(err.status).json({ error: err.message || "Request failed" });
+  }
+
+  // Fallback — 500 with generic message (no internal details)
   res.status(500).json({ error: "Something went wrong!" });
 });
 
@@ -141,8 +167,22 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log("Database connected successfully.");
 
-    await sequelize.sync();
-    console.log("Database synchronized.");
+    // sync() creates tables if they don't exist, but does NOT alter
+    // existing tables (no { alter: true }). This means new columns
+    // added to models won't appear in the DB until you run a migration
+    // or drop the table manually.
+    //
+    // For production, use Sequelize migrations (umzug). For now, we
+    // use sync() in dev only, and warn in production.
+    if (isProd) {
+      console.log(
+        "[db] Production mode — skipping sync(). Run migrations manually: " +
+          "npx sequelize-cli db:migrate"
+      );
+    } else {
+      await sequelize.sync();
+      console.log("Database synchronized (dev mode).");
+    }
 
     // Seed database
     await seedDatabase();
