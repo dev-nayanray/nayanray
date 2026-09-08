@@ -3,18 +3,41 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 /* ------------------------------------------------------------------ */
-/*  Axios instance with cookie-based auth                              */
+/*  Token storage — in-memory only (NOT localStorage)                 */
 /*                                                                    */
-/*  Previously: JWT was stored in localStorage and attached via        */
-/*  Authorization header. XSS could steal the token.                  */
+/*  The backend sets an httpOnly cookie for same-origin setups, but  */
+/*  cross-origin (admin on Vercel → backend on Render) cookies are    */
+/*  often blocked by browsers (Safari ITP, Brave Shields, third-party */
+/*  cookie restrictions).                                              */
 /*                                                                    */
-/*  Now: JWT is in an httpOnly cookie set by the backend. The browser  */
-/*  auto-attaches it via `credentials: 'include'`. JavaScript can't  */
-/*  read it, so XSS can't steal it.                                  */
+/*  As a fallback, the login response also returns the token in JSON. */
+/*  We store it in a module-level variable (in memory, not localStorage) */
+/*  and attach it via Authorization header. This survives page reloads */
+/*  within the same session (until /auth/me fails), and is cleared on */
+/*  logout.                                                            */
+/*                                                                    */
+/*  In-memory storage is XSS-safe: even if an attacker runs JS, they  */
+/*  can only read the token for the current session — not from       */
+/*  localStorage which persists across sessions.                      */
 /* ------------------------------------------------------------------ */
+let authToken: string | null = null;
+
+export const setAuthToken = (token: string | null) => {
+  authToken = token;
+};
+
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true, // send httpOnly cookies cross-origin
+  withCredentials: true, // send httpOnly cookies if available
+});
+
+// Request interceptor — attach token via Authorization header as fallback
+// when the cookie isn't present (cross-origin / blocked cookies)
+api.interceptors.request.use((config) => {
+  if (authToken) {
+    config.headers.Authorization = `Bearer ${authToken}`;
+  }
+  return config;
 });
 
 /* ------------------------------------------------------------------ */
@@ -141,6 +164,7 @@ export interface LoginData {
 
 export interface AuthResponse {
   message: string;
+  token?: string; // present as fallback for cross-origin (blocked cookies)
   user: AuthUser;
 }
 
@@ -155,10 +179,17 @@ export const getErrorMessage = (err: unknown, fallback: string): string => {
 
 // Auth API
 export const authAPI = {
-  // Login — backend sets httpOnly cookie, returns user object (no token)
+  // Login — backend sets httpOnly cookie AND returns token in JSON.
+  // The token is stored in memory as a fallback for cross-origin setups
+  // where third-party cookies are blocked.
   login: async (data: LoginData): Promise<AuthResponse> => {
     const response = await api.post('/auth/login', data);
-    return response.data;
+    const responseData = response.data;
+    // Store token in memory for cross-origin fallback
+    if (responseData.token) {
+      setAuthToken(responseData.token);
+    }
+    return responseData;
   },
 
   // Fetch current user from the httpOnly cookie — called on app mount
@@ -169,8 +200,11 @@ export const authAPI = {
   },
 
   // Logout — clears the httpOnly cookie on the server
+  // Logout — clears the httpOnly cookie on the server AND clears the
+  // in-memory token fallback.
   logout: async (): Promise<void> => {
     await api.post('/auth/logout');
+    setAuthToken(null); // clear in-memory token
   },
 
   // NOTE: The `register` method was removed for security.

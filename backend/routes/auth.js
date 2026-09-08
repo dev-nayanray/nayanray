@@ -43,21 +43,21 @@ const isProd = process.env.NODE_ENV === "production";
 /* ------------------------------------------------------------------ */
 /*  Cookie configuration                                               */
 /*                                                                    */
-/*  sameSite: 'lax' (not 'strict') allows the cookie to be sent on     */
-/*  top-level navigations from external sites, which is needed when    */
-/*  the admin frontend and backend are on different domains/ports.     */
-/*  'strict' would block the cookie entirely in cross-origin setups.   */
-/*  'lax' still provides CSRF protection for POST/PUT/DELETE (only    */
-/*  allows GET from cross-site, which is safe for read-only ops).     */
+/*  sameSite: 'none' allows cross-origin cookies (admin on Vercel,     */
+/*  backend on Render). Requires secure: true in production.           */
 /*                                                                    */
-/*  If admin and backend are on the same domain (e.g. nayanray.com    */
-/*  with /api/*), 'strict' would work. But for separate domains      */
-/*  (admin.nayanray.com → api.nayanray.com), 'lax' is required.       */
+/*  In dev (localhost), sameSite: 'lax' works fine because admin      */
+/*  (localhost:5173) and backend (localhost:5000) are same-site.       */
+/*                                                                    */
+/*  The JWT is ALSO returned in the JSON response as a fallback for   */
+/*  environments where third-party cookies are blocked (Safari ITP,   */
+/*  Brave Shields, etc.). The admin client prefers the cookie but      */
+/*  falls back to the Authorization header if the cookie isn't present.*/
 /* ------------------------------------------------------------------ */
 const cookieOptions = {
   httpOnly: true, // JS can't read it → XSS can't steal it
   secure: isProd, // HTTPS only in production
-  sameSite: "lax", // CSRF protection (allows cross-origin top-level nav)
+  sameSite: isProd ? "none" : "lax", // 'none' for cross-origin, 'lax' for dev
   maxAge: 24 * 60 * 60 * 1000, // 24 hours (matches JWT expiry)
   path: "/",
 };
@@ -89,13 +89,17 @@ router.post("/login", async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    // Set JWT as httpOnly cookie — NOT returned in JSON.
-    // The admin frontend no longer needs to handle the token at all;
-    // the browser auto-attaches it via credentials: 'include'.
+    // Set JWT as httpOnly cookie for same-origin setups.
     res.cookie("adminToken", token, cookieOptions);
 
+    // ALSO return the token in JSON for cross-origin setups where
+    // third-party cookies are blocked (Safari ITP, Brave Shields,
+    // or different domains). The admin client stores this in memory
+    // (NOT localStorage — that's XSS-vulnerable) and sends it via
+    // Authorization header as a fallback when the cookie isn't present.
     res.json({
       message: "Login successful",
+      token, // fallback for cross-origin / blocked cookies
       user: {
         id: user.id,
         username: user.username,

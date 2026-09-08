@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Login from './components/Login';
-import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage, authAPI, setOnAuthError } from './services/api';
+import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage, authAPI, setOnAuthError, setAuthToken } from './services/api';
 import type { Project, BlogPost, Service, ContactMessage, Proposal, ProposalStatus, User, AuthUser } from './services/api';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -84,6 +84,9 @@ function App() {
     isLoggingOutRef.current = true;
 
     clearIdleTimer();
+
+    // Clear the in-memory token (cross-origin fallback)
+    setAuthToken(null);
 
     // Only call the backend logout if this is a manual logout.
     // For 'idle' and 'expired', the cookie is already invalid/expired,
