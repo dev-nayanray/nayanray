@@ -1067,10 +1067,20 @@ function Comparison() {
           </div>
         </motion.div>
 
-        <p className="text-center text-sm text-surface-900/50 dark:text-white/40 mt-6">
+        <p className="text-center text-sm text-surface-900/50 dark:text-white/40 mt-6 mb-4">
           Premium is separate, optional software hosted on the developer's own site. Nothing in the free plugin is
           time-limited or locked.
         </p>
+
+        <div className="text-center">
+          <Link
+            to="/premium"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-0.5 transition-all"
+          >
+            View Premium Pricing
+            <FaArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
     </section>
   );

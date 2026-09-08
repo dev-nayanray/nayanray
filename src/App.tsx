@@ -30,6 +30,9 @@ const ContactPage = lazy(() => import("./pages/Contact"));
 const StartProject = lazy(() => import("./pages/StartProject"));
 const MarkhubsPlugin = lazy(() => import("./pages/MarkhubsPlugin"));
 const MarkhubsDocs = lazy(() => import("./pages/MarkhubsDocs"));
+const PremiumPricing = lazy(() => import("./pages/PremiumPricing"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Account = lazy(() => import("./pages/Account"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 /* Lightweight fallback shown while a chunk downloads. Keeps the      */
@@ -104,6 +107,9 @@ function App() {
                 path="/markhubs-store-manager-for-telegram/docs"
                 element={<MarkhubsDocs />}
               />
+              <Route path="/premium" element={<PremiumPricing />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/account" element={<Account />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
