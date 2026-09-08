@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Login from './components/Login';
-import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage } from './services/api';
-import type { Project, BlogPost, Service, ContactMessage, Proposal, ProposalStatus, User } from './services/api';
+import { projectsAPI, blogAPI, servicesAPI, contactsAPI, proposalsAPI, usersAPI, getErrorMessage, authAPI } from './services/api';
+import type { Project, BlogPost, Service, ContactMessage, Proposal, ProposalStatus, User, AuthUser } from './services/api';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import DashboardOverview from './components/DashboardOverview';
@@ -22,9 +22,19 @@ const TAB_LABELS: Record<string, string> = {
   users: 'Users',
 };
 
+/* Idle timeout — auto-logout after 15 minutes of inactivity.
+ * The JWT cookie lives 24h, but we don't want an unlocked laptop
+ * to give an attacker 24h of access. This resets the timer on any
+ * user activity (mouse, keyboard, scroll, touch) and logs out
+ * when the timer expires. */
+const IDLE_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
+
 function App() {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('adminToken'));
-  const [user, setUser] = useState<any>(null);
+  // Auth state — no longer uses localStorage. The JWT is in an httpOnly
+  // cookie. On mount, we call /auth/me to check if the cookie is valid
+  // and populate the user object. If it fails, we show the login screen.
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null = checking
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(
     () => localStorage.getItem('admin-sidebar-collapsed') === '1'
@@ -56,21 +66,74 @@ function App() {
   const [searchUsers, setSearchUsers] = useState('');
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem('adminToken', token);
-      fetchAllData();
-    } else {
-      localStorage.removeItem('adminToken');
-      setUser(null);
-      setProjects([]);
-      setBlogPosts([]);
-      setServices([]);
-      setContacts([]);
-      setProposals([]);
-      setUsers([]);
+  // Idle timeout refs
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await authAPI.logout();
+    } catch {
+      // Ignore errors — the cookie may already be expired
     }
-  }, [token]);
+    setIsAuthenticated(false);
+    setUser(null);
+    setProjects([]);
+    setBlogPosts([]);
+    setServices([]);
+    setContacts([]);
+    setProposals([]);
+    setUsers([]);
+  }, []);
+
+  // Reset the idle timer on any user activity
+  const resetIdleTimer = useCallback(() => {
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    idleTimerRef.current = setTimeout(() => {
+      handleLogout();
+    }, IDLE_TIMEOUT_MS);
+  }, [handleLogout]);
+
+  // Check auth on mount — calls /auth/me to validate the httpOnly cookie
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { user: fetchedUser } = await authAPI.me();
+        setUser(fetchedUser);
+        setIsAuthenticated(true);
+      } catch {
+        // Not authenticated (401) or network error
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  // Fetch data when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAllData();
+    }
+  }, [isAuthenticated]);
+
+  // Idle timeout — set up activity listeners
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    activityEvents.forEach((evt) => {
+      window.addEventListener(evt, resetIdleTimer, { passive: true });
+    });
+
+    // Start the initial timer
+    resetIdleTimer();
+
+    return () => {
+      activityEvents.forEach((evt) => {
+        window.removeEventListener(evt, resetIdleTimer);
+      });
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    };
+  }, [isAuthenticated, resetIdleTimer]);
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -90,20 +153,18 @@ function App() {
       setContacts(contactsData);
       setProposals(proposalsData);
       setUsers(usersData);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to fetch data'));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogin = (token: string, user: any) => {
-    setToken(token);
-    setUser(user);
-  };
-
-  const handleLogout = () => {
-    setToken(null);
+  // handleLogin no longer takes a token — the backend set the httpOnly
+  // cookie. We just need the user object.
+  const handleLogin = (loggedInUser: AuthUser) => {
+    setUser(loggedInUser);
+    setIsAuthenticated(true);
   };
 
   const openAddModal = (type: string) => {
@@ -313,7 +374,18 @@ function App() {
     }
   };
 
-  if (!token) {
+  // Show a loading spinner while checking auth status (on mount).
+  // This prevents a flash of the Login screen for authenticated users
+  // who reload the page.
+  if (isAuthenticated === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface-50 dark:bg-surface-950">
+        <div className="w-10 h-10 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />;
   }
 

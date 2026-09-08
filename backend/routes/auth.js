@@ -12,7 +12,6 @@ const loginSchema = Joi.object({
 });
 
 // Validation schema for registration — enforces strong passwords.
-// Previously /register accepted any string as a password (even 1 char).
 const registerSchema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
   email: Joi.string().email().required(),
@@ -26,6 +25,29 @@ const registerSchema = Joi.object({
     .required(),
 });
 
+/* ------------------------------------------------------------------ */
+/*  Cookie configuration                                               */
+/*                                                                    */
+/*  JWT is now stored in an HttpOnly, Secure, SameSite=Strict cookie  */
+/*  instead of localStorage. This means:                             */
+/*  1. JavaScript can't read the token → XSS can't steal it           */
+/*  2. Browser auto-attaches it to every request to the same origin   */
+/*  3. SameSite=Strict prevents CSRF (cross-site requests don't       */
+/*     include the cookie)                                            */
+/*                                                                    */
+/*  In production, secure: true is enforced. In dev (HTTP localhost), */
+/*  secure is false so the cookie actually gets set.                  */
+/* ------------------------------------------------------------------ */
+const isProd = process.env.NODE_ENV === "production";
+
+const cookieOptions = {
+  httpOnly: true, // JS can't read it → XSS can't steal it
+  secure: isProd, // HTTPS only in production
+  sameSite: "strict" as const, // CSRF protection — no cross-site cookie
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours (matches JWT expiry)
+  path: "/",
+};
+
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
@@ -36,32 +58,30 @@ router.post("/login", async (req, res) => {
 
     const { email, password } = value;
 
-    // Find user
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Check password
     const isValidPassword = await user.checkPassword(password);
     if (!isValidPassword) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Generate JWT — payload is { id } only.
-    // Previously included email + role, which leaks PII (JWT is base64,
-    // not encrypted) and prevents server-side role revocation for the
-    // token's lifetime. Role is now fetched from DB on each protected
-    // request via the requireAuth middleware.
     const token = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
 
+    // Set JWT as httpOnly cookie — NOT returned in JSON.
+    // The admin frontend no longer needs to handle the token at all;
+    // the browser auto-attaches it via credentials: 'include'.
+    res.cookie("adminToken", token, cookieOptions);
+
     res.json({
       message: "Login successful",
-      token,
       user: {
         id: user.id,
         username: user.username,
@@ -75,24 +95,49 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// GET /api/auth/me — fetch current user from the JWT cookie.
+// The admin app calls this on mount to populate the user object
+// after a page reload (previously the user object was lost on
+// reload because it was only in React state).
+router.get("/me", async (req, res) => {
+  try {
+    const token = req.cookies?.adminToken;
+    if (!token) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as { id: number };
+    const user = await User.findByPk(decoded.id, {
+      attributes: ["id", "username", "email", "role"],
+    });
+
+    if (!user) {
+      // Token is valid but user was deleted — clear the cookie
+      res.clearCookie("adminToken", { path: "/" });
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    // Invalid or expired token — clear the cookie
+    res.clearCookie("adminToken", { path: "/" });
+    return res.status(401).json({ error: "Invalid or expired session" });
+  }
+});
+
+// POST /api/auth/logout — clear the JWT cookie
+router.post("/logout", (req, res) => {
+  res.clearCookie("adminToken", { path: "/" });
+  res.json({ message: "Logged out successfully" });
+});
+
 // POST /api/auth/register
 //
 // SECURITY: This endpoint is now locked down. Previously it created
 // admin accounts with no authentication, no validation, and a hardcoded
 // role — anyone could mint an admin account at any time.
-//
-// The endpoint now ONLY works when:
-//   1. The env var ENABLE_REGISTER=1 is set (off by default)
-//   2. AND zero users exist in the database (first-boot bootstrap only)
-//
-// In production, admin users should be created via the admin panel
-// (which requires an existing authenticated admin) or via the seeder
-// with a strong ADMIN_SEED_PASSWORD env var.
 router.post("/register", async (req, res) => {
   try {
-    // Guard 1: Registration must be explicitly enabled via env var.
-    // Default is disabled. This prevents the endpoint from ever
-    // being reachable on a production deploy that forgot to set it.
     if (process.env.ENABLE_REGISTER !== "1") {
       return res.status(403).json({
         error:
@@ -100,9 +145,6 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Guard 2: Only allow registration when the database has zero users.
-    // This makes the endpoint a one-time bootstrap — once the first
-    // admin exists, it can never be used again, even if ENABLE_REGISTER=1.
     const userCount = await User.count();
     if (userCount > 0) {
       return res.status(403).json({
@@ -111,7 +153,6 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Validate input — previously accepted any string, including 1-char passwords.
     const { error, value } = registerSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
@@ -119,7 +160,6 @@ router.post("/register", async (req, res) => {
 
     const { username, email, password } = value;
 
-    // Check if user already exists (email OR username collision)
     const existingUser = await User.findOne({
       where: { [sequelize.Op.or]: [{ email }, { username }] },
     });
@@ -128,7 +168,6 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Create the first admin user (only reachable when userCount === 0)
     const user = await User.create({
       username,
       email,
@@ -136,7 +175,6 @@ router.post("/register", async (req, res) => {
       role: "admin",
     });
 
-    // Log only metadata — never log the password or full user object.
     console.log(`[register] Bootstrap admin created: id=${user.id} username=${user.username}`);
 
     res.status(201).json({

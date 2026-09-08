@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { authAPI } from '../services/api';
-import type { LoginData } from '../services/api';
+import type { LoginData, AuthUser } from '../services/api';
 
 interface LoginProps {
-  onLogin: (token: string, user: any) => void;
+  // onLogin no longer receives a token — the backend sets the httpOnly
+  // cookie. Only the user object is needed.
+  onLogin: (user: AuthUser) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
@@ -27,10 +29,19 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setError('');
 
     try {
+      // Backend sets httpOnly cookie — response only contains the user object
       const response = await authAPI.login(formData);
-      onLogin(response.token, response.user);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed');
+      onLogin(response.user);
+    } catch (err: unknown) {
+      // Safely extract error message without `as any`
+      if (err && typeof err === 'object' && 'response' in err) {
+        const resp = err as { response?: { data?: { error?: string } } };
+        setError(resp.response?.data?.error || 'Login failed');
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Login failed');
+      }
     } finally {
       setIsLoading(false);
     }

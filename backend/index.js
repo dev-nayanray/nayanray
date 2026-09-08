@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -66,9 +67,14 @@ app.use(
     origin: process.env.FRONTEND_URL
       ? process.env.FRONTEND_URL.split(",").map((url) => url.trim())
       : ["http://localhost:5173", "http://localhost:5174"],
+    // credentials: true is required for the browser to send and accept
+    // httpOnly cookies cross-origin (admin frontend on a different port).
+    credentials: true,
   })
 );
 app.use(express.json());
+// Parse cookies so req.cookies.adminToken is available in auth middleware
+app.use(cookieParser());
 
 // Serve uploaded images
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

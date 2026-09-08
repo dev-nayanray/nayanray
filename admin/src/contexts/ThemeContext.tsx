@@ -23,7 +23,16 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('admin-theme');
-    return saved ? JSON.parse(saved) : false;
+    // Wrap in try/catch — if localStorage is corrupted or contains a
+    // non-JSON value (e.g. from an XSS or manual devtools edit), the
+    // app would crash on mount with no recovery path.
+    try {
+      return saved ? JSON.parse(saved) === true : false;
+    } catch {
+      // Corrupted value — reset to default and move on
+      localStorage.removeItem('admin-theme');
+      return false;
+    }
   });
 
   useEffect(() => {

@@ -2,31 +2,29 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+/* ------------------------------------------------------------------ */
+/*  Axios instance with cookie-based auth                              */
+/*                                                                    */
+/*  Previously: JWT was stored in localStorage and attached via        */
+/*  Authorization header. XSS could steal the token.                  */
+/*                                                                    */
+/*  Now: JWT is in an httpOnly cookie set by the backend. The browser  */
+/*  auto-attaches it via `credentials: 'include'`. JavaScript can't  */
+/*  read it, so XSS can't steal it.                                  */
+/* ------------------------------------------------------------------ */
 const api = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true, // send httpOnly cookies cross-origin
 });
 
-// Request interceptor to add auth token
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('adminToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Response interceptor to handle errors
+// Response interceptor to handle auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Session is invalid/expired. This app has no router — Login vs.
-      // the dashboard is just conditional on the presence of a token in
-      // App.tsx — so reload in place rather than navigating to a '/login'
-      // route that doesn't actually exist and would 404 on most static
-      // hosts. The reload re-mounts App, which reads localStorage (now
-      // cleared) and renders the Login screen.
-      localStorage.removeItem('adminToken');
+      // Session is invalid/expired. Clear any stale user state and
+      // reload to show the login screen. The cookie was already
+      // cleared by the backend's /auth/me or the expired-token handler.
       window.location.reload();
     }
     return Promise.reject(error);
@@ -104,6 +102,13 @@ export interface User {
   updatedAt?: string;
 }
 
+export interface AuthUser {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+}
+
 export interface LoginData {
   email: string;
   password: string;
@@ -111,25 +116,38 @@ export interface LoginData {
 
 export interface AuthResponse {
   message: string;
-  token: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-  };
+  user: AuthUser;
 }
 
-export const getErrorMessage = (err: any, fallback: string): string => {
-  return err?.response?.data?.error || err?.response?.data?.message || err?.message || fallback;
+export const getErrorMessage = (err: unknown, fallback: string): string => {
+  if (err && typeof err === 'object' && 'response' in err) {
+    const resp = err as { response?: { data?: { error?: string; message?: string } }; message?: string };
+    return resp.response?.data?.error || resp.response?.data?.message || resp.message || fallback;
+  }
+  if (err instanceof Error) return err.message;
+  return fallback;
 };
 
 // Auth API
 export const authAPI = {
+  // Login — backend sets httpOnly cookie, returns user object (no token)
   login: async (data: LoginData): Promise<AuthResponse> => {
     const response = await api.post('/auth/login', data);
     return response.data;
   },
+
+  // Fetch current user from the httpOnly cookie — called on app mount
+  // to populate the user object after a page reload.
+  me: async (): Promise<{ user: AuthUser }> => {
+    const response = await api.get('/auth/me');
+    return response.data;
+  },
+
+  // Logout — clears the httpOnly cookie on the server
+  logout: async (): Promise<void> => {
+    await api.post('/auth/logout');
+  },
+
   // NOTE: The `register` method was removed for security.
   // /api/auth/register is disabled by default and only works when
   // ENABLE_REGISTER=1 AND zero users exist (first-boot bootstrap).
