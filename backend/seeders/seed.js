@@ -9,17 +9,57 @@ const seedDatabase = async () => {
     // Seed Admin User (only if no users exist yet)
     // Password is passed plain - the User model's beforeCreate hook hashes it.
     // Pre-hashing here would double-hash it, breaking login.
+    //
+    // SECURITY: Previously defaulted to 'admin123' if ADMIN_SEED_PASSWORD
+    // was unset. That meant any fresh deploy without the env var got a
+    // known-weak admin password. Now we refuse to seed in production
+    // unless a strong password is explicitly provided. In development
+    // (NODE_ENV !== 'production') we fall back to a dev-only password
+    // and log a warning so it's never silently insecure.
     const userCount = await User.count();
     if (userCount === 0) {
-      const adminUser = {
-        username: 'admin',
-        email: 'admin@nayanray.com',
-        password: process.env.ADMIN_SEED_PASSWORD || 'admin123',
-        role: 'admin'
-      };
+      const isProd = process.env.NODE_ENV === "production";
+      const seedPassword = process.env.ADMIN_SEED_PASSWORD;
 
-      await User.create(adminUser);
-      console.log("Admin user seeded successfully");
+      if (isProd && !seedPassword) {
+        // Refuse to seed with a weak default in production.
+        console.error(
+          "[seed] FATAL: ADMIN_SEED_PASSWORD environment variable is not set. " +
+            "Refusing to seed admin user with a default password in production. " +
+            "Set ADMIN_SEED_PASSWORD to a strong value (min 12 chars) and redeploy."
+        );
+        // Don't throw — let the rest of the seed run (projects, blog, etc.)
+        // The admin can create the first user via /api/auth/register with
+        // ENABLE_REGISTER=1, or by setting the env var and redeploying.
+      } else {
+        const password =
+          seedPassword ||
+          (isProd ? null : "dev-only-password-change-me");
+
+        if (!password) {
+          console.error(
+            "[seed] Skipping admin seed — no ADMIN_SEED_PASSWORD set in production."
+          );
+        } else {
+          if (!isProd && !seedPassword) {
+            console.warn(
+              "[seed] WARNING: Using dev-only default password. Set ADMIN_SEED_PASSWORD in production."
+            );
+          }
+          const adminUser = {
+            username: "admin",
+            email: process.env.ADMIN_SEED_EMAIL || "admin@nayanray.com",
+            password,
+            role: "admin",
+          };
+
+          await User.create(adminUser);
+          // Log only metadata — never the password or full user object.
+          console.log(
+            `[seed] Admin user seeded successfully (username=${adminUser.username}, email=${adminUser.email}).`
+          );
+        }
+      }
     } else {
       console.log("Users already exist, skipping admin seed");
     }

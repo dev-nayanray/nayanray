@@ -130,10 +130,12 @@ export const authAPI = {
     const response = await api.post('/auth/login', data);
     return response.data;
   },
-  register: async (data: any) => {
-    const response = await api.post('/auth/register', data);
-    return response.data;
-  },
+  // NOTE: The `register` method was removed for security.
+  // /api/auth/register is disabled by default and only works when
+  // ENABLE_REGISTER=1 AND zero users exist (first-boot bootstrap).
+  // Admin users should be created via the admin panel (UsersManagement)
+  // by an existing authenticated admin, or via the seeder with
+  // ADMIN_SEED_PASSWORD set.
 };
 
 // Upload API

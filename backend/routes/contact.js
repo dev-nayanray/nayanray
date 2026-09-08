@@ -12,21 +12,32 @@ const contactSchema = Joi.object({
 });
 
 // POST /api/contact - Submit contact form
+//
+// SECURITY: Previously logged the full req.body (name, email, message)
+// and the full newMessage record to stdout. That's PII leaking into
+// server logs (GDPR/CCPA risk). Now we log only metadata — never
+// the user's name, email, or message content.
 router.post("/", async (req, res) => {
   try {
-    console.log("Received contact form data:", req.body);
     const { error, value } = contactSchema.validate(req.body);
     if (error) {
-      console.log("Validation error:", error.details[0].message);
       return res.status(400).json({ error: error.details[0].message });
     }
 
-    console.log("Validation passed, creating message");
     const newMessage = await ContactMessage.create(value);
-    console.log("Message created:", newMessage);
-    res.status(201).json({ message: "Contact message received", data: newMessage });
+
+    // Log only the record ID + timestamp — no PII.
+    console.log(
+      `[contact] New message received (id=${newMessage.id}, subject="${newMessage.subject}")`
+    );
+
+    res.status(201).json({
+      message: "Contact message received",
+      data: newMessage,
+    });
   } catch (error) {
-    console.error("Error saving contact message:", error);
+    // Log only the error type, not the request body (which contains PII).
+    console.error("[contact] Error saving contact message:", error.message);
     res.status(500).json({ error: "Failed to save contact message" });
   }
 });

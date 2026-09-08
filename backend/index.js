@@ -21,6 +21,35 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+/* ------------------------------------------------------------------ */
+/*  SECURITY: Fail-closed startup checks                               */
+/*                                                                    */
+/*  Previously, if JWT_SECRET or FRONTEND_URL were unset, the server  */
+/*  silently started in an insecure state — JWTs were signed with     */
+/*  `undefined` (forgeable by anyone), and CORS reflected every       */
+/*  origin. Now we refuse to start in production unless these are     */
+/*  explicitly set. In development we fall back to safe defaults.    */
+/* ------------------------------------------------------------------ */
+const isProd = process.env.NODE_ENV === "production";
+
+if (isProd && !process.env.JWT_SECRET) {
+  console.error(
+    "FATAL: JWT_SECRET environment variable is not set. " +
+      "Refusing to start in production without a secure JWT secret. " +
+      "Set JWT_SECRET to a strong random string (min 32 chars)."
+  );
+  process.exit(1);
+}
+
+if (isProd && !process.env.FRONTEND_URL) {
+  console.error(
+    "FATAL: FRONTEND_URL environment variable is not set. " +
+      "Refusing to start in production with open CORS. " +
+      "Set FRONTEND_URL to your frontend origin (e.g. https://nayanray.com)."
+  );
+  process.exit(1);
+}
+
 // Middleware
 app.use(
   helmet({
@@ -31,9 +60,12 @@ app.use(
 );
 app.use(
   cors({
+    // Fail closed: in production, FRONTEND_URL must be set (checked above).
+    // In development, fall back to localhost:5173 (Vite dev server) and
+    // localhost:5174 (admin Vite dev server). Never reflect arbitrary origins.
     origin: process.env.FRONTEND_URL
       ? process.env.FRONTEND_URL.split(",").map((url) => url.trim())
-      : true,
+      : ["http://localhost:5173", "http://localhost:5174"],
   })
 );
 app.use(express.json());
@@ -41,12 +73,36 @@ app.use(express.json());
 // Serve uploaded images
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Rate Limiter
-const limiter = rateLimit({
+/* ------------------------------------------------------------------ */
+/*  Rate limiting                                                      */
+/*                                                                    */
+/*  Two tiers:                                                        */
+/*  1. Global limiter — 100 req / 15 min per IP (general abuse)      */
+/*  2. Login limiter — 5 attempts / 15 min per IP (brute-force)      */
+/*                                                                    */
+/*  Previously only the global limiter existed, which allowed        */
+/*  9,600 login attempts per day per IP — enough to brute-force     */
+/*  weak passwords (especially given the old admin123 default).     */
+/* ------------------------------------------------------------------ */
+const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
+  message: { error: "Too many requests, please try again later." },
 });
-app.use(limiter);
+app.use(globalLimiter);
+
+// Stricter limiter for the login endpoint — applied per-route, not globally.
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 login attempts per 15 minutes
+  message: {
+    error: "Too many login attempts. Please try again in 15 minutes.",
+  },
+  skipSuccessfulRequests: true, // don't count successful logins against the limit
+});
+
+// Apply the login limiter only to POST /api/auth/login
+app.use("/api/auth/login", loginLimiter);
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -78,7 +134,7 @@ const startServer = async () => {
   try {
     await sequelize.authenticate();
     console.log("Database connected successfully.");
-    
+
     await sequelize.sync();
     console.log("Database synchronized.");
 

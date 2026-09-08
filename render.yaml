@@ -13,6 +13,22 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
+        # Must be set to your production frontend origin(s).
+        # Comma-separated for multiple origins:
+        #   https://nayanray.com,https://nayanray.vercel.app
         sync: false
+      - key: NODE_ENV
+        value: production
       - key: PORT
         value: 5000
+      # Strong admin password — REQUIRED in production.
+      # Min 12 chars, must include uppercase, lowercase, number, symbol.
+      # Generate one with: openssl rand -base64 24
+      - key: ADMIN_SEED_PASSWORD
+        sync: false
+      - key: ADMIN_SEED_EMAIL
+        value: admin@nayanray.com
+      # Set to "1" ONLY on first deploy to bootstrap the first admin via
+      # /api/auth/register. Leave unset (default) to keep registration disabled.
+      - key: ENABLE_REGISTER
+        sync: false
