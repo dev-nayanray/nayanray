@@ -11,6 +11,7 @@ import ServicesManagement from './components/ServicesManagement';
 import ContactsManagement from './components/ContactsManagement';
 import ProposalsManagement from './components/ProposalsManagement';
 import UsersManagement from './components/UsersManagement';
+import LicensesManagement from './components/LicensesManagement';
 
 const TAB_LABELS: Record<string, string> = {
   dashboard: 'Dashboard',
@@ -19,6 +20,7 @@ const TAB_LABELS: Record<string, string> = {
   services: 'Services',
   contacts: 'Contact Messages',
   proposals: 'Proposals',
+  licenses: 'Licenses',
   users: 'Users',
 };
 
@@ -553,6 +555,9 @@ function App() {
                 editingUser={editingUser}
                 handleSaveUser={handleSaveUser}
               />
+            )}
+            {activeTab === 'licenses' && (
+              <LicensesManagement />
             )}
             </div>
           </main>

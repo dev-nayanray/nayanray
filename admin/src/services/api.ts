@@ -336,4 +336,42 @@ export const usersAPI = {
   },
 };
 
+// License API — manage premium plugin licenses
+export interface License {
+  id: number;
+  licenseKey: string;
+  email: string;
+  customerName: string | null;
+  plan: string;
+  status: string;
+  maxActivations: number;
+  activationsCount: number;
+  activations: Array<{ site: string; activationId: string; activatedOn: string }>;
+  billingCycle: string | null;
+  purchasedOn: string | null;
+  expiresOn: string | null;
+}
+
+export interface CreateLicenseData {
+  email: string;
+  plan: string;
+  billingCycle: string;
+  customerName?: string;
+}
+
+export const licensesAPI = {
+  getAll: async (): Promise<{ success: boolean; licenses: License[] }> => {
+    const response = await api.get('/license/list');
+    return response.data;
+  },
+  create: async (data: CreateLicenseData): Promise<{ success: boolean; license_key: string }> => {
+    const response = await api.post('/license/create', data);
+    return response.data;
+  },
+  verify: async (key: string): Promise<{ success: boolean; valid: boolean; plan?: string; expires_on?: string }> => {
+    const response = await api.get(`/license/verify?key=${encodeURIComponent(key)}`);
+    return response.data;
+  },
+};
+
 export default api;
