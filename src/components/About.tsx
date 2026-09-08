@@ -268,7 +268,7 @@ const About = () => {
                 {/* Main Image Container */}
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/80 dark:border-white/10 bg-surface-0 dark:bg-surface-900 transform group-hover:scale-105 transition-all duration-700 backdrop-blur-sm">
                   <img
-                    src="/profile.png"
+                    src="/profile.jpg"
                     alt="Nayan Ray - Professional Full Stack Developer"
                     className="w-80 h-80 md:w-96 md:h-96 object-cover"
                   />
