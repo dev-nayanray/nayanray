@@ -1,36 +1,33 @@
 import { Link } from "react-router-dom";
-import { Home, Search } from "lucide-react";
-import Premium from "../components/Premium";
+import { FaHome } from "react-icons/fa";
+import { useSeo } from "../hooks/useSeo";
 
 const NotFound = () => {
+  useSeo({
+    title: "404 — Page Not Found | Nayan Ray",
+    description: "The page you're looking for doesn't exist.",
+    canonical: "/404",
+    noindex: true,
+  });
+
   return (
-    <>
-      <div className="min-h-screen bg-surface-0 dark:bg-surface-950 flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="mb-8">
-            <Search className="w-16 h-16 mx-auto text-surface-900/40 dark:text-white/40 mb-4" />
-            <h1 className="text-6xl font-bold text-surface-900 dark:text-white mb-2">404</h1>
-          </div>
-
-          <h2 className="text-2xl font-semibold text-surface-900/80 dark:text-white/70 mb-4">
-            Page Not Found
-          </h2>
-
-          <p className="text-surface-900/40 dark:text-white/40 mb-8">
-            Sorry, the page you are looking for doesn't exist.
-          </p>
-
-          <Link
-            to="/"
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-medium rounded-lg shadow-glow hover:shadow-xl transition-all duration-200"
-          >
-            <Home className="w-4 h-4 mr-2" />
-            Go Home
-          </Link>
-        </div>
+    <div className="pt-20 min-h-screen flex items-center justify-center px-4">
+      <div className="text-center">
+        <h1 className="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700 mb-4">
+          404
+        </h1>
+        <p className="text-lg text-surface-900/60 dark:text-white/50 mb-8">
+          The page you're looking for doesn't exist.
+        </p>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-premium)] transition-all"
+        >
+          <FaHome className="w-4 h-4" />
+          Back to Home
+        </Link>
       </div>
-      <Premium />
-    </>
+    </div>
   );
 };
 

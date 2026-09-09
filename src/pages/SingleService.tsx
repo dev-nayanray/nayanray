@@ -1,4 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useSeo } from "../hooks/useSeo";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
@@ -45,6 +46,12 @@ const PROCESS_STEPS = [
 ];
 
 const SingleService = () => {
+  useSeo({
+    title: "Web Development Services | Nayan Ray",
+    description: "Professional web development services: React, WordPress, WooCommerce, UI/UX design. Custom solutions for your business.",
+    canonical: "/services",
+    keywords: ["web development services", "React development", "WordPress services"],
+  });
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [service, setService] = useState<Service | null>(null);

@@ -1,8 +1,16 @@
 import { motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import ProposalForm from "../components/ProposalForm";
+import { useSeo } from "../hooks/useSeo";
 
 const StartProject = () => {
+  useSeo({
+    title: "Start a Project — Get a Free Quote | Nayan Ray",
+    description: "Start your web development project. Fill out the proposal form for a free quote within 24 hours. React, WordPress, WooCommerce, and full stack development.",
+    canonical: "/start-a-project",
+    keywords: ["start a project", "get a quote", "hire web developer", "web development proposal", "freelance developer quote"],
+  });
+
   return (
     <section className="relative py-32 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">

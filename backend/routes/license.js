@@ -1,9 +1,21 @@
 import express from "express";
 import crypto from "crypto";
+import Joi from "joi";
 import License from "../models/License.js";
 import { authenticateToken, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
+
+const activateSchema = Joi.object({
+  license_key: Joi.string().required(),
+  email: Joi.string().email().allow(""),
+  site_url: Joi.string().uri().required(),
+}).options({ stripUnknown: true });
+
+const deactivateSchema = Joi.object({
+  license_key: Joi.string().required(),
+  activation_id: Joi.string().required(),
+}).options({ stripUnknown: true });
 
 /* ------------------------------------------------------------------ */
 /*  License API — called by the premium WooCommerce plugin              */
@@ -46,7 +58,9 @@ function getMaxActivations(plan) {
  * Response: { success, activation_id, license_key, expires_on } */
 router.post("/activate", async (req, res) => {
   try {
-    const { license_key, email, site_url } = req.body;
+    const { error, value } = activateSchema.validate(req.body);
+    if (error) return res.status(400).json({ success: false, error: error.details[0].message });
+    const { license_key, site_url } = value;
 
     if (!license_key || !site_url) {
       return res.status(400).json({

@@ -3,6 +3,7 @@ import { FaExternalLinkAlt, FaGithub, FaCode, FaMobile, FaShoppingCart, FaCube, 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import { useSeo } from "../hooks/useSeo";
 import Premium from "../components/Premium";
 import ProjectGallery from "../components/ui/ProjectGallery";
 
@@ -43,6 +44,13 @@ const SingleProject = () => {
   const [relatedBlogPosts, setRelatedBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useSeo({
+    title: project ? `${project.title} — Project Case Study | Nayan Ray` : "Project — Nayan Ray",
+    description: project?.description || "View this web development project case study by Nayan Ray.",
+    canonical: id ? `/projects/${id}` : "/projects",
+    keywords: project?.technologies || [],
+  });
 
   useEffect(() => {
     const fetchProject = async () => {
