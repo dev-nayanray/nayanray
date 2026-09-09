@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   FaBook, FaDownload, FaGithub, FaArrowLeft, FaArrowRight, FaCopy, FaCheck,
   FaCog, FaTelegram, FaLock, FaDatabase, FaCode, FaShieldAlt,
-  FaRobot, FaSync, FaPlug,
+  FaRobot, FaSync, FaPlug, FaWordpress,
   FaWrench, FaChevronDown, FaExternalLinkAlt, FaRocket,
 } from "react-icons/fa";
 import { SiTelegram } from "react-icons/si";
@@ -304,6 +304,15 @@ function DocsHero() {
           >
             <FaRobot className="w-4 h-4" />
             Command Reference
+          </a>
+          <a
+            href="https://wordpress.org/plugins/markhubs-store-manager-for-telegram"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-surface-0/70 dark:bg-surface-900/60 backdrop-blur-xl border border-surface-100/60 dark:border-white/10 text-surface-900 dark:text-white font-medium rounded-xl hover:bg-surface-0 transition-all duration-300"
+          >
+            <FaWordpress className="w-4 h-4" />
+            WordPress.org
           </a>
           <a
             href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
@@ -1243,15 +1252,26 @@ export default function MarkhubsDocs() {
             <FaArrowLeft className="w-4 h-4" />
             Back to Landing Page
           </Link>
-          <a
-            href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-medium rounded-xl shadow-glow hover:shadow-xl transition-all"
-          >
-            View on GitHub
-            <FaGithub className="w-4 h-4" />
-          </a>
+          <div className="flex gap-3">
+            <a
+              href="https://wordpress.org/plugins/markhubs-store-manager-for-telegram"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-medium rounded-xl shadow-glow hover:shadow-xl transition-all"
+            >
+              <FaWordpress className="w-4 h-4" />
+              WordPress.org
+            </a>
+            <a
+              href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-surface-50 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-xl text-surface-900 dark:text-white font-medium hover:border-brand-500/40 transition-colors"
+            >
+              <FaGithub className="w-4 h-4" />
+              GitHub
+            </a>
+          </div>
         </div>
       </div>
     </main>

@@ -459,8 +459,8 @@ const authorInfo = {
     { value: "0", label: "Tracker servers operated" },
   ],
   links: [
+    { label: "WordPress.org", url: "https://wordpress.org/plugins/markhubs-store-manager-for-telegram", icon: FaWordpress },
     { label: "GitHub", url: "https://github.com/dev-nayanray", icon: FaGithub },
-    { label: "Plugin Source", url: "https://github.com/dev-nayanray/markhubs-store-manager-for-telegram", icon: FaCode },
     { label: "Documentation", url: "/markhubs-store-manager-for-telegram/docs", icon: FaBook, internal: true },
   ],
 };
@@ -686,7 +686,9 @@ function Hero() {
           className="flex flex-wrap gap-4 justify-center mt-10"
         >
           <motion.a
-            href="#download"
+            href="https://wordpress.org/plugins/markhubs-store-manager-for-telegram"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
             className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-2xl shadow-glow hover:shadow-xl transition-all duration-300 overflow-hidden"
@@ -697,7 +699,7 @@ function Hero() {
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
             />
             <FaDownload className="relative" />
-            <span className="relative">Download Plugin</span>
+            <span className="relative">Download from WordPress.org</span>
           </motion.a>
           <motion.a
             href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
@@ -1838,7 +1840,7 @@ function DownloadCTA() {
           className="flex flex-wrap gap-4 justify-center mt-10"
         >
           <motion.a
-            href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram/releases/latest"
+            href="https://wordpress.org/plugins/markhubs-store-manager-for-telegram"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
@@ -1846,7 +1848,7 @@ function DownloadCTA() {
             className="inline-flex items-center gap-3 px-8 py-4 bg-white text-brand-700 font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300"
           >
             <FaDownload />
-            <span>Download .zip</span>
+            <span>Download from WordPress.org</span>
           </motion.a>
           <motion.a
             href="https://github.com/dev-nayanray/markhubs-store-manager-for-telegram"
@@ -2906,7 +2908,7 @@ export default function MarkhubsPlugin() {
         "Free WordPress plugin that turns your WooCommerce store into a Telegram sales bot with 25 core commands, order notifications, product search, cart, checkout flow, and order tracking. HPOS compatible, GPL-licensed, zero external dependencies.",
       url: `https://nayanray.com${PAGE_URL}`,
       downloadUrl:
-        "https://github.com/dev-nayanray/markhubs-store-manager-for-telegram/releases/latest",
+        "https://wordpress.org/plugins/markhubs-store-manager-for-telegram",
       softwareVersion: "1.0.0",
       license: "https://www.gnu.org/licenses/gpl-2.0.html",
       // Freshness signals — Google's QDF algorithm favors pages with
