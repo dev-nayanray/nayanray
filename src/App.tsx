@@ -4,6 +4,7 @@ import Header from "./components/golobal/Header";
 import Footer from "./components/golobal/Footer";
 import Preloader from "./components/ui/Preloader";
 import ReadingProgress from "./components/ui/ReadingProgress";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 /* ------------------------------------------------------------------ */
 /*  Code-splitting — ALL routes are lazy-loaded so the initial         */
@@ -70,6 +71,7 @@ function App() {
 
   return (
     <Router>
+      <ErrorBoundary>
       {/* Preloader will overlay until content fully loads */}
       {loading && (
         <Preloader
@@ -116,6 +118,7 @@ function App() {
         </main>
         <Footer />
       </div>
+      </ErrorBoundary>
     </Router>
   );
 }

@@ -229,8 +229,8 @@ const Learningp = () => {
                     key={category.id}
                     className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
                       isActive
-                        ? "bg-white/10 border-cyan-400/50 shadow-2xl shadow-cyan-500/20 scale-105"
-                        : "bg-white/5 border-white/10 shadow-lg hover:shadow-xl hover:border-white/20"
+                        ? "bg-surface-100 dark:bg-white/10 border-brand-400/50 shadow-2xl shadow-brand-500/20 scale-105"
+                        : "bg-surface-50 dark:bg-white/5 border-surface-100 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-surface-200 dark:border-white/20"
                     }`}
                     onClick={() => setActiveSkill(index)}
                     onKeyDown={(e) => {
@@ -251,18 +251,18 @@ const Learningp = () => {
                       <div
                         className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-r ${category.color} flex items-center justify-center shadow-lg`}
                       >
-                        <CategoryIcon className="w-6 h-6 text-white" />
+                        <CategoryIcon className="w-6 h-6 text-surface-900 dark:text-white" />
                       </div>
 
                       {/* Category Info */}
                       <div className="flex-1">
                         <h3 className={`font-semibold text-lg transition-colors duration-300 ${
-                          isActive ? "text-white" : "text-gray-300"
+                          isActive ? "text-surface-900 dark:text-white" : "text-surface-900/70 dark:text-white/50"
                         }`}>
                           {category.title}
                         </h3>
                         <div className="flex items-center gap-2 mt-1">
-                          <div className="flex-1 bg-gray-700 rounded-full h-2">
+                          <div className="flex-1 bg-surface-100 dark:bg-surface-100 dark:bg-white/10 rounded-full h-2">
                             <motion.div
                               className={`h-2 rounded-full bg-gradient-to-r ${category.color}`}
                               initial={{ width: 0 }}
@@ -270,7 +270,7 @@ const Learningp = () => {
                               transition={{ duration: 1, delay: index * 0.1 }}
                             />
                           </div>
-                          <span className="text-sm font-medium text-cyan-400">
+                          <span className="text-sm font-medium text-brand-500 dark:text-brand-300">
                             {category.level}%
                           </span>
                         </div>
@@ -302,17 +302,17 @@ const Learningp = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 p-8 shadow-2xl"
+              className="bg-surface-50 dark:bg-white/5 backdrop-blur-lg rounded-3xl border border-surface-100 dark:border-white/10 p-8 shadow-2xl"
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className={`p-3 rounded-2xl bg-gradient-to-r ${currentCategory.color} shadow-lg`}>
-                  <CurrentCategoryIcon className="w-6 h-6 text-white" />
+                  <CurrentCategoryIcon className="w-6 h-6 text-surface-900 dark:text-white" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">
+                  <h3 className="text-2xl font-bold text-surface-900 dark:text-white">
                     {currentCategory.title}
                   </h3>
-                  <p className="text-cyan-400 text-sm">
+                  <p className="text-brand-500 dark:text-brand-300 text-sm">
                     {currentCategory.skills.length} core skills
                   </p>
                 </div>
@@ -333,7 +333,7 @@ const Learningp = () => {
                         {skill.name}
                       </span>
                       <div className="flex items-center gap-3">
-                        <span className="text-cyan-400 text-sm font-medium">
+                        <span className="text-brand-500 dark:text-brand-300 text-sm font-medium">
                           {skill.level}%
                         </span>
                         <span className="text-gray-500 text-xs">
@@ -341,7 +341,7 @@ const Learningp = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="w-full bg-gray-700 rounded-full h-3">
+                    <div className="w-full bg-surface-100 dark:bg-surface-100 dark:bg-white/10 rounded-full h-3">
                       <motion.div
                         className={`h-3 rounded-full bg-gradient-to-r ${currentCategory.color} shadow-lg shadow-cyan-500/25`}
                         initial={{ width: 0 }}
@@ -358,18 +358,18 @@ const Learningp = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
-                className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/10"
+                className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-surface-100 dark:border-white/10"
               >
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-cyan-400">86+</div>
+                  <div className="text-2xl font-bold text-brand-500 dark:text-brand-300">86+</div>
                   <div className="text-gray-400 text-sm">Projects</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-400">48</div>
+                  <div className="text-2xl font-bold text-brand-600 dark:text-brand-400">48</div>
                   <div className="text-gray-400 text-sm">Months</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-400">25+</div>
+                  <div className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">25+</div>
                   <div className="text-gray-400 text-sm">Technologies</div>
                 </div>
               </motion.div>
@@ -383,7 +383,7 @@ const Learningp = () => {
               className="mt-8"
             >
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <FaRocket className="text-amber-400" />
+                <FaRocket className="text-amber-500 dark:text-amber-400" />
                 Current Learning Goals
               </h3>
               <div className="space-y-4">
@@ -395,16 +395,16 @@ const Learningp = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.6 + index * 0.1 }}
-                      className="bg-white/5 rounded-2xl p-4 border border-white/10"
+                      className="bg-surface-50 dark:bg-white/5 rounded-2xl p-4 border border-surface-100 dark:border-white/10"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-3">
-                          <GoalIcon className="w-5 h-5 text-amber-400" />
+                          <GoalIcon className="w-5 h-5 text-amber-500 dark:text-amber-400" />
                           <span className="text-white font-medium">{goal.title}</span>
                         </div>
-                        <span className="text-cyan-400 text-sm">{goal.deadline}</span>
+                        <span className="text-brand-500 dark:text-brand-300 text-sm">{goal.deadline}</span>
                       </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
+                      <div className="w-full bg-surface-100 dark:bg-surface-100 dark:bg-white/10 rounded-full h-2 mb-2">
                         <motion.div
                           className="h-2 rounded-full bg-gradient-to-r from-amber-400 to-orange-500"
                           initial={{ width: 0 }}
@@ -412,7 +412,7 @@ const Learningp = () => {
                           transition={{ duration: 1, delay: 0.8 + index * 0.1 }}
                         />
                       </div>
-                      <div className="flex justify-between text-xs text-gray-400">
+                      <div className="flex justify-between text-xs text-surface-900/60 dark:text-white/50">
                         <span>Progress: {goal.progress}%</span>
                         <span>{goal.resources.length} resources</span>
                       </div>
@@ -432,7 +432,7 @@ const Learningp = () => {
               className="space-y-6"
             >
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <FaChartLine className="text-purple-400" />
+                <FaChartLine className="text-brand-600 dark:text-brand-400" />
                 Learning Timeline
               </h3>
 
@@ -445,8 +445,8 @@ const Learningp = () => {
                     key={period.year}
                     className={`relative p-6 rounded-2xl border-2 transition-all duration-500 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
                       isActive
-                        ? "bg-white/10 border-purple-400/50 shadow-2xl shadow-purple-500/20"
-                        : "bg-white/5 border-white/10 hover:border-white/20"
+                        ? "bg-surface-100 dark:bg-white/10 border-purple-400/50 shadow-2xl shadow-purple-500/20"
+                        : "bg-surface-50 dark:bg-white/5 border-surface-100 dark:border-white/10 hover:border-surface-200 dark:border-white/20"
                     }`}
                     onClick={() => setActiveTimeline(index)}
                     onKeyDown={(e) => {
@@ -468,11 +468,11 @@ const Learningp = () => {
 
                     <div className="flex items-start gap-4">
                       <div className={`p-3 rounded-xl bg-gradient-to-r ${period.color} shadow-lg flex-shrink-0`}>
-                        <PeriodIcon className="w-5 h-5 text-white" />
+                        <PeriodIcon className="w-5 h-5 text-surface-900 dark:text-white" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-cyan-400 text-sm font-medium">
+                          <span className="text-brand-500 dark:text-brand-300 text-sm font-medium">
                             {period.year}
                           </span>
                           <span className="text-gray-500 text-xs">
@@ -491,7 +491,7 @@ const Learningp = () => {
                           {period.technologies.map((tech) => (
                             <span
                               key={tech}
-                              className="px-2 py-1 bg-white/5 rounded-lg text-gray-400 text-xs border border-white/10"
+                              className="px-2 py-1 bg-surface-50 dark:bg-white/5 rounded-lg text-gray-400 text-xs border border-surface-100 dark:border-white/10"
                             >
                               {tech}
                             </span>
@@ -513,27 +513,27 @@ const Learningp = () => {
           transition={{ delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <div className="bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 p-8 max-w-4xl mx-auto">
-            <FaGraduationCap className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
+          <div className="bg-surface-50 dark:bg-white/5 backdrop-blur-lg rounded-3xl border border-surface-100 dark:border-white/10 p-8 max-w-4xl mx-auto">
+            <FaGraduationCap className="w-12 h-12 text-brand-500 dark:text-brand-300 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">
               Learning Philosophy
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed max-w-3xl mx-auto">
-              "I believe in <span className="text-cyan-400">continuous learning</span> through building real projects, 
+              "I believe in <span className="text-brand-500 dark:text-brand-300">continuous learning</span> through building real projects, 
               contributing to open source, and staying curious about emerging technologies. 
               Every challenge is an opportunity to grow, and every project teaches something new."
             </p>
-            <div className="flex justify-center gap-6 mt-6 text-sm text-gray-400">
+            <div className="flex justify-center gap-6 mt-6 text-sm text-surface-900/60 dark:text-white/50">
               <span className="flex items-center gap-2">
-                <FaFire className="text-amber-400" />
+                <FaFire className="text-amber-500 dark:text-amber-400" />
                 Always Learning
               </span>
               <span className="flex items-center gap-2">
-                <FaCode className="text-green-400" />
+                <FaCode className="text-emerald-500 dark:text-emerald-400" />
                 Build to Learn
               </span>
               <span className="flex items-center gap-2">
-                <FaUsers className="text-purple-400" />
+                <FaUsers className="text-brand-600 dark:text-brand-400" />
                 Community Driven
               </span>
             </div>

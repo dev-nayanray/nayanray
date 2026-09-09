@@ -4,6 +4,7 @@ import { FaCalendar, FaUser, FaClock, FaTags, FaArrowLeft, FaExternalLinkAlt, Fa
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import { useSeo } from "../hooks/useSeo";
 import Premium from "../components/Premium";
 import BlogSidebar from "../components/BlogSidebar";
 
@@ -17,10 +18,15 @@ interface BlogPost {
   image: string;
   readTime: string;
   category: string;
-  tags: string[]; // Ensure this is always an array
+  tags: string[];
   createdAt: string;
   updatedAt: string;
-  content?: string; // Added for full post content
+  content?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  slug?: string;
+  status?: string;
+  featured?: boolean;
 }
 
 interface Project {
@@ -119,6 +125,16 @@ const SingleBlogPost = () => {
   const [relatedProjects, setRelatedProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // SEO — uses metaTitle/metaDescription from the blog post if available,
+  // falls back to title/excerpt. Updates document head on every post change.
+  useSeo({
+    title: post?.metaTitle || post?.title || "Blog Post — Nayan Ray",
+    description: post?.metaDescription || post?.excerpt || "Read this blog post on Nayan Ray's portfolio.",
+    canonical: id ? `/blog/${id}` : "/blog",
+    keywords: post?.tags || [],
+    ogType: "article",
+  });
 
   // Safe tags array with fallback
   const tags = Array.isArray(post?.tags) ? post.tags : [];

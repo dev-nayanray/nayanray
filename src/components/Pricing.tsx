@@ -100,25 +100,6 @@ const Pricing = () => {
     }
   ];
 
-  const faqs = [
-    {
-      question: "Do you offer custom pricing?",
-      answer: "Yes, I provide custom quotes for projects that don't fit standard packages. Contact me to discuss your specific requirements."
-    },
-    {
-      question: "What's included in the support period?",
-      answer: "Support includes bug fixes, minor updates, and technical assistance. Major feature additions may require additional costs."
-    },
-    {
-      question: "How long does a typical project take?",
-      answer: "Starter: 1-2 weeks, Professional: 2-4 weeks, Enterprise: 4-8 weeks. Timelines may vary based on project complexity."
-    },
-    {
-      question: "Do you provide source code?",
-      answer: "Yes, you'll receive all source code and full ownership upon project completion and payment."
-    }
-  ];
-
   return (
     <section id="pricing" className="relative py-20 bg-gradient-to-br from-surface-50 via-surface-0 to-brand-50/30 dark:from-surface-950 dark:via-surface-900 dark:to-surface-950 overflow-hidden">
       {/* Background Elements */}
@@ -282,38 +263,6 @@ const Pricing = () => {
                   <h4 className="font-semibold text-surface-900 dark:text-white mb-2">{service.name}</h4>
                   <p className="text-surface-900/60 dark:text-white/50 text-sm">{service.description}</p>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* FAQ Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-gradient-to-r from-brand-50 to-brand-100 dark:from-brand-500/10 dark:to-brand-500/5 rounded-3xl p-8 md:p-12 border border-brand-100/50 dark:border-brand-500/20 shadow-sm"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-4">
-              Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Questions</span>
-            </h3>
-            <p className="text-surface-900/60 dark:text-white/50 max-w-2xl mx-auto">
-              Get answers to common questions about my pricing and services.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-surface-0/80 dark:bg-surface-900/80 backdrop-blur-sm rounded-2xl p-6 border border-surface-100 dark:border-white/10 shadow-sm"
-              >
-                <h4 className="font-semibold text-surface-900 dark:text-white mb-3">{faq.question}</h4>
-                <p className="text-surface-900/60 dark:text-white/50 text-sm leading-relaxed">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
