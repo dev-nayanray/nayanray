@@ -8,7 +8,6 @@ import {
   FaChevronDown, FaStar, FaCode, FaMobileAlt, FaStore, FaSync, FaBook,
   FaBoxes, FaTags, FaLanguage, FaServer, FaCloud,
   FaTachometerAlt, FaUsers, FaGift,
-  FaQuoteLeft,
   FaPhp, FaLayerGroup, FaTrophy, FaBroom, FaRegClock, FaCopy,
   FaShare, FaLink, FaTwitter, FaFacebook, FaLinkedin, FaWhatsapp, FaReddit,
 } from "react-icons/fa";
@@ -384,29 +383,9 @@ const securityFeatures = [
   },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "We replaced a clunky WhatsApp workflow with this plugin in a weekend. Order-tracking questions dropped 70% in the first month because customers can /track their own orders without calling us.",
-    author: "Shop Owner",
-    role: "Fashion boutique · Dhaka",
-    rating: 5,
-  },
-  {
-    quote:
-      "Setup took less than 10 minutes. The webhook auto-setup is genius — we didn't have to touch cURL or Postman once. Our customers love being able to /search our catalog from inside Telegram.",
-    author: "Store Founder",
-    role: "Electronics retailer · Kolkata",
-    rating: 5,
-  },
-  {
-    quote:
-      "I've tried other WooCommerce Telegram plugins — most are bloated with dozens of settings nobody uses. This one does exactly what it promises, with 25 solid commands and nothing more. Finally a clean option.",
-    author: "WordPress Developer",
-    role: "Agency build · Singapore",
-    rating: 5,
-  },
-];
+/* No fake testimonials — removed to avoid Google penalty for
+   fake review schema. When real user reviews are available,
+   re-add them here with verifiable attribution. */
 
 const chatPreviewMessages = [
   { from: "bot", text: "Welcome to My Store! 🛍️\n\nI'm your personal shopping assistant. Type /help to see what I can do.", time: "10:32" },
@@ -1767,48 +1746,39 @@ function Testimonials() {
           badge="Testimonials"
           title={
             <>
-              Loved by
+              Key benefits for
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">
-                {" "}store owners
+                {" "}your store
               </span>
             </>
           }
-          subtitle="Real feedback from WooCommerce store owners and WordPress developers using the plugin in production."
+          subtitle="What you get when you install the plugin — practical benefits, not marketing fluff."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.12, duration: 0.5 }}
-              className="bg-surface-0 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-3xl p-7 shadow-sm hover:shadow-card transition-shadow duration-300 relative"
-            >
-              <FaQuoteLeft className="w-8 h-8 text-brand-500/20 mb-4" />
-
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(t.rating)].map((_, i) => (
-                  <FaStar key={i} className="w-4 h-4 text-amber-400 fill-current" />
-                ))}
-              </div>
-
-              <p className="text-surface-900/70 dark:text-white/65 leading-relaxed mb-6 text-sm">
-                "{t.quote}"
-              </p>
-
-              <div className="flex items-center gap-3 pt-4 border-t border-surface-100 dark:border-white/10">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-                  {t.author.charAt(0)}
+          {[
+            { icon: FaBell, title: "Instant Order Alerts", desc: "Get a Telegram message the moment an order is placed. No more refreshing your admin dashboard — the notification comes to you in real time.", color: "from-amber-500 to-orange-600" },
+            { icon: FaShoppingCart, title: "Self-Service Shopping", desc: "Customers browse products, search the catalog, add to cart, and generate checkout links — all inside Telegram, no app install required.", color: "from-emerald-500 to-teal-600" },
+            { icon: FaTruck, title: "Reduced Support Load", desc: "Customers track their own orders with /track — no more phone calls asking 'where is my order?'. The bot handles it 24/7.", color: "from-blue-500 to-cyan-600" },
+          ].map((benefit, idx) => {
+            const Icon = benefit.icon;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-surface-0 dark:bg-surface-900/60 border border-surface-100 dark:border-white/10 rounded-2xl p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-premium)] hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${benefit.color} shadow-lg mb-4`}>
+                  <Icon className="w-5 h-5 text-white" />
                 </div>
-                <div>
-                  <div className="font-semibold text-surface-900 dark:text-white text-sm">{t.author}</div>
-                  <div className="text-xs text-surface-900/50 dark:text-white/40">{t.role}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                <h3 className="text-lg font-bold text-surface-900 dark:text-white mb-2">{benefit.title}</h3>
+                <p className="text-sm text-surface-900/60 dark:text-white/55 leading-relaxed">{benefit.desc}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -3177,33 +3147,8 @@ export default function MarkhubsPlugin() {
         },
       ],
     },
-    /* Review schema — the testimonials become eligible for review rich
-       results, which show star ratings directly in search snippets. */
-    ...testimonials.map((t) => ({
-      "@context": "https://schema.org",
-      "@type": "Review",
-      itemReviewed: {
-        "@type": "SoftwareApplication",
-        name: "Markhubs Store Manager for Telegram",
-        applicationCategory: "WordPressPlugin",
-        operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
-      },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: String(t.rating),
-        bestRating: "5",
-        worstRating: "1",
-      },
-      author: {
-        "@type": "Person",
-        name: t.author,
-      },
-      reviewBody: t.quote,
-      publisher: {
-        "@type": "Organization",
-        name: "Nayan Ray",
-      },
-    })),
+    /* Review schema removed — fake testimonials deleted to avoid
+       Google penalty. Re-add when real user reviews are available. */
   ];
 
   useSeo({

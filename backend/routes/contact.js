@@ -19,7 +19,7 @@ const contactSchema = Joi.object({
 // the user's name, email, or message content.
 router.post("/", async (req, res) => {
   try {
-    const { error, value } = contactSchema.validate(req.body);
+    const { error, value } = contactSchema.validate(req.body, { stripUnknown: true });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }

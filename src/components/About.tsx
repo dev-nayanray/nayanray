@@ -214,7 +214,7 @@ const About = () => {
                   {/* Enhanced Social Links */}
                   <div className="absolute top-6 left-6 flex flex-col gap-3">
                     <motion.a
-                      href="#"
+                      href="https://www.linkedin.com/in/dev-nayanray"
                       whileHover={{ scale: 1.2, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
                       className="p-3 bg-surface-0/95 dark:bg-surface-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-surface-100 dark:border-white/10 text-surface-900/80 dark:text-white/70 hover:text-brand-600 dark:hover:text-brand-400 transition-all duration-300 hover:shadow-2xl"
@@ -222,7 +222,7 @@ const About = () => {
                       <FaLinkedin className="w-5 h-5" />
                     </motion.a>
                     <motion.a
-                      href="#"
+                      href="https://github.com/dev-nayanray"
                       whileHover={{ scale: 1.2, rotate: -5 }}
                       whileTap={{ scale: 0.9 }}
                       className="p-3 bg-surface-0/95 dark:bg-surface-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-surface-100 dark:border-white/10 text-surface-900/80 dark:text-white/70 hover:text-surface-900 dark:hover:text-white transition-all duration-300 hover:shadow-2xl"
@@ -499,7 +499,7 @@ const About = () => {
               {/* Enhanced CTA Section */}
               <div className="flex flex-col gap-6 justify-center">
                 <motion.a
-                  href="#projects"
+                  href="/projects"
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-8 py-5 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold rounded-3xl shadow-glow hover:shadow-3xl transition-all duration-300 text-center group relative overflow-hidden"
@@ -511,7 +511,7 @@ const About = () => {
                   </div>
                 </motion.a>
                 <motion.a
-                  href="/resume.pdf"
+                  href="https://nayanray.com"
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-8 py-5 bg-surface-0 dark:bg-surface-900 text-surface-900/80 dark:text-white/70 font-bold rounded-3xl border-2 border-surface-100 dark:border-white/10 shadow-xl hover:shadow-2xl hover:border-brand-300 dark:hover:border-brand-500/40 transition-all duration-300 text-center flex items-center justify-center gap-3 group"
@@ -521,14 +521,14 @@ const About = () => {
                 </motion.a>
                 <div className="flex gap-4 justify-center mt-4">
                   <motion.a
-                    href="#"
+                    href="https://github.com/dev-nayanray"
                     whileHover={{ scale: 1.2, y: -3, rotate: 5 }}
                     className="p-4 bg-surface-50 dark:bg-white/5 rounded-2xl text-surface-900/60 dark:text-white/50 hover:bg-brand-50 dark:hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     <FaLinkedin className="w-6 h-6" />
                   </motion.a>
                   <motion.a
-                    href="#"
+                    href="https://www.linkedin.com/in/dev-nayanray"
                     whileHover={{ scale: 1.2, y: -3, rotate: -5 }}
                     className="p-4 bg-surface-50 dark:bg-white/5 rounded-2xl text-surface-900/60 dark:text-white/50 hover:bg-surface-100 dark:hover:bg-white/10 hover:text-surface-900 dark:hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   >

@@ -1,6 +1,7 @@
 import express from "express";
 import crypto from "crypto";
 import License from "../models/License.js";
+import { authenticateToken, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -242,14 +243,13 @@ router.get("/verify", async (req, res) => {
   }
 });
 
-/* POST /api/license/create (admin only — no auth here since it's
- * behind the requireAdmin middleware on the /api/admin router)
- *
- * This is called by the admin panel when creating a new license
- * manually, or by the checkout flow after a successful payment.
+/* POST /api/license/create (admin only — requires authentication)
+ * Protected by authenticateToken + requireAdmin middleware.
+ * Called by the admin panel when creating a new license manually,
+ * or by the checkout flow after a successful payment.
  * Body: { email, plan, billingCycle, customerName }
  * Response: { success, license_key } */
-router.post("/create", async (req, res) => {
+router.post("/create", authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { email, plan, billingCycle, customerName } = req.body;
 
@@ -297,9 +297,10 @@ router.post("/create", async (req, res) => {
   }
 });
 
-/* GET /api/license/list (admin only — list all licenses)
+/* GET /api/license/list (admin only — requires authentication)
+ * Protected by authenticateToken + requireAdmin middleware.
  * Response: { licenses: [...] } */
-router.get("/list", async (req, res) => {
+router.get("/list", authenticateToken, requireAdmin, async (req, res) => {
   try {
     const licenses = await License.findAll({
       order: [["createdAt", "DESC"]],

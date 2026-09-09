@@ -40,19 +40,21 @@ export default function Checkout() {
     noindex: true,
   });
 
+  const [licenseKey, setLicenseKey] = useState("");
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (step === "details") setStep("payment");
     else if (step === "payment") {
-      // Simulate payment — in production this would call a payment gateway
+      // Generate license key once when payment succeeds
+      const key = "WTM-" + Math.random().toString(36).substring(2, 6).toUpperCase() + "-" +
+        Math.random().toString(36).substring(2, 6).toUpperCase() + "-" +
+        Math.random().toString(36).substring(2, 6).toUpperCase() + "-" +
+        Math.random().toString(36).substring(2, 6).toUpperCase();
+      setLicenseKey(key);
       setTimeout(() => setStep("success"), 1500);
     }
   };
-
-  const licenseKey = "WTM-" + Math.random().toString(36).substring(2, 6).toUpperCase() + "-" +
-    Math.random().toString(36).substring(2, 6).toUpperCase() + "-" +
-    Math.random().toString(36).substring(2, 6).toUpperCase() + "-" +
-    Math.random().toString(36).substring(2, 6).toUpperCase();
 
   return (
     <main className="pt-20 min-h-screen bg-surface-50 dark:bg-surface-950">

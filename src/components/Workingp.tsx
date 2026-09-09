@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   FaCode,
   FaPalette,
@@ -396,14 +397,12 @@ const Workingp = () => {
                     </div>
 
                     {/* CTA Button */}
-                    <motion.a
-                      href="/start-a-project"
+                    <Link
+                      to="/start-a-project"
                       className="block w-full py-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-2xl text-center shadow-glow hover:shadow-xl transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
                     >
                       Start Your Project
-                    </motion.a>
+                    </Link>
                   </div>
                 </div>
               </div>
