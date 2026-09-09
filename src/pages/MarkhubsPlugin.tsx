@@ -10,6 +10,7 @@ import {
   FaTachometerAlt, FaUsers, FaGift,
   FaQuoteLeft,
   FaPhp, FaLayerGroup, FaTrophy, FaBroom, FaRegClock, FaCopy,
+  FaShare, FaLink, FaTwitter, FaFacebook, FaLinkedin, FaWhatsapp, FaReddit,
 } from "react-icons/fa";
 import { SiTelegram } from "react-icons/si";
 import { useSeo } from "../hooks/useSeo";
@@ -2852,6 +2853,107 @@ function FloatingCTA() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Social Share — mobile + desktop                                    */
+/* ------------------------------------------------------------------ */
+
+function SocialShare() {
+  const [copied, setCopied] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600 && window.scrollY < document.body.scrollHeight - 1200);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const shareUrl = "https://nayanray.com/markhubs-store-manager-for-telegram";
+  const shareText = "markhubs Store Manager for Telegram — Free WooCommerce Telegram plugin with 25 bot commands, order notifications, and HPOS support.";
+
+  const shareLinks = [
+    { icon: FaTelegram, label: "Telegram", url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`, color: "hover:bg-sky-500 hover:text-white" },
+    { icon: FaTwitter, label: "Twitter", url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`, color: "hover:bg-sky-400 hover:text-white" },
+    { icon: FaFacebook, label: "Facebook", url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, color: "hover:bg-blue-600 hover:text-white" },
+    { icon: FaLinkedin, label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, color: "hover:bg-blue-700 hover:text-white" },
+    { icon: FaWhatsapp, label: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`, color: "hover:bg-green-500 hover:text-white" },
+    { icon: FaReddit, label: "Reddit", url: `https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`, color: "hover:bg-orange-500 hover:text-white" },
+  ];
+
+  const handleNativeShare = () => {
+    if (navigator.share) {
+      navigator.share({ title: "markhubs Store Manager for Telegram", text: shareText, url: shareUrl });
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 lg:left-auto lg:right-6 lg:translate-x-0 lg:bottom-24"
+        >
+          <div className="bg-surface-0 dark:bg-surface-900/90 backdrop-blur-xl border border-surface-100 dark:border-white/10 rounded-2xl shadow-2xl p-3 flex items-center gap-2">
+            {/* Label — desktop only */}
+            <span className="hidden lg:block text-xs font-medium text-surface-900/50 dark:text-white/40 px-2">
+              Share
+            </span>
+
+            {/* Social buttons */}
+            {shareLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <a
+                  key={link.label}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-2.5 rounded-xl bg-surface-50 dark:bg-white/5 text-surface-900/50 dark:text-white/40 transition-all duration-200 ${link.color}`}
+                  title={link.label}
+                  aria-label={`Share on ${link.label}`}
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              );
+            })}
+
+            {/* Copy link button */}
+            <button
+              onClick={handleCopyLink}
+              className="p-2.5 rounded-xl bg-surface-50 dark:bg-white/5 text-surface-900/50 dark:text-white/40 hover:bg-brand-500 hover:text-white transition-all duration-200"
+              title="Copy link"
+              aria-label="Copy link"
+            >
+              {copied ? <FaCheckCircle className="w-4 h-4 text-emerald-400" /> : <FaLink className="w-4 h-4" />}
+            </button>
+
+            {/* Native share — mobile only */}
+            <button
+              onClick={handleNativeShare}
+              className="lg:hidden p-2.5 rounded-xl bg-brand-500 text-white"
+              title="Share"
+              aria-label="Share via native share sheet"
+            >
+              <FaShare className="w-4 h-4" />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Back to top button — floating, appears after scrolling              */
 /* ------------------------------------------------------------------ */
 
@@ -3141,6 +3243,7 @@ export default function MarkhubsPlugin() {
       <FloatingCTA />
       <MobileCTABar />
       <BackToTop />
+      <SocialShare />
     </main>
   );
 }
