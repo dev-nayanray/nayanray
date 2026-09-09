@@ -266,7 +266,7 @@ const faqItems = [
   },
   {
     q: "Is this the best free WooCommerce Telegram plugin?",
-    a: "The markhubs Store Manager for Telegram is one of the most lightweight and feature-complete free WooCommerce Telegram plugins available on WordPress.org. It ships with 25 bot commands, order notifications, product search, cart management, order tracking, HPOS compatibility, and webhook auto-setup — all in under 200 KB with zero external dependencies. Unlike other plugins that lock core features behind paywalls, every feature in the free version works permanently.",
+    a: "The Markhubs Store Manager for Telegram is one of the most lightweight and feature-complete free WooCommerce Telegram plugins available on WordPress.org. It ships with 25 bot commands, order notifications, product search, cart management, order tracking, HPOS compatibility, and webhook auto-setup — all in under 200 KB with zero external dependencies. Unlike other plugins that lock core features behind paywalls, every feature in the free version works permanently.",
   },
   {
     q: "How do I install the WooCommerce Telegram bot plugin?",
@@ -482,9 +482,9 @@ const integrations = [
 ];
 
 const authorInfo = {
-  name: "markhubs",
+  name: "Markhubs",
   role: "Plugin Author · WooCommerce Specialist",
-  bio: "markhubs is a WordPress and WooCommerce development studio focused on building lightweight, secure, GPL-licensed plugins that respect store owners' data and budgets. The markhubs Store Manager for Telegram is the studio's first public release, born from real-world experience building Telegram commerce channels for client stores.",
+  bio: "Markhubs is a WordPress and WooCommerce development studio focused on building lightweight, secure, GPL-licensed plugins that respect store owners' data and budgets. The Markhubs Store Manager for Telegram is the studio's first public release, born from real-world experience building Telegram commerce channels for client stores.",
   stats: [
     { value: "6+", label: "Years building for WordPress" },
     { value: "100+", label: "WooCommerce stores shipped" },
@@ -679,7 +679,7 @@ function Hero() {
           className="text-center space-y-6"
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-surface-900 dark:text-white leading-[1.05]">
-            markhubs Store Manager
+            Markhubs Store Manager
             <br className="hidden sm:block" />
             <span className="relative inline-block mt-2">
               {/* Animated gradient text */}
@@ -705,7 +705,7 @@ function Hero() {
           </h1>
 
           <p className="text-lg md:text-xl text-surface-900/60 dark:text-white/55 max-w-3xl mx-auto leading-relaxed">
-            <span className="font-semibold text-surface-900 dark:text-white">markhubs Store Manager for Telegram</span> is a free WooCommerce Telegram plugin that lets customers browse products, place orders, and track shipments — all directly inside Telegram. 25 bot commands, real-time order notifications, HPOS compatible, 100% free.
+            <span className="font-semibold text-surface-900 dark:text-white">Markhubs Store Manager for Telegram</span> is a free WooCommerce Telegram plugin that lets customers browse products, place orders, and track shipments — all directly inside Telegram. 25 bot commands, real-time order notifications, HPOS compatible, 100% free.
           </p>
         </motion.div>
 
@@ -2108,7 +2108,7 @@ function Architecture() {
       desc: "Products, orders, customers — everything stays in your existing WooCommerce database.",
     },
     {
-      label: "markhubs Plugin",
+      label: "Markhubs Plugin",
       sublabel: "Telegram bridge",
       icon: FaWordpress,
       color: "from-brand-500 to-brand-700",
@@ -2788,7 +2788,7 @@ function MobileCTABar() {
         >
           <div className="flex-1 min-w-0">
             <div className="text-xs text-surface-900/50 dark:text-white/50">Free · GPL · v1.0.0</div>
-            <div className="text-sm font-bold text-surface-900 dark:text-white truncate">markhubs Telegram Plugin</div>
+            <div className="text-sm font-bold text-surface-900 dark:text-white truncate">Markhubs Telegram Plugin</div>
           </div>
           <a
             href="#download"
@@ -2867,7 +2867,7 @@ function SocialShare() {
   }, []);
 
   const shareUrl = "https://nayanray.com/markhubs-store-manager-for-telegram";
-  const shareText = "markhubs Store Manager for Telegram — Free WooCommerce Telegram plugin with 25 bot commands, order notifications, and HPOS support.";
+  const shareText = "Markhubs Store Manager for Telegram — Free WooCommerce Telegram plugin with 25 bot commands, order notifications, and HPOS support.";
 
   const shareLinks = [
     { icon: FaTelegram, label: "Telegram", url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`, color: "hover:bg-sky-500 hover:text-white" },
@@ -2880,7 +2880,7 @@ function SocialShare() {
 
   const handleNativeShare = () => {
     if (navigator.share) {
-      navigator.share({ title: "markhubs Store Manager for Telegram", text: shareText, url: shareUrl });
+      navigator.share({ title: "Markhubs Store Manager for Telegram", text: shareText, url: shareUrl });
     } else {
       navigator.clipboard.writeText(shareUrl);
       setCopied(true);
@@ -3008,13 +3008,13 @@ export default function MarkhubsPlugin() {
   /* ------------------------------------------------------------------ */
   const PAGE_URL = "/markhubs-store-manager-for-telegram";
   const PAGE_TITLE =
-    "markhubs Store Manager for Telegram — Free WooCommerce Telegram Plugin";
+    "Markhubs Store Manager for Telegram — Free WooCommerce Telegram Plugin";
   const PAGE_DESC =
-    "markhubs Store Manager for Telegram is a free WooCommerce Telegram plugin. Let customers browse products, place orders, and track shipments in Telegram. 25 bot commands, order notifications, HPOS compatible. Download free from WordPress.org.";
+    "Markhubs Store Manager for Telegram is a free WooCommerce Telegram plugin. Let customers browse products, place orders, and track shipments in Telegram. 25 bot commands, order notifications, HPOS compatible. Download free from WordPress.org.";
   const PAGE_KEYWORDS = [
-    "markhubs Store Manager for Telegram",
-    "markhubs Telegram plugin",
-    "markhubs WooCommerce plugin",
+    "Markhubs Store Manager for Telegram",
+    "Markhubs Telegram plugin",
+    "Markhubs WooCommerce plugin",
     "WooCommerce Telegram plugin",
     "WooCommerce Telegram bot",
     "WordPress Telegram plugin",
@@ -3038,12 +3038,12 @@ export default function MarkhubsPlugin() {
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      name: "markhubs Store Manager for Telegram",
+      name: "Markhubs Store Manager for Telegram",
       alternateName: "WooCommerce Telegram Plugin",
       applicationCategory: "WordPressPlugin",
       operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
       description:
-        "markhubs Store Manager for Telegram is a free WooCommerce Telegram plugin that lets customers browse products, place orders, and track shipments directly in Telegram. Features 25 bot commands, real-time order notifications, cart management, order tracking, webhook auto-setup, and HPOS compatibility. GPL-licensed with zero external dependencies.",
+        "Markhubs Store Manager for Telegram is a free WooCommerce Telegram plugin that lets customers browse products, place orders, and track shipments directly in Telegram. Features 25 bot commands, real-time order notifications, cart management, order tracking, webhook auto-setup, and HPOS compatibility. GPL-licensed with zero external dependencies.",
       url: `https://nayanray.com${PAGE_URL}`,
       downloadUrl:
         "https://wordpress.org/plugins/markhubs-store-manager-for-telegram",
@@ -3068,7 +3068,7 @@ export default function MarkhubsPlugin() {
       },
       author: {
         "@type": "Organization",
-        name: "markhubs",
+        name: "Markhubs",
         url: "https://nayanray.com",
       },
       featureList: [
@@ -3115,7 +3115,7 @@ export default function MarkhubsPlugin() {
         {
           "@type": "ListItem",
           position: 3,
-          name: "markhubs Store Manager for Telegram",
+          name: "Markhubs Store Manager for Telegram",
           item: `https://nayanray.com${PAGE_URL}`,
         },
       ],
@@ -3125,7 +3125,7 @@ export default function MarkhubsPlugin() {
     {
       "@context": "https://schema.org",
       "@type": "HowTo",
-      name: "How to install and set up markhubs Store Manager for Telegram",
+      name: "How to install and set up Markhubs Store Manager for Telegram",
       description:
         "Install the free WordPress plugin, create a Telegram bot with @BotFather, configure the webhook, and start selling on Telegram — in under 5 minutes.",
       totalTime: "PT5M",
@@ -3184,7 +3184,7 @@ export default function MarkhubsPlugin() {
       "@type": "Review",
       itemReviewed: {
         "@type": "SoftwareApplication",
-        name: "markhubs Store Manager for Telegram",
+        name: "Markhubs Store Manager for Telegram",
         applicationCategory: "WordPressPlugin",
         operatingSystem: "WordPress 6.4+, WooCommerce 5.0+, PHP 7.4+",
       },
