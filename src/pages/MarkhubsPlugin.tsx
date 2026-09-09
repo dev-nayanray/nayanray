@@ -486,11 +486,13 @@ function SectionHeading({
   title,
   subtitle,
   align = "center",
+  dark = false,
 }: {
   badge: string;
   title: React.ReactNode;
   subtitle?: string;
   align?: "center" | "left";
+  dark?: boolean;
 }) {
   return (
     <div className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : "text-left"} mb-14`}>
@@ -498,7 +500,11 @@ function SectionHeading({
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-300 text-xs font-semibold uppercase tracking-wider border border-brand-500/20"
+        className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border ${
+          dark
+            ? "bg-white/5 text-brand-300 border-brand-500/20"
+            : "bg-brand-500/10 text-brand-600 dark:text-brand-300 border-brand-500/20"
+        }`}
       >
         <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
         {badge}
@@ -508,7 +514,9 @@ function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="mt-5 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-surface-900 dark:text-white"
+        className={`mt-5 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight ${
+          dark ? "text-white" : "text-surface-900 dark:text-white"
+        }`}
       >
         {title}
       </motion.h2>
@@ -518,7 +526,9 @@ function SectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-5 text-lg text-surface-900/60 dark:text-white/50 leading-relaxed"
+          className={`mt-5 text-lg leading-relaxed ${
+          dark ? "text-white/50" : "text-surface-900/60 dark:text-white/50"
+        }`}
         >
           {subtitle}
         </motion.p>
@@ -1174,6 +1184,7 @@ BotFather: Done! Congratulations on your new bot.
       <div className="relative max-w-5xl mx-auto">
         <SectionHeading
           badge="Quick Start"
+          dark
           title={
             <>
               For developers who'd rather
