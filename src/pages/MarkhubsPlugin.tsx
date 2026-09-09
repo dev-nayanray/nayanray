@@ -201,7 +201,7 @@ const requirements = [
 const faqItems = [
   {
     q: "Is this plugin really free?",
-    a: "Yes — 100% free, GPL-licensed, fully functional, no time limits, no nag screens, no locked features. The entire core experience ships in the free version. You can download it from GitHub, install it on unlimited sites, and use it commercially without paying a cent.",
+    a: "Yes — 100% free, GPL-licensed, fully functional, no time limits, no nag screens, no locked features. The entire core experience ships in the free version. You can download it from WordPress.org, install it on unlimited sites, and use it commercially without paying a cent.",
   },
   {
     q: "Does it work with HPOS (High-Performance Order Storage)?",
@@ -246,6 +246,38 @@ const faqItems = [
   {
     q: "Is the plugin compatible with WordPress multisite?",
     a: "Yes. The plugin can be activated per-site on a multisite network. Each subsite gets its own bot token, admin chat ID, and webhook secret, so multiple stores in a multisite network can each run their own independent Telegram bot.",
+  },
+  {
+    q: "How does the WooCommerce Telegram bot plugin work?",
+    a: "The plugin connects your WooCommerce store to a Telegram bot via the Telegram Bot API. When a customer messages your bot, Telegram forwards the message to a webhook on your WordPress site. The plugin processes the message, fetches product or order data from WooCommerce, and sends a reply back through Telegram. Order notifications are sent automatically when orders are placed or status changes occur.",
+  },
+  {
+    q: "Can customers place orders directly in Telegram?",
+    a: "Yes. Customers can browse products with /products, search with /search, add items to cart with /add, view cart with /cart, and generate a checkout link with /checkout. The checkout link redirects to your standard WooCommerce checkout page where they complete payment. The bot handles the browsing and cart management — payment happens on your secure WooCommerce checkout.",
+  },
+  {
+    q: "What Telegram bot commands are available?",
+    a: "The free plugin includes 25 bot commands: /start, /help, /products, /search, /product, /cart, /add, /clear, /checkout, /myorders, /order, /track, /store, /contact, /faq, /hours, /shipping, /returns, /lang, /stop, /resume, /id, /about, /version, and /support. Premium extends this to 116+ commands including AI-powered support and CRM actions.",
+  },
+  {
+    q: "Does the plugin send order notifications to Telegram?",
+    a: "Yes. When a new order is placed in WooCommerce, the plugin instantly sends a Telegram message to the store admin with order details (order number, items, total, customer info). When order status changes (processing, shipped, completed), the customer receives a Telegram notification automatically. Both admin and customer notifications are configurable in TG Manager → Settings.",
+  },
+  {
+    q: "Is this the best free WooCommerce Telegram plugin?",
+    a: "The markhubs Store Manager for Telegram is one of the most lightweight and feature-complete free WooCommerce Telegram plugins available on WordPress.org. It ships with 25 bot commands, order notifications, product search, cart management, order tracking, HPOS compatibility, and webhook auto-setup — all in under 200 KB with zero external dependencies. Unlike other plugins that lock core features behind paywalls, every feature in the free version works permanently.",
+  },
+  {
+    q: "How do I install the WooCommerce Telegram bot plugin?",
+    a: "Download the plugin from WordPress.org, then go to WordPress admin → Plugins → Add New → Upload Plugin → choose the zip file → Install Now → Activate. Then go to TG Manager → Settings, paste your Telegram bot token from @BotFather, enter your admin chat ID, and click Set webhook. The entire setup takes under 5 minutes.",
+  },
+  {
+    q: "Does the plugin work with WooCommerce product variations?",
+    a: "Yes. The plugin uses standard WooCommerce product APIs (wc_get_product, WC()->product_factory), which fully support product variations. When customers search or browse products, variation products appear in results. The /product command displays the product name, price, and description — variations are shown as part of the parent product.",
+  },
+  {
+    q: "Can I use this plugin to sell digital products on Telegram?",
+    a: "Yes. The plugin works with any WooCommerce product type — physical, digital/downloadable, virtual, or variable. Customers browse, add to cart, and checkout through your standard WooCommerce flow. For digital products, the download links are delivered through WooCommerce's standard email after payment, and the customer receives a Telegram notification when their order is completed.",
   },
 ];
 
@@ -2876,25 +2908,30 @@ export default function MarkhubsPlugin() {
   /* ------------------------------------------------------------------ */
   const PAGE_URL = "/markhubs-store-manager-for-telegram";
   const PAGE_TITLE =
-    "markhubs Telegram Plugin — Free WooCommerce Bot";
+    "WooCommerce Telegram Bot Plugin — Free WordPress Integration | markhubs";
   const PAGE_DESC =
-    "Free WordPress plugin turns WooCommerce into a Telegram sales bot. 25 commands, order notifications, cart, HPOS. GPL-licensed, zero deps.";
+    "Free WooCommerce Telegram bot plugin for WordPress. Let customers browse products, place orders, and track shipments directly in Telegram. 25 bot commands, order notifications, HPOS compatible. Download free from WordPress.org.";
   const PAGE_KEYWORDS = [
     "WooCommerce Telegram plugin",
-    "WordPress Telegram bot",
-    "Telegram store bot",
-    "WooCommerce Telegram integration",
-    "free WordPress Telegram plugin",
+    "WooCommerce Telegram bot",
+    "WordPress Telegram plugin",
     "Telegram bot for WooCommerce",
-    "markhubs Store Manager",
-    "WooCommerce chatbot",
-    "Telegram order notifications",
-    "WordPress plugin Telegram",
-    "WooCommerce bot plugin",
-    "free Telegram bot WordPress",
+    "WooCommerce Telegram integration",
+    "free WooCommerce Telegram plugin",
+    "WordPress Telegram bot integration",
+    "Telegram shopping bot WordPress",
+    "WooCommerce chatbot Telegram",
+    "Telegram order notifications WooCommerce",
+    "WooCommerce bot plugin free",
+    "markhubs Store Manager for Telegram",
+    "Telegram WooCommerce plugin free download",
+    "WordPress plugin Telegram bot",
+    "Telegram bot for online store WordPress",
+    "WooCommerce inline keyboard bot",
+    "Telegram product search WooCommerce",
+    "WooCommerce Telegram webhook plugin",
     "HPOS compatible Telegram plugin",
-    "Telegram shopping bot",
-    "WooCommerce inline keyboard",
+    "GPL WooCommerce Telegram bot",
   ];
 
   const jsonLd = [
