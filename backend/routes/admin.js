@@ -146,13 +146,19 @@ router.delete("/projects/:id", async (req, res) => {
 // Blog CRUD
 const blogSchema = Joi.object({
   title: Joi.string().min(1).max(255).required(),
+  slug: Joi.string().allow(null, ""),
   date: Joi.string().required(),
   author: Joi.string().required(),
   excerpt: Joi.string().required(),
+  content: Joi.string().allow(null, ""),
   image: Joi.string().uri().required(),
   readTime: Joi.string().required(),
   category: Joi.string().required(),
   tags: Joi.array().items(Joi.string()).required(),
+  metaTitle: Joi.string().allow(null, ""),
+  metaDescription: Joi.string().allow(null, ""),
+  status: Joi.string().valid("published", "draft").default("published"),
+  featured: Joi.boolean().default(false),
 });
 
 // GET /api/admin/blog

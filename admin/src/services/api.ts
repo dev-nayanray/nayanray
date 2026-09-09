@@ -96,13 +96,21 @@ export interface Project {
 export interface BlogPost {
   id?: number;
   title: string;
+  slug?: string;
   date: string;
   author: string;
   excerpt: string;
+  content?: string;
   image: string;
   readTime: string;
   category: string;
   tags: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  status?: string;
+  featured?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Service {

@@ -13,6 +13,10 @@ const BlogPost = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     date: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,6 +28,10 @@ const BlogPost = sequelize.define(
     excerpt: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     image: {
       type: DataTypes.STRING,
@@ -41,12 +49,37 @@ const BlogPost = sequelize.define(
       type: DataTypes.JSON,
       allowNull: false,
     },
+    // SEO fields
+    metaTitle: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    metaDescription: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    // Publishing
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "published",
+      validate: {
+        isIn: [["published", "draft"]],
+      },
+    },
+    featured: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
-    // Indexes — frontend filters by category and sorts by createdAt.
-    // The blog sidebar and category filter do WHERE category = 'X'
-    // on every blog page visit.
-    indexes: [{ fields: ["category"] }, { fields: ["createdAt"] }],
+    indexes: [
+      { fields: ["category"] },
+      { fields: ["createdAt"] },
+      { fields: ["slug"] },
+      { fields: ["status"] },
+    ],
   }
 );
 
