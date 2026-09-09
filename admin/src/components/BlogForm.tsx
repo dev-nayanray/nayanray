@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaImage, FaTags, FaSearch, FaFileAlt, FaCheck } from 'react-icons/fa';
+import { FaTags, FaSearch, FaFileAlt, FaCheck } from 'react-icons/fa';
 import type { BlogPost } from '../services/api';
 import ImageUpload from './ui/ImageUpload';
 
