@@ -35,7 +35,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, label = 'Ima
       setProgress(0);
       const { url } = await uploadAPI.uploadImage(file, setProgress);
       onChange(url);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.response?.data?.error || 'Upload failed. Please try again.');
     } finally {
       setProgress(null);

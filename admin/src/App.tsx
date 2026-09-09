@@ -261,7 +261,7 @@ function App() {
       closeModal();
       // Optionally fetch all data in background to sync
       fetchAllData().catch(err => console.error('Failed to sync data:', err));
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to save project'));
     } finally {
       setLoading(false);
@@ -275,7 +275,7 @@ function App() {
     try {
       await projectsAPI.delete(id);
       await fetchAllData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to delete project'));
     } finally {
       setLoading(false);
@@ -298,7 +298,7 @@ function App() {
       closeModal();
       // Optionally fetch all data in background to sync
       fetchAllData().catch(err => console.error('Failed to sync data:', err));
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to save blog post'));
     } finally {
       setLoading(false);
@@ -312,7 +312,7 @@ function App() {
     try {
       await blogAPI.delete(id);
       await fetchAllData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to delete blog post'));
     } finally {
       setLoading(false);
@@ -335,7 +335,7 @@ function App() {
       closeModal();
       // Optionally fetch all data in background to sync
       fetchAllData().catch(err => console.error('Failed to sync data:', err));
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to save service'));
     } finally {
       setLoading(false);
@@ -349,7 +349,7 @@ function App() {
     try {
       await servicesAPI.delete(id);
       await fetchAllData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to delete service'));
     } finally {
       setLoading(false);
@@ -363,7 +363,7 @@ function App() {
     try {
       await contactsAPI.delete(id);
       await fetchAllData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to delete contact message'));
     } finally {
       setLoading(false);
@@ -376,7 +376,7 @@ function App() {
       const updated = await proposalsAPI.updateStatus(id, status);
       setProposals(proposals.map((p) => (p.id === id ? updated : p)));
       setViewingProposal((prev) => (prev && prev.id === id ? updated : prev));
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to update proposal status'));
     }
   };
@@ -388,7 +388,7 @@ function App() {
     try {
       await proposalsAPI.delete(id);
       await fetchAllData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to delete proposal'));
     } finally {
       setLoading(false);
@@ -407,7 +407,7 @@ function App() {
       }
       await fetchAllData();
       closeModal();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to save user'));
     } finally {
       setLoading(false);
@@ -421,7 +421,7 @@ function App() {
     try {
       await usersAPI.delete(id);
       await fetchAllData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to delete user'));
     } finally {
       setLoading(false);

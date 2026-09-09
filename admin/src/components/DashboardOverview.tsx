@@ -115,7 +115,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               <meta.icon size={16} />
             </div>
             <p className="mt-4 text-2xl font-bold text-surface-900 dark:text-white">
-              {(counts as any)[meta.key]}
+              {counts[meta.key as keyof typeof counts]}
             </p>
             <p className="text-xs font-medium text-surface-900/50 dark:text-white/40">{meta.label}</p>
           </div>

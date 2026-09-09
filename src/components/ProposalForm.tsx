@@ -76,8 +76,13 @@ const ProposalForm = ({ defaultServiceId, defaultServiceName, onSuccess }: Propo
       });
       setSubmitted(true);
       onSuccess?.();
-    } catch (err: any) {
-      setError(err?.response?.data?.error || "Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      let msg = "Something went wrong. Please try again.";
+      if (err && typeof err === 'object' && 'response' in err) {
+        const resp = err as { response?: { data?: { error?: string } } };
+        if (resp.response?.data?.error) msg = resp.response.data.error;
+      }
+      setError(msg);
     } finally {
       setIsSubmitting(false);
     }
